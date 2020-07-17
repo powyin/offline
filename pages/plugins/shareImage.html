@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片分享</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-btn-block{
+            position: absolute;
+            width: 90%;
+            left: 5%;
+            padding: 10px 0;
+            margin: 0;
+        }
+        .mui-input-clear{
+            position: absolute;
+            width: 90%;
+            left: 0;
+            padding: 10px 0;
+            margin: 0;
+        }
+        #haoyouShare {
+            bottom: 80px;
+        }
+
+        #kongjianShare {
+            bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">图片分享</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示微信插件分享图片的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div id="album" style="padding: 2px;position: absolute;height: 30%">
+    </div>
+
+    <button type="button" id="haoyouShare" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareImage('1')">分享1</button>
+    <button type="button" id="kongjianShare" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareImage('2')">分享2</button>
+
+    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#" onclick="photoImage()">拍照</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a href="#chooseImage" onclick="chooseImage()">相册</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#picture"><b>取消</b></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+
+    mui.init();
+
+    var type = getQueryString("type");
+    if (type==='wechat') {
+        document.getElementById("haoyouShare").innerText="微信好友";
+        document.getElementById("kongjianShare").innerText="微信朋友圈";
+        window.onload = function(){
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示微信插件分享图片的接口能力，具体参数详见HCB开发文档";
+        };
+    }else if (type==='qq') {
+        document.getElementById("haoyouShare").innerText="QQ好友";
+        document.getElementById("kongjianShare").innerText="QQ空间";
+        window.onload = function(){
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示QQ插件分享图片的接口能力，具体参数详见HCB开发文档";
+        };
+    }else if (type==='alipay') {
+        document.getElementById("haoyouShare").innerText="分享支付宝";
+        $("#kongjianShare").hide();
+        window.onload = function(){
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示支付宝插件分享图片的接口能力，具体参数详见HCB开发文档";
+        };
+    }else if (type==='sina') {
+        $("#descriptionShare").hide();
+        document.getElementById("haoyouShare").innerText="分享新浪";
+        $("#kongjianShare").hide();
+        window.onload = function(){
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示新浪插件分享图片的接口能力，具体参数详见HCB开发文档";
+        };
+    }
+
+
+    var width, height, padding = 2, itemWidth;
+    var columnCount = 3;
+    var mediaFiles = new Array();
+
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+        width = window.screen.availWidth - padding * 2;
+        height = window.screen.availHeight;
+        itemWidth = (width - padding * (columnCount + 1)) / columnCount;
+
+        generateItem(null);
+
+
+    });
+
+    function photoImage() {
+        mui('#picture').popover('toggle');
+        var captureSuccess = function(mediaFiles) {
+            generateItem(mediaFiles);
+        };
+        var captureError = function(error) {
+            navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+        };
+        navigator.camera.takePhoto(captureSuccess, captureError,true,1024);
+    }
+
+    function chooseImage() {
+        mui('#picture').popover('toggle');
+
+        navigator.imagePicker.selectImage(function (data) {
+            if (data instanceof Array) {
+                $.each(data, function (i, item) {
+                    generateItem(item)
+                });
+                // JSON.stringify(item);
+            } else {
+                generateItem(data);
+                // JSON.stringify(data);
+            }
+        }, function (error) {
+            JSON.stringify(error)
+        })
+    }
+    var src;
+    function generateItem(mediaFile) {
+
+        if (mediaFile != null) mediaFiles.push(mediaFile);
+        var row, col,itemHtml, count = mediaFiles.length;
+        if (count === 0) {
+            src = "../../img/add_media.png";
+
+            itemHtml = "<a href='#picture' style='left: " + padding + "px; top:" + padding + "px'>"
+                + "<img style='width: " + itemWidth + "px; height:" + itemWidth + "px;' src='" + src + "' />"
+                + "</a>";
+        } else {
+
+
+            row = Math.floor(count / columnCount);//0
+            col = count % columnCount;//1
+
+            var left = col * itemWidth + padding * (col + 1);
+            var top = row * itemWidth + padding * (row + 1);
+
+
+            if (mediaFile.thumbLocalURL != null && mediaFile.thumbLocalURL !== undefined) {
+
+                src = mediaFile.thumbLocalURL;
+
+            } else {
+                src = mediaFile.localURL;
+            }
+
+
+            itemHtml = "<div onclick='albumItemClick(" + (count - 1) + ");' style='position: absolute; left: " + left + "px; top:" + top + "px'>"
+                + "<img style='background-color:lightblue; width: " + itemWidth + "px; height:" + itemWidth + "px;' src='" + src + "' />"
+                + "</div>";
+        }
+        $("#album").append($(itemHtml));
+    }
+    function albumItemClick(index) {
+        var mediaFile = mediaFiles[index];
+        mediaFileH =  mediaFiles[index];
+        navigator.file.preview(mediaFile.fullPath, function () {
+
+        });
+    }
+
+    function shareImage(str){
+        var shareImg = src==='../../img/add_media.png' ? 'http://hot.online.sh.cn/images/attachement/jpeg/site1/20180225/IMGf48e3894467146954814361.jpeg':src;
+        if (type==='wechat') {
+            if (str==='1') {
+                var obj = new ShareImageObject(shareImg,'',ShareScene.WechatSession);
+                navigator.wechat.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }else {
+                var obj = new ShareImageObject(shareImg,'',ShareScene.WechatTimeLine);
+                navigator.wechat.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }
+
+        }else if (type==='qq') {
+            if (str==='1') {
+                var obj = new ShareImageObject(shareImg,'',ShareScene.QQ);
+                navigator.qq.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }else {
+                var obj = new ShareImageObject(shareImg,'',ShareScene.Qzone);
+                navigator.qq.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }
+        }else if (type==='alipay') {
+            if (str==='1') {
+                var obj = new ShareImageObject(shareImg);
+                navigator.alipay.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }
+
+        }else if (type==='sina') {
+            if (str==='1') {
+                var obj = new ShareImageObject(shareImg);
+                navigator.sina.share(obj,function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback){
+                    alert(JSON.stringify(errorCallback));
+                });
+            }
+        }
+
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+</script>
+</html>

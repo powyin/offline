@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>云信</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">云信</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+
+<div class="mui-content">
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>帐号</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入用户名" name="username">
+        </div>
+        <div class="mui-input-row">
+            <label>密码</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入密码" name="password">
+        </div>
+    </form>
+
+    <div class="mui-content-padded" align="center">
+        <button type="button" class="mui-btn mui-btn-blue" id="login" style="margin-top: 20px;width:40%;height: 50px;font-size: 18px" onclick="loginNim()">登录</button>
+
+    </div>
+
+    <div class="mui-content-padded" align="center">
+        <button type="button" class="mui-btn" id="refresh" style="margin-top: 20px;width:40%;height: 50px;font-size: 15px" onclick="refreshPassword()">重置密码</button>
+        <button type="button" class="mui-btn" id="reg" style="margin-top: 20px;width:40%;height: 50px;font-size: 15px;"onclick="registerNim()">注册</button>
+    </div>
+</div>
+
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+    $("input[ name='username']").val('1220');
+    $("input[ name='password']").val('123456');
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+    //登录
+    function loginNim() {
+        var account = $("input[ name='username']").val();
+        var token = $("input[ name='password']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!token.length){
+            alert('请输入密码');
+            return;
+        }
+        navigator.nim.loginNim({'account':account,'token':token},function (successCallback) {
+
+            window.location.href='IMPage/modifyNim.html?account='+account;
+
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    //重置登录密码
+    function refreshPassword() {
+        var account = $("input[ name='username']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        navigator.nim.refreshPassword(account,function (successCallback) {
+            $("input[ name='username']").val(successCallback.accid);
+            $("input[ name='password']").val(successCallback.token);
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    //注册
+    function registerNim() {
+        window.location.href='IMPage/registerNim.html';
+    }
+
+
+</script>
+</body>
+
+</html>

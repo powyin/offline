@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<style>
+		h5{
+			padding-top: 8px;
+			padding-bottom: 8px;
+			text-indent: 12px;
+		}
+
+		.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
+			font-size: 15px;
+			margin-top:8px;
+			color: #333;
+		}
+
+		.selected {
+			border : 2px solid red;
+		}
+
+		.unselected {
+			border : 2px solid transparent;
+		}
+	</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title">登录界面</h1>
+	<span onclick="submitAndExit()" id="back" class="mui-icon mui-icon-checkmarkempty" style="position:absolute; right:15px"></span>
+</header>
+<div class="mui-content" style="background-color:#fff">
+	<h5 style="background-color:#efeff4">平台默认登录界面</h5>
+	<ul id="defaultStyle" class="mui-table-view mui-grid-view">
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<img id="round_center" class="mui-media-object unselected" src="../../img/login_round_center.jpg">
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<img id="round_bottom" class="mui-media-object unselected" src="../../img/login_round_bottom.jpg">
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<img id="line_center" class="mui-media-object unselected" src="../../img/login_line_center.jpg">
+		</li>
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<img id="line_bottom" class="mui-media-object unselected" src="../../img/login_line_bottom.jpg">
+		</li>
+	</ul>
+</div>
+
+<div style="background-color:#fff">
+	<h5 style="background-color:#efeff4">自定义登录界面</h5>
+	<ul id="diyStyle" class="mui-table-view mui-grid-view">
+		<li class="mui-table-view-cell mui-media mui-col-xs-6">
+			<img id="diy_default" class="mui-media-object unselected" src="../../img/login_diy_default.png">
+		</li>
+	</ul>
+</div>
+
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+    var selectedId = null;
+    var data = new Array();
+    data["round_center"] = "default_login/login_center_round.html";
+    data["round_bottom"] = "default_login/login_bottom_round.html";
+    data["line_center"] = "default_login/login_center_line.html";
+    data["line_bottom"] = "default_login/login_bottom_line.html";
+    data["diy_default"] = "example/login.html";
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        navigator.basis.getValue(function(loginStyle) {
+            if (loginStyle != null && loginStyle != "undefined" && loginStyle != "") {
+                $("#" + loginStyle).removeClass("unselected");
+                $("#" + loginStyle).addClass("selected");
+                selectedId = loginStyle;
+            } else {
+                $("#round_center").removeClass("unselected");
+                $("#round_center").addClass("selected");
+                selectedId = "round_center";
+            }
+        }, "loginStyle");
+    }
+
+    $(document).ready(function() {
+
+        $("ul#defaultStyle").on("click","li",function(){
+            if (selectedId == $(this).find("img").attr("id")) {
+                return;
+            } else {
+                $("#"+selectedId).removeClass("selected");
+                $("#"+selectedId).addClass("unselected");
+                selectedId = $(this).find("img").attr("id");
+                $("#"+selectedId).removeClass("unselected");
+                $("#"+selectedId).addClass("selected")
+            }
+        });
+
+        $("ul#diyStyle").on("click","li",function(){
+            if (selectedId == $(this).find("img").attr("id")) {
+                return;
+            } else {
+                $("#"+selectedId).removeClass("selected");
+                $("#"+selectedId).addClass("unselected");
+                selectedId = $(this).find("img").attr("id");
+                $("#"+selectedId).removeClass("unselected");
+                $("#"+selectedId).addClass("selected")
+            }
+        });
+    });
+
+    function submitAndExit() {
+        navigator.basis.putValues(function() {
+        	navigator.basis.reset(function() {
+        		navigator.basis.tip("设置成功，重启应用生效");
+        	}, data[selectedId]);
+        }, null, {"loginStyle" : selectedId});
+    }
+
+    function homePage() {
+    	navigator.basis.loadUrl("http://172.25.192.8:8080/hcmobile/example/index.html?tabIndex=3", {clearHistory:true});
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+		.form-row {
+			margin: 0 0.8rem 0 0.3rem;
+			padding-right: 1.8rem;
+			padding-left: 0.8rem;
+		}
+    </style>
+</head>
+<body>
+
+<header class="mui-bar mui-bar-nav">
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="mui.openWindow('create-version.html')" id="back" class="mui-icon mui-icon-plusempty" style="position:absolute; right:15px"></span>
+</header>
+
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<!--数据列表-->
+		<ul id="versionUl" class="mui-table-view mui-table-view-chevron">
+			
+		</ul>
+	</div>
+</div>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+  	var id = 0;
+  	var name = "";
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+		var params = title.substring(title.lastIndexOf("=")+1).split(",");
+		id = params[0];
+		name = params[1];
+		$("#title").text(name);
+		
+		refreshVersions();
+	});
+	
+	mui.init({
+		pullRefresh: {
+			container: '#pullrefresh',
+			down: {
+				callback: pulldownRefresh
+			},
+			up: {
+				contentrefresh: '正在刷新...',
+				callback: pullupRefresh
+			}
+		}
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+    }
+    
+    /**
+	 * 下拉刷新具体业务实现
+	 */
+	function pulldownRefresh() {
+		refreshVersions(function() {
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+		});
+	}
+	var count = 0;
+	/**
+	 * 上拉加载具体业务实现
+	 */
+	function pullupRefresh() {
+		refreshVersions(function() {
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+		});
+	}
+
+	function refreshVersions(callback) {
+		$.ajax({
+			url:"http://10.10.21.43:8070/hcmobile/versions/"+id,
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+   			contentType:"application/json",
+			timeout:10000,//超时时间设置为10秒
+			success:function(data) {
+				console.log(data);
+				var table = $('.mui-table-view');
+				table.empty();
+				$.each(data, function(i, item) {
+					var icon = ""
+					var statusImg = ""
+					
+					if (item.config == null || item.config.iconName == "") {
+						icon += "../../img/logo.png";
+					} else {
+						icon = "http://10.10.21.43:8070/hcmobile/file/download/" + id + "/" + item.id + "/" + item.config.iconName;
+						console.log(icon);
+					}
+					
+					if (item.status == 0) {
+						
+					} else if (item.status == 1) {
+						statusImg = "../../img/processing.gif";
+					} else if (item.status == 2) {
+						statusImg = "../../img/pack_failed.png";
+					} else if (item.status == 3) {
+						statusImg = "../../img/download.png";
+					}
+					var appHtml = "<li class='mui-table-view-cell mui-media'>"
+					        + "<a href='javascript:alert();'>"
+					        + "<img class='mui-media-object mui-pull-left' src='"+icon+"'>"
+					        + "<div class='mui-media-body'>" + item.version
+					        + "<p 'class='mui-ellipsis'>" + item.description + "</p>"
+					        + "</div>"
+					        + (statusImg == "" ? "":"<img name='"+item.status+"' src='"+statusImg+"' style='width:1.5rem; height:1.5rem; position:absolute; right:1rem;bottom:1.5rem' />")
+					        + "</a>"
+					    	+ "</li>";
+					table.append($(appHtml));
+				});
+				
+				mui("#versionUl").on("tap","img",function(){
+				    // 逻辑代码，例如跳转详情页、ajax
+				    var status = $(this).attr("name")
+				   	if (status == 1) {
+				   		navigator.basis.tip("正在打包，请稍后~");
+				   	} else if (status == 2) {
+				   		navigator.basis.tip("打包失败，请重试~");
+				   	} else if (status = 3) {
+				   		navigator.basis.tip("开始下载安装包");
+				   	}
+				   	return false;
+				});
+				
+				mui("#versionUl").on("tap","li",function(){
+				    // 逻辑代码，例如跳转详情页、ajax
+				   	alert(2222);
+				});
+				if (callback != null) {
+					callback();
+				}
+			}
+		});
+	}
+	
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text(title);
+	    
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+    	
+    }
+    
+    function nativeAlert() {
+    	navigator.notification.alert(
+						    '你赢了2!',  // message
+						    function() {
+						    	navigator.modal.toast("关闭");
+						    },         // callback
+						    '恭喜你',            // title
+						    '确定'                  // buttonLabel
+						);
+    }
+    
+    function nativeConfirm() {
+    	navigator.notification.confirm(
+						    '你赢了!', // message
+						     function(index) {
+						     	navigator.modal.toast('buttonIndex = ' + index);
+                                 console.log(localStorage.getItem("Name"));
+						     },            // callback to invoke with index of button pressed
+						    '恭喜你',           // title
+						    ['再玩一次','退出']     // buttonLabels
+						);
+    }
+    
+    function nativePrompt() {
+    	navigator.notification.prompt(
+						    '你赢了！',  // message
+						    function(data) {
+						    	navigator.modal.toast(JSON.stringify(data));
+                                localStorage.setItem("Name", "John");
+						    },                  // callback to invoke
+						    '恭喜你',            // title
+						    ['确定','退出'] ,            // buttonLabels
+            				'默认文字'
+						);
+    }
+
+  </script>
+<header class="mui-bar mui-bar-nav" >
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()" id="back" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div>
+	<div style="margin-top: 64px;display: flex;justify-content: space-around">
+		<button type="button" onclick="nativeAlert()" class="mui-btn mui-btn-primary" >Alert</button>
+		<button type="button" onclick="nativeConfirm()" class="mui-btn mui-btn-primary" >Confirm</button>
+		<button type="button" onclick="nativePrompt()" class="mui-btn mui-btn-primary" >Prompt</button>
+		<button type="button" onclick="navigator.notification.beep(2)" class="mui-btn mui-btn-primary" >Beep</button>
+	</div>
+</div>
+</body>
+</html>

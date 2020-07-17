@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Nim插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Nim插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Nim插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">注册云信</a>
+                <div class="mui-collapse-content">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>用户名</label>
+                            <input type="text" name="account" class="mui-input-clear" placeholder="请输入用户名">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>密码</label>
+                            <input type="password" name="token" class="mui-input-password" placeholder="请输入密码">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>昵称</label>
+                            <input type="text" name="nickname" class="mui-input-clear" placeholder="请输入昵称">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>头像</label>
+                            <input type="text" name="icon" class="mui-input-clear" placeholder="请输入头像">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" class="mui-btn mui-btn-primary" onclick="registerNim()">注册</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">登录云信</a>
+                <div class="mui-collapse-content">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>用户名</label>
+                            <input type="text" name="account1" class="mui-input-clear" placeholder="请输入用户名">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>密码</label>
+                            <input type="password" name="token1" class="mui-input-password" placeholder="请输入密码">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" class="mui-btn mui-btn-primary" onclick="loginNim()">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">修改登录密码</a>
+                <div class="mui-collapse-content">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>用户名</label>
+                            <input type="text" name="account2" class="mui-input-clear" placeholder="请输入用户名">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>密码</label>
+                            <input type="password" name="token2" class="mui-input-password" placeholder="请输入修改密码">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" class="mui-btn mui-btn-primary" onclick="modifyPassword()">修改登录密码</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">修改用户信息</a>
+                <div class="mui-collapse-content">
+                    <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>用户名</label>
+                            <input type="text" name="account3" class="mui-input-clear" placeholder="请输入用户名">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>头像</label>
+                            <input type="text" name="icon3" class="mui-input-clear" placeholder="请输入修改头像地址">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>昵称</label>
+                            <input type="text" name="nickname3" class="mui-input-clear" placeholder="请输入修改昵称">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" class="mui-btn mui-btn-primary" onclick="modifyUserInfo()">修改用户信息</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="enterTheRecentSessionPage()">进入原生最近会话界面</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="allRecentSessions()">获取所有最近会话</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="enterTheChatPage()">点击进入聊天界面</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="enterTheRecentSessionPageH5()">进入h5最近会话界面</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="logout()">退出登陆</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+    $("input[ name='account']").val('1220');
+    $("input[ name='token']").val('123456');
+    $("input[ name='nickname']").val('小明');
+    $("input[ name='icon']").val('http://b-ssl.duitang.com/uploads/item/201407/10/20140710145247_TAT8t.jpeg');
+    $("input[ name='account1']").val('1220');
+    $("input[ name='token1']").val('123456');
+    $("input[ name='account2']").val('1220');
+    $("input[ name='token2']").val('123456');
+
+    $("input[ name='account3']").val('1220');
+    $("input[ name='nickname3']").val('小红');
+    $("input[ name='icon3']").val('https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=296785508,2423100707&fm=15&gp=0.jpg');
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+    function registerNim() {
+        var account = $("input[ name='account']").val();
+        var token = $("input[ name='token']").val();
+        var nickname = $("input[ name='nickname']").val();
+        var icon = $("input[ name='icon']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!token.length){
+            alert('请输入密码');
+            return;
+        }
+        if (!nickname.length){
+            alert('请输入昵称');
+            return;
+        }
+        if (!icon.length){
+            alert('请输入头像地址');
+            return;
+        }
+        navigator.nim.registerNim({'account':account,'token':token,'nickname':nickname,'icon':icon},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function loginNim() {
+        var account = $("input[ name='account1']").val();
+        var token = $("input[ name='token1']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!token.length){
+            alert('请输入密码');
+            return;
+        }
+        navigator.nim.loginNim({'account':account,'token':token},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+            // navigator.nim.allRecentSessions(function (successCallback) {
+            //     alert(JSON.stringify(successCallback));
+            // },function (errorCallback) {
+            //     alert(JSON.stringify(errorCallback));
+            // });
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    //修改登录密码
+    function modifyPassword() {
+        var account = $("input[ name='account2']").val();
+        var token = $("input[ name='token2']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!token.length){
+            alert('请输入修改密码');
+            return;
+        }
+        navigator.nim.modifyPassword({'account':account,'token':token},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function modifyUserInfo() {
+        //修改昵称
+        var account =  $("input[ name='account3']").val();
+        var nickname = $("input[ name='nickname3']").val();
+        var icon = $("input[ name='icon3']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!nickname.length){
+            alert('请输入修改头像地址');
+            return;
+        }
+        if (!icon.length){
+            alert('请输入修改昵称');
+            return;
+        }
+
+        navigator.nim.modifyUserInfo({'account':account,'nickname':nickname,'icon':icon},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function logout() {
+        //退出登陆
+        navigator.nim.logout(function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function enterTheRecentSessionPage() {
+        //进入原生最近会话界面
+        navigator.nim.enterTheRecentSessionPage(function (successCallback) {
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+        // navigator.nim.loginNim({'account':'1224','token':'123456'},function (successCallback) {
+        //     // alert(JSON.stringify(successCallback));
+        //     navigator.nim.enterTheRecentSessionPage(function(success){},function(error){});
+        // },function (errorCallback){
+        //     alert(JSON.stringify(errorCallback));
+        // });
+
+    }
+    function allRecentSessions() {
+        //获取所有最近会话
+        navigator.nim.allRecentSessions(function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback) {
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function enterTheChatPage() {
+        //点击进入聊天界面
+        navigator.nim.enterTheChatPage('lilinlin@supcon.com','0',function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function enterTheRecentSessionPageH5() {
+        window.location.href='chatnim.html';
+    }
+
+</script>
+</body>
+
+</html>

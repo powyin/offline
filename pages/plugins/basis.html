@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' local: ; media-src *">-->
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+    	td {
+    		vertical-align: middle;
+    	}
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="/cordova.js"></script>-->
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/hc.js"></script>
+<script type="application/javascript" charset="UTF-8">
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text(title);
+	    $("#spDiv").hide();
+	    $("#clearTable").hide();
+	    $.each($("[name='ios']"), function() {
+	    	$(this).hide();
+	    });
+	    $.each($("[name='android']"), function() {
+	    	$(this).hide();
+	    });
+	    
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+
+
+        navigator.basis.getValue(function(username) {
+        	if (username != null && username != "undefined")
+	    		$('#usernameLabel').text(username);
+        }, "username");
+        
+        var platform = device.platform;
+	    if (platform == "Android") {
+	    	$.each($("[name='android']"), function() {
+		    	$(this).show();
+		    });
+	    } else if (platform == "iOS") {
+	    	$.each($("[name='ios']"), function() {
+		    	$(this).show();
+		    });
+	    }
+
+    }
+
+	function phone(direct) {
+		var number = $('#phoneNumber').val();
+		if (number == "") {
+			navigator.basis.tip("请输入手机号码");
+			return;
+		}
+		navigator.telephony.dial(onSuccess, onFail, number, direct);
+	}
+
+	function sms(direct) {
+
+
+		var number = $('#smsNumber').val();
+		if (number == "") {
+			navigator.basis.tip("请输入手机号码");
+			return;
+		}
+
+		var msg = $('#smsMsg').val();
+		navigator.telephony.sendSMS(onSuccess, onFail, number, msg, direct);
+	}
+
+	function onSuccess(imageURI) {
+    }
+
+    function onFail(message) {
+    }
+
+    function loadUrl(_clearHistory) {
+    	var url = $('#internetAddress').val();
+
+        if (navigator.basis === undefined) {
+            navigator.webview.loadUrl(url, {clearHistory : false});
+        } else {
+            navigator.basis.loadUrl(url, {clearHistory : false});
+        }
+    }
+
+	function clearHistory() {
+		// 清除浏览器历史
+		navigator.webView.clearHistory();
+	}
+
+
+	function clearCache() {
+		// 清除浏览器缓存
+		navigator.webView.clearCache();
+	}
+
+	function closeWeb() {
+		// 关闭WebView
+		navigator.webView.close();
+	}
+
+	function closeCache() {
+		// 关闭浏览器缓存
+		navigator.webView.closeCache(true,1);
+	}
+
+	function tipMsg() {
+		var msg = $('#tipMsg').val();
+		navigator.basis.tip(msg);
+	}
+
+	function logout() {
+		navigator.basis.logout();
+	}
+
+	function exitApp() {
+		navigator.basis.exitApp();
+	}
+
+	function resetUrl() {
+        var url = $('#reset-url-input').val();
+
+
+
+        if (url == "") {
+            navigator.basis.tip("请输入主页地址");
+            navigator.umeng.addTags();
+            return;
+        }
+
+        var reg = new RegExp('[a-zA-z]+://[^\\s]*');
+
+        if (!reg.test(url)){
+
+            navigator.basis.tip("请输入有效的主页地址!");
+
+            return;
+		}
+
+        navigator.basis.reset(function () {
+
+            navigator.basis.tip('重置成功，重启应用生效');
+
+        }, url);
+
+    }
+
+
+	function addOrRemoveRow(obj) {
+		var index = Number(obj.id.substring(obj.id.lastIndexOf("_") + 1)) + 1;
+		var add = $("#" + obj.id).hasClass("mui-icon-plus");
+		if (add) {
+			var newTrHtml = "<tr id=\"sp_tr_" + index + "\">"
+	        				+ "<td width=\"10%\"><p>key:</p></td>"
+	        				+ "<td><input style=\"border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;\" type=\"text\" class=\"form-control\" ></td>"
+	        				+ "<td width=\"10%\"><p>value:</p></td>"
+	        				+ "<td><input style=\"border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;\" type=\"text\" class=\"form-control\" ></td>"
+	        				+ "<td width=\"10%\"><span id=\"span_sp_tr_" + index + "\" onclick=\"addOrRemoveRow(this)\" class=\"mui-icon mui-icon-plus\"></span></td>"
+	        				+ "</tr>";
+			var newTr = $(newTrHtml);
+	       	$('#spTable').append(newTr);
+	       	for (var i = 1; i < index; i++) {
+	       		$('#span_sp_tr_' + i).removeClass("mui-icon-plus");
+	       		$('#span_sp_tr_' + i).addClass("mui-icon-minus");
+	       	}
+		} else {
+			$("#sp_tr_" + (index-1)).remove();
+		}
+
+		if ($('#spTable').find("tr").length > 1) {
+			$("#clearTable").show();
+		} else {
+			$("#clearTable").hide();
+		}
+	}
+
+	function saveSp() {
+		var params = "{";
+		$("#spTable").find("tr").each(function(){
+			var tdArr = $(this).children();
+			var key = tdArr.eq(1).find("input").val();
+			var value = tdArr.eq(3).find("input").val();
+			if (key == "") {
+				navigator.basis.tip("Key不能为空");
+				return false;
+			}
+			params += "\"" + key + "\":\"" + value + "\",";
+		});
+		if (params.lastIndexOf(",") == params.length - 1) {
+			params = params.substring(0, params.length - 1);
+		}
+		params += "}";
+		if (params != "{}") {
+			navigator.basis.putValues(function() {
+			navigator.basis.tip("数据存储成功");
+		}, null, $.parseJSON(params));
+		}
+
+		// var a = {
+         //    'testInt' : 1,
+         //        'testFloat': 2.0,
+         //    'testString': '3.333',
+         //    'testBool': true,
+         //    'testArray': ['1.1', 2.2222, 3, false],
+         //    'testObj': {'objkey1': 'objvalue', 'objkey2': 2, 'objkey3': [0, 5, '6.6']}
+		// };
+        //
+		// navigator.basis.putValues(
+		//     function () {
+         //        navigator.basis.tip("数据存储成功");
+        // },
+		// 	function () {
+        //
+        // },
+		// 	a
+		// );
+
+
+	}
+	function loadwebtUrl() {
+		var url = $('#load-url-input').val();
+
+		if (url == "") {
+			navigator.basis.tip("请输入跳转地址");
+			navigator.umeng.addTags();
+			return;
+		}
+
+		var reg = new RegExp('[a-zA-z]+://[^\\s]*');
+
+		if (!reg.test(url)){
+
+			navigator.basis.tip("请输入有效的跳转地址!");
+
+			return;
+		}
+		navigator.webView.load(url, {'loadUrlTimeoutValue': 15000, 'clearHistory': true});
+	}
+
+	function getSp() {
+		navigator.basis.getValues(function(data){
+			$("#showSpTable tr td").remove();
+			$("#spDiv").show();
+			var index = 0;
+			$.each(data, function(key, value) {
+				var trHtml = "<tr><td style=\"color: darkgray;\">"
+								+ ++index
+				    			+ "</td><td style=\"color: darkgray;\">"
+				    			+ key
+				    			+ "</td><td style=\"color: darkgray;\">"
+				    			+ value
+				    			+ "</td></tr>";
+				$("#showSpTable").append($(trHtml));
+			});
+		});
+	}
+
+	function clearTable() {
+		$("#spTable").find("tr").each(function(i) {
+			$(this).remove();
+		});
+		var newTrHtml = "<tr id=\"sp_tr_1" + "\">"
+	        				+ "<td width=\"10%\"><p>key:</p></td>"
+	        				+ "<td><input style=\"border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;\" type=\"text\" class=\"form-control\" ></td>"
+	        				+ "<td width=\"10%\"><p>value:</p></td>"
+	        				+ "<td><input style=\"border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;\" type=\"text\" class=\"form-control\" ></td>"
+	        				+ "<td width=\"10%\"><span id=\"span_sp_tr_1\" onclick=\"addOrRemoveRow(this)\" class=\"mui-icon mui-icon-plus\"></span></td>"
+	        				+ "</tr>";
+		var newTr = $(newTrHtml);
+       	$('#spTable').append(newTr);
+       	$("#clearTable").hide();
+	}
+
+  </script>
+
+<header class="mui-bar mui-bar-nav">
+	<span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div style="margin-top: 44px;">
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">手机基础功能</a>
+			<div class="mui-collapse-content">
+				<div style="padding: 5px 10px;">
+					<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+						<a class="mui-control-item mui-active" href="#item1">打电话</a>
+						<a class="mui-control-item" href="#item2">发短信</a>
+					</div>
+				</div>
+				<div>
+					<div id="item1" class="mui-control-content mui-active">
+						<div id="androidPhone" name="android" style="padding: 0 10px 15px 10px">
+							<div>
+								<span class="mui-icon mui-icon-phone" style="position: absolute; margin-top: 13px;"></span>
+								<input id="phoneNumber" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 10px; padding-left: 40px;" type="tel" class="form-control" placeholder="请输入手机号">
+							</div>
+							<div class="mui-button-row">
+								<button type="button" onclick="phone(true)" class="mui-btn mui-btn-primary" >直接拨号</button>
+								<button type="button" onclick="phone(false)" class="mui-btn mui-btn-primary" >系统拨号</button>
+							</div>
+						</div>
+						<div id="iosPhone" name="ios" style="padding: 0 10px 15px 10px">
+							<div>
+								<table>
+									<tr>
+										<td>
+											<span class="mui-icon mui-icon-phone" style="position: absolute; margin-top: 13px;"></span>
+											<input id="phoneNumber" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 10px; padding-left: 40px;" type="tel" class="form-control" placeholder="请输入手机号">
+										</td>
+										<td>
+											<button type="button" onclick="phone(false)" class="mui-btn mui-btn-primary" >拨号</button>
+										</td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+					</div>
+					<div id="item2" class="mui-control-content">
+						<div id="sms" style="padding: 0 10px 15px 10px">
+							<div>
+								<span class="mui-icon mui-icon-chatboxes" style="position: absolute; margin-top: 13px;"></span>
+								<input id="smsNumber" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 10px; padding-left: 40px;" type="tel" class="form-control" placeholder="请输入手机号">
+							</div>
+							<div class="mui-input-row" style="margin: 10px 5px;">
+								<textarea id="smsMsg" rows="5" placeholder="请输入短信内容"></textarea>
+							</div>
+							<div id="androidSms" name="android"  class="mui-button-row">
+								<button type="button" onclick="sms(true)" class="mui-btn mui-btn-primary" >直接发送</button>
+								<button type="button" onclick="sms(false)" class="mui-btn mui-btn-primary" >系统发送</button>
+							</div>
+							<div id="iosSms" name="ios" class="mui-button-row">
+								<button type="button" onclick="sms(false)" class="mui-btn mui-btn-primary" >直接发送</button>						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">Web组件操作</a>
+			<div class="mui-collapse-content">
+				<div id="androidBrowser" name="android" style="margin: 10px 0 10px 0;">
+					<div>
+						<p>➤ 跳转页面</p>
+						<span class="mui-icon mui-icon-paperplane" style="position: absolute; margin-top: 13px;"></span>
+						<input id="internetAddress" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;height:50px; margin-bottom: 10px; padding-left: 40px;" type="url" class="form-control" placeholder="请输入网址" value="http://www.baidu.com">
+					</div>
+					<div class="mui-button-row">
+						<button type="button" onclick="loadUrl(false)" class="mui-btn mui-btn-primary" >直接跳转</button>
+						<button type="button" onclick="loadUrl(true)" class="mui-btn mui-btn-primary" >清历史跳转</button>
+					</div>
+				</div>
+
+				<div id="iosBrowser" name="ios" style="margin: 10px 0 10px 0;">
+					<table width="100%">
+						<tr>
+							<td>
+								<div>
+									<p>➤ 跳转页面</p>
+									<span class="mui-icon mui-icon-paperplane" style="position: absolute; margin-top: 13px;"></span>
+									<input id="internetAddress" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;height:50px; margin-bottom: 10px; padding-left: 40px;" type="url" class="form-control" placeholder="请输入网址" value="http://www.baidu.com">
+								</div>
+							</td>
+							<td>
+								<button type="button" onclick="loadUrl(true)" class="mui-btn mui-btn-primary" >GO</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+				<div style="margin: 20px 0 10px 0;">
+					<p style="margin: 10px 0 10px 0;">➤ 返回上一页</p>
+					<button type="button" onclick="navigator.webView.back();" class="mui-btn mui-btn-primary" >返回上一页</button>
+
+					<p style="margin: 10px 0 10px 0;">➤ 刷新</p>
+					<button type="button" onclick="navigator.webView.reload();" class="mui-btn mui-btn-primary" >刷新</button>
+
+					<p style="margin: 10px 0 10px 0;">➤ 跳转到指定的URL</p>
+					<button onclick="loadwebtUrl()" style="position: absolute; margin-top: 10px; right: 15px;" type="button" class="mui-btn mui-btn-primary">跳转</button>
+					<span class="mui-icon mui-icon-paperplane" style="position: absolute; margin-top: 13px;"></span>
+					<input id="load-url-input" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;height:50px; margin-bottom: 10px; padding:0 100px 0 40px;" type="url" class="form-control" placeholder="请输入跳转地址">
+
+				</div>
+
+				<div style="margin: 20px 0 10px 0;">
+					<p style="margin: 10px 0 10px 0;">➤ 清空</p>
+					<button type="button" onclick="clearHistory()" class="mui-btn mui-btn-primary" >清空浏览历史</button>
+					<button type="button" onclick="clearCache()" class="mui-btn mui-btn-primary" >清空Web组件缓存</button>
+				</div>
+				<div style="margin: 20px 0 10px 0;">
+					<p style="margin: 10px 0 10px 0;">➤ 关闭</p>
+					<button type="button" onclick="closeCache()" class="mui-btn mui-btn-primary" >关闭浏览器缓存</button>
+					<button type="button" onclick="closeWeb()" class="mui-btn mui-btn-primary" >关闭WebView</button>
+				</div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">系统基础功能</a>
+			<div class="mui-collapse-content">
+				<div style="margin: 0 0 10px 0;">
+					<p>➤ 系统提示</p>
+					<button onclick="tipMsg()" style="position: absolute; margin-top: 10px; right: 15px;" type="button" class="mui-btn mui-btn-primary">提示</button>
+					<span class="mui-icon mui-icon-chatbubble" style="position: absolute; margin-top: 13px;"></span>
+					<input id="tipMsg" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;height:50px; margin-bottom: 10px; padding:0 100px 0 40px;" type="text" class="form-control" placeholder="请输入需提示内容">
+				</div>
+				<div style="margin: 20px 0 10px 0;">
+					<p>➤ 注销</p>
+					<p style="margin: 10px 0 10px 0;">当前用户：<label id="usernameLabel"></label></p>
+					<button type="button" onclick="logout()" class="mui-btn mui-btn-primary">注销</button>
+				</div>
+
+				<div style="margin: 10px 0 10px 0;">
+					<p style="margin: 20px 0 10px 0;">➤ 退出应用</p>
+					<button type="button" onclick="exitApp()" class="mui-btn mui-btn-primary">退出应用</button>
+				</div>
+
+				<div style="margin: 20px 0 10px 0;">
+					<p>➤ 重置主页地址</p>
+					<button onclick="resetUrl()" style="position: absolute; margin-top: 10px; right: 15px;" type="button" class="mui-btn mui-btn-primary">重置</button>
+					<span class="mui-icon mui-icon-paperplane" style="position: absolute; margin-top: 13px;"></span>
+					<input id="reset-url-input" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;height:50px; margin-bottom: 10px; padding:0 100px 0 40px;" type="url" class="form-control" placeholder="请输入主页地址">
+				</div>
+
+
+				<div style="margin: 10px 0 10px 0;">
+					<table style="margin: 20px 0 10px 0; width:100%">
+						<tr>
+							<td width="90%"><p>➤ 简单数据存取</p></td>
+							<td><span onclick="clearTable();" id="clearTable" class="mui-icon mui-icon-trash"></span></td>
+						</tr>
+					</table>
+					<table width="100%" id="spTable">
+						<tr id="sp_tr_1">
+							<td width="10%"><p>key:</p></td>
+							<td><input id="sp_td_key_1" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;" type="text" class="form-control" ></td>
+							<td width="10%"><p>value:</p></td>
+							<td><input id="sp_td_value_1" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 0px;" type="text" class="form-control" ></td>
+							<td width="10%"><span id="span_sp_tr_1" onclick="addOrRemoveRow(this)" class="mui-icon mui-icon-plus"></span></td>
+						</tr>
+					</table>
+					<div class="mui-button-row" style="margin: 10px 0 20px 0;">
+						<button type="button" onclick="saveSp()" class="mui-btn mui-btn-primary" >存储数据</button>
+						<button type="button" onclick="getSp()" class="mui-btn mui-btn-primary" >读取数据</button>
+					</div>
+					<div id="spDiv">
+						<p>已存储数据：</p>
+						<table id="showSpTable" style="width: 100%; margin: 10px 0 0 0;">
+							<tr>
+								<th style="width: 10%; color: darkgray;">#</th>
+								<th style="width: 40%; color: darkgray;">Key</th>
+								<th style="width: 50%; color: darkgray;">Value</th>
+							</tr>
+							<tr>
+								<td>
+									1
+								</td>
+								<td>
+									key
+								</td>
+								<td>
+									value
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</div>
+</body>
+</html>

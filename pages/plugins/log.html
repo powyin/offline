@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Log插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Log插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Log插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <!--<div class="mui-card mui-table-view-cell mui-collapse">-->
+        <!--<a class="mui-navigate-right" href="#">crash崩溃日志</a>-->
+        <!--<div class="mui-collapse-content mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right" onclick="getCrashReport()">获取</a>-->
+        <!--</div>-->
+        <!--<div class="mui-collapse-content mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right" onclick="deleteCrashReport()">删除</a>-->
+        <!--</div>-->
+        <!--<div class="mui-collapse-content mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right" onclick="isCrash()">删除</a>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">数据</a>
+            <div class="mui-content-padded">
+                <div class="mui-input-row">
+                    <label>logData:</label>
+                    <input type="text" name="logData" class="mui-input-clear" placeholder="请输入要存储的数据">
+                </div>
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="onLog()">存储数据</button>
+            </div>
+            <div class="mui-content-padded">
+                <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="getLogReport()">获取存储数据</button>
+            </div>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="deleteLogReport()">删除存储数据</button>
+        </div>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">事件</a>
+        <div class="mui-content-padded">
+            <div class="mui-input-row">
+                <label>eventId:</label>
+                <input type="text" name="eventId" class="mui-input-clear" placeholder="请输入事件id">
+            </div>
+            <div class="mui-input-row">
+                <label>name:</label>
+                <input type="text" name="name" class="mui-input-clear" placeholder="请输入事件名称">
+            </div>
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="onEvent()">记录事件</button>
+        </div>
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">人员</a>
+        <div class="mui-content-padded">
+            <div class="mui-input-row">
+                <label>userid:</label>
+                <input type="text" name="adduserid" class="mui-input-clear" placeholder="请输入用户ID">
+            </div>
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="addUsers()">新增人数统计</button>
+            <div class="mui-input-row">
+                <label>userid:</label>
+                <input type="text" name="userid" class="mui-input-clear" placeholder="请输入用户ID">
+            </div>
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="activeUsers()">活跃人数统计</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    $("input[ name='logData']").val('你好，很高兴认识你');
+    $("input[ name='eventId']").val('001');
+    $("input[ name='name']").val('单击');
+    $("input[ name='adduserid']").val('1');
+    $("input[ name='userid']").val('2');
+    function getCrashReport() {
+        navigator.crash.getCrashReport(function (res) {
+            alert(JSON.stringify(res));
+            navigator.notification.confirm(
+                '是否上传崩溃日志',
+                function (buttonIndex) {
+
+                    if (buttonIndex === 1){
+                        var options = new FileUploadOptions();
+                        options.fileKey = res.name;
+                        options.fileName = res.name;
+                        options.mimeType = res.type;
+                        var ft = new FileTransfer();
+                        ft.upload(res.fullPath, encodeURI("http://10.10.21.189:8081/TestApp/UploadServlet"), function (result) {
+                            alert(JSON.stringify(result));
+                        }, function (error) {
+                            alert(JSON.stringify(error));
+                        }, options);
+                    }
+                },
+                '提示',
+                ['是','否']
+            );
+
+
+        }, function (errorCallback) {
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+    function deleteCrashReport() {
+        navigator.notification.confirm(
+            '是否删除崩溃日志?',
+            function (buttonIndex) {
+
+                if (buttonIndex === 1){
+                    navigator.crash.deleteCrashReport(function (res) {
+                        alert(JSON.stringify(res))
+                    },function (error) {
+                        alert(JSON.stringify(error))
+                    })
+                }
+            },
+            '提示',
+            ['是','否']
+        );
+    }
+//存储前端数据
+    function onLog() {
+        var message = $("input[ name='logData']").val();
+        if (!message.length){
+            alert('请输入logData的值');
+            return;
+        }
+        navigator.log.onLog(message,function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+//获取前端储存数据
+    function getLogReport() {
+        navigator.log.getLogReport(function (res) {
+            alert(JSON.stringify(res));
+            // navigator.notification.confirm(
+            //     '是否上传日志',
+            //     function (buttonIndex) {
+            //
+            //         if (buttonIndex === 1){
+            //             var options = new FileUploadOptions();
+            //             options.fileKey = res.name;
+            //             options.fileName = res.name;
+            //             options.mimeType = res.type;
+            //             var ft = new FileTransfer();
+            //             ft.upload(res.fullPath, encodeURI("http://10.10.21.189:8081/TestApp/UploadServlet"), function (result) {
+            //                 alert(JSON.stringify(result));
+            //             }, function (error) {
+            //                 alert(JSON.stringify(error));
+            //             }, options);
+            //         }
+            //     },
+            //     '提示',
+            //     ['是','否']
+            // );
+            //
+
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+
+    function deleteLogReport() {
+
+
+        navigator.notification.confirm(
+            '是否删除日志?',
+            function (buttonIndex) {
+
+                if (buttonIndex === 1){
+                    navigator.log.deleteLogReport(function (res) {
+                        alert(JSON.stringify(res));
+                    },function (error){
+                        alert(JSON.stringify(error));
+                    });
+                }
+            },
+            '提示',
+            ['是','否']
+        );
+
+    }
+    
+    
+    function onEvent() {
+        var eventId = $("input[ name='eventId']").val();
+        var name = $("input[ name='name']").val();
+        if (!eventId.length){
+            alert('请输入eventId的值');
+            return;
+        }
+        if (!name.length){
+            alert('请输入name的值');
+            return;
+        }
+        navigator.log.onEvent(eventId, name,function (res) {
+            alert(JSON.stringify(res))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    function addUsers() {
+        var adduserid = $("input[ name='adduserid']").val();
+        if (!adduserid.length){
+            alert('请输入新增人数userid的值');
+            return;
+        }
+        navigator.log.addUsers(adduserid,function (res) {
+            alert(JSON.stringify(res))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    function activeUsers() {
+        var userid = $("input[ name='userid']").val();
+        if (!userid.length){
+            alert('请输入活跃人数userid的值');
+            return;
+        }
+        navigator.log.activeUsers(userid,function (res) {
+            alert(JSON.stringify(res))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+    function isCrash() {
+        navigator.log.isCrash(function (res) {
+            alert(JSON.stringify(res))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+</script>
+</body>
+
+</html>

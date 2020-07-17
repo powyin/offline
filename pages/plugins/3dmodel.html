@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>3DModel插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">3DModel插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示3DModel插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+    <div class="mui-card">
+        <h4 class="mui-content-padded" style="text-align: center;font-size: 18px;">3D模型展示</h4>
+        <div class="mui-content-padded">
+            <form action="" class="mui-input-group">
+                <div class="mui-input-row" >
+                    <label>3D模型资源压缩包地址:</label>
+                    <input type="text" name="3dpath" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="请输入资源压缩包地址" value="http://pxckjw600.bkt.clouddn.com/ok.zip">
+                </div>
+                <div class="mui-input-row" >
+                    <label>3D模型文件名:</label>
+                    <input type="text" name="namedic" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="请输入文件名" value="jiangbei.obj">
+                </div>
+            </form>
+        </div>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="preview()">3D模型展示</button>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+    function preview() {
+        var path = $("input[name='3dpath']").val();
+        if (path === undefined || !path.length ||path === null ){
+            alert("请输入资源压缩包地址");
+            return;
+        };
+        var namedic = $("input[name='namedic']").val();
+        if (namedic === undefined || !namedic.length ||namedic === null ){
+            alert("请输入文件名");
+            return;
+        };
+        navigator.glPreviewer.preview(path,namedic,function(success) {
+            alert(error);
+        },function(error) {
+            alert(error);
+        });
+    }
+</script>
+</body>
+
+</html>

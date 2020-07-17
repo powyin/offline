@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SpeechSynthesis插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">SpeechSynthesis插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示SpeechSynthesis插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="speechSynthesis()">语音合成</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="cancelSynthesis()">取消合成(停止播放并停止合成)</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="pauseSynthesis()">暂停播放</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="resumeSynthesis()">恢复播放</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+    function speechSynthesis() {
+        var key = prompt('输入需合成文字');
+
+        if (key === null || !key.length) return;
+        navigator.speechsynthesis.speechSynthesis(
+            function (success) {
+                // alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            },{'text':key}
+        );
+    }
+
+    function cancelSynthesis() {
+        navigator.speechsynthesis.cancelSynthesis(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+    function pauseSynthesis() {
+        navigator.speechsynthesis.pauseSynthesis(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+
+    function resumeSynthesis() {
+        navigator.speechsynthesis.resumeSynthesis(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+</script>
+</body>
+
+</html>

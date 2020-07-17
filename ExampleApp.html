@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head>
+    <meta charset="utf-8" />
+	<style type='text/css'>
+		html { font-family:Helvetica; color:#222; background:#aaa}
+		h1 { color:steelblue; font-size:24px; margin-top:24px; }
+		button { margin:0 10px 10px; font-size:14px; }
+		.logLine { border-bottom:1px solid #ccc; padding:4px 2px; font-family:courier; font-size:12px; }
+	</style>
+</head><body>
+	<h5>WebViewJavascriptBridge Demo1</h5>
+    <script type="text/javascript" src="util.js"></script>
+
+    <img src="http://ww1.sinaimg.cn/crop.3.45.1919.1919.1024/6b805731jw1em0hze051hj21hk1isn5k.jpg" width="150" height="150" id="img1"/>
+ 
+    <button type="button" onclick="takePhoto()">拍照</button>
+    <button type="button" onclick="playVideo()">看视频</button>
+    <button type="button" onclick="scanQRCode()">扫二维码</button>
+    <button type="button" onclick="getLocation()">定位</button>
+    <button type="button" onclick="backFun()">返回上一个页面</button>
+    <button type="button" onclick="backToLogin()">返回登录页面</button>
+
+    <button type="button" onclick="getDeviceIMEI()">获取设备码</button>
+    <button type="button" onclick="getUserInfo()">获取用户信息</button>
+
+    <button type="tel" onclick="telPhone()" >打电话</button>
+    <button type="tel" onclick="smsPhone()" >发短信</button>
+    <button type="record" onclick="record()" id='recordButton'>开始录音</button>
+    <button type="button" onclick="buileBarCode()" id='buileBarCodeButton'>生成二维码</button>
+    <button type="button" onclick="kqLogout()">退出</button>
+    <button type="button" onclick="openApp()">打开其他App</button>
+    <button type="button" onclick="setLocationAutoUpload()">自动上传坐标</button>
+    <button type="button" onclick="chooseAlbum()">选择相册</button>
+    <button type="button" onclick="photoGraph()">拍摄照片</button>
+    <button type="button" onclick="shootVideo()">拍摄视频</button>
+    <button type="button" onclick="networkState()">网络状态</button>
+    <button type="button" onclick="mapNavigation()">地图导航</button>
+    <button type="button" onclick="voiceStart()">开始录音</button>
+    <button type="button" onclick="voiceStop()">录音结束</button>
+    <button type="button" onclick="voiceUpload()">确认上传</button>
+    <button type="button" onclick="voiceCancel()">取消上传</button>
+    <button type="button" onclick="getAppVersion()">获取APP版本号</button>
+    <button type="button" onclick="getServerVersion()">获取服务器版本号</button>
+    <button type="button" onclick="appUpdate()">版本更新</button>
+
+    <button type="button" onclick="downloadFile()">文件下载</button>
+    <button type="button" onclick="preview()">文件预览</button>
+
+</body></html>

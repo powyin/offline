@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <script src="js/mui.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
+        .mui-date-right {
+            position: absolute;
+            top: 11px;
+            right: 15px;
+            font-size: 13px;
+            line-height: 21px
+        }
+
+        .mui-badge-right {
+            position: absolute;
+            top: 32px;
+            right: 15px;
+            color: #fff;
+            background-color: #dd524d;
+            font-size: 12px;
+            line-height: 1;
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 100px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <header class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">聊天列表</h1>
+        <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+    </header>
+
+    <div class="mui-content">
+        <ul style="margin: 0" class="mui-table-view" id="OA_task_1">
+            <li  v-for="(session, index) in sessions" class="mui-table-view-cell mui-media">
+                <span class="mui-badge-right" v-show="session.unreadCount > 0">{{session.unreadCount}}</span>
+                <a @click="chat(session)">
+                    <div class="mui-media-body mui-slider-handle">
+                        {{session.nikName}}
+                        <img class="mui-media-object mui-pull-left" onerror="this.src='./img/4g.png'" :src="session.avatarUrlString" />
+                        <p class='mui-ellipsis mui-table-cell'>{{session.lastMessage.text
+                            }}
+                        </p>
+                    </div>
+                </a>
+                <p class="mui-date-right">{{session.lastMessage.time
+                    }}
+                </p>
+
+                <div class="mui-slider-right mui-disabled">
+                    <a class="mui-btn mui-btn-grey" @click="onTopRecentSession(session)">{{session.localExt.NTESRecentSessionTopMark?"取消置顶":"置顶"}}</a>
+                    <a class="mui-btn mui-btn-red" @click="removeSession(session)">删除</a>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="js/vue.min.js"></script>
+
+<script>
+    mui.init();
+    var data = {
+        sessions: []
+    };
+
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            chat(session){
+                navigator.nim.enterTheChatPage(session.session.sessionId, session.session.sessionType, function (sessions) {
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    }
+                )
+
+            },
+            removeSession(session){//删除聊天
+                let index = data.sessions.findIndex(item => item.session.sessionId === session.session.sessionId);
+                if (index >= 0) {
+                    data.sessions.splice(index,1);
+                    navigator.nim.deleteRecentSession(session.session.sessionId, session.session.sessionType, function (successCallBack) {
+                            alert(JSON.stringify(successCallBack));
+                        }, function (errorCallback) {
+                            alert(JSON.stringify(errorCallback));
+                        }
+                    )
+                }
+            },
+            onTopRecentSession(session){//置顶聊天返回的是数组
+                window.event? window.event.cancelBubble = true : e.stopPropagation();
+                navigator.nim.onTopRecentSession(session.session.sessionId, session.session.sessionType, function (sessions) {
+                        // window.location.reload();
+                        data.sessions = sessions;
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    }
+                )
+            }
+            // }
+        },
+        data: data
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        //先登录，登陆成功，请求聊天数据
+        navigator.nim.loginNim({'account':'1224','token':'123456'}, function (success) {
+                alert(JSON.stringify(success));
+                navigator.nim.allRecentSessions(function (sessions) {
+                    data.sessions = sessions;
+                })
+            }, function (error) {
+                alert(JSON.stringify(error));
+            }
+        )
+        // //注册
+        // navigator.nim.registerNim('hahasan123', '123456','haha', function (success) {
+        //         alert(JSON.stringify(success));
+        //     }, function (error) {
+        //         alert(JSON.stringify(error));
+        //     }
+        // )
+    }
+
+    // 1.当新增一条消息，并且本地存在该消息所属的会话。
+    // 2.所属会话的未读清零。
+    // 3.所属会话的最后一条消息的内容发送变化。(例如成功发送后，修正发送时间为服务器时间)
+    // 4.删除消息，并且删除的消息为当前会话的最后一条消息。
+    document.addEventListener("updateRecentSession", onUpdateRecentSession, false);
+    function onUpdateRecentSession(session) {
+// alert(JSON.stringify(session));
+//         console.log(JSON.stringify(session.data));
+
+        // let index = data.sessions.findIndex(item => item.session.sessionId === session.session.sessionId);
+        // if (index < 0) {
+        //     data.sessions.unshift(session);
+        // } else {
+        //     // Vue.set(data.sessions, index, session);
+        //     //更新一条数据
+        //     data.sessions.splice(index,1,session);
+        // }
+        data.sessions = session.data;
+    }
+
+    // 当新增一条消息，并且本地不存在该消息所属的会话时，会触发此回调,返回所有数据数组
+    document.addEventListener("addRecentSession", onAddRecentSession, false);
+    function onAddRecentSession(session1) {
+        // console.log(JSON.stringify(session1.data));
+        //新增一条消息
+        data.sessions = session1.data;
+    }
+
+
+
+
+</script>
+<script>
+    // mui.init();
+    // (function($) {
+    //     var btnArray = ['确认', '取消'];
+    //     $('#OA_task_1').on('slideleft', '.mui-table-view-cell', function(event) {
+    //         var elem = this;
+    //         setTimeout(function() {
+    //             $.swipeoutClose(elem);
+    //         }, 5);
+    //     });
+    //     //第二个demo，向右拖拽后显示操作图标，释放后自动触发的业务逻辑
+    //     $('#OA_task_1').on('slideright', '.mui-table-view-cell', function(event) {
+    //         var elem = this;
+    //         mui.confirm('确认删除该条记录？', 'Hello MUI', btnArray, function(e) {
+    //             if (e.index == 0) {
+    //                 elem.parentNode.removeChild(elem);
+    //             } else {
+    //
+    //             }
+    //         });
+    //     });
+    // })(mui);
+</script>
+
+</html>

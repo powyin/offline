@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Nim插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Nim插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>密码</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入密码" name="password">
+        </div>
+    </form>
+    <div class="mui-content-padded" align="center">
+        <button type="button" class="mui-btn mui-btn-blue" id="login" style="margin-top: 10px;width:40%;height: 50px;font-size: 18px" onclick="modifyPassword()">修改登录密码</button>
+
+    </div>
+
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>头像</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入头像链接" name="icon">
+        </div>
+        <div class="mui-input-row">
+            <label>昵称</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入昵称" name="nickname">
+        </div>
+    </form>
+    <div class="mui-content-padded" align="center">
+        <button type="button" class="mui-btn mui-btn-blue"  style="margin-top: 10px;width:40%;height: 50px;font-size: 18px" onclick="modifyPassword()">修改用户信息</button>
+
+    </div>
+
+    <div class="mui-content-padded" align="center">
+    <button type="button" class="mui-btn mui-btn-success"  style="margin-top: 10px;width:40%;height: 50px;font-size: 18px" onclick="enterTheRecentSessionPage()">进入原生列表</button>
+        <button type="button" class="mui-btn mui-btn-success"  style="margin-top: 10px;width:40%;height: 50px;font-size: 18px" onclick="enterTheRecentSessionPageH5()">进入h5列表</button>
+        <button type="button" class="mui-btn mui-btn-danger"  style="margin-top: 10px;width:40%;height: 50px;font-size: 18px" onclick="logout()">退出登录</button>
+    </div>
+
+</div>
+
+<script src="../../../js/vue.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../../js/hc.js"></script>
+<script>
+    mui.init();
+    var account = getQueryString('account');
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+
+    }
+
+    //修改登录密码
+    function modifyPassword() {
+        var password = $("input[ name='password']").val();
+        if (!password.length){
+            alert('请输入修改密码');
+            return;
+        }
+        navigator.nim.modifyPassword({'account':account,'token':password},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function modifyUserInfo() {
+        //修改昵称
+        var nickname = $("input[ name='nickname']").val();
+        var icon = $("input[ name='icon']").val();
+        if (!icon.length&&!nickname.length){
+            alert('请输入需要修改的用户信息')
+            return;
+        }
+        navigator.nim.modifyUserInfo({'account':account,'nickname':nickname,'icon':icon},function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function logout() {
+        //退出登陆
+        navigator.nim.logout(function (successCallback) {
+            mui.back();
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function enterTheRecentSessionPage() {
+        //进入原生最近会话界面
+        navigator.nim.enterTheRecentSessionPage(function (successCallback) {
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function enterTheRecentSessionPageH5() {
+        // window.location.href='chatnim.html';
+        window.location.href='../chatnim.html';
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
+</body>
+
+</html>

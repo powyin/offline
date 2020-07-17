@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>移动应用平台_首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy"-->
+          <!--content="default-src 'self' data:gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' local: ; media-src *">-->
+    <script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+    <!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+    <!--<meta name="apple-mobile-web-app-status-bar-style" content="black">-->
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <style>
+
+        .mui-bar-nav{
+            background-color: white;
+        }
+
+        .title {
+            margin: 20px 15px 10px;
+            color: #6d6d72;
+            font-size: 15px;
+        }
+
+        .oa-contact-cell.mui-table .mui-table-cell {
+            padding: 11px 0;
+            vertical-align: middle;
+        }
+
+        .oa-contact-cell {
+            position: relative;
+            margin: -11px 0;
+        }
+
+        .oa-contact-avatar {
+            width: 75px;
+        }
+
+        .oa-contact-avatar img {
+            border-radius: 50%;
+        }
+
+        .oa-contact-content {
+            width: 100%;
+        }
+
+        .oa-contact-name {
+            margin-right: 20px;
+        }
+
+        .oa-contact-name, oa-contact-position {
+            float: left;
+        }
+
+        .info {
+            background: white;
+            width: 100%;
+            height: 100px;
+            margin: 25px 0 0 0;
+        }
+
+        .head {
+            width: 70px;
+            height: 70px;
+            margin: 15px 0 0 15px;
+            float: left;
+        }
+
+        .usernamediv {
+            height: 50px;
+            float: left;
+            margin: 25px 0 0 15px;
+        }
+
+        p {
+            color: darkgrey;
+            margin: 10px 0 0 0;
+        }
+
+        h5 {
+            font-size: 16px;
+            color: #333333;
+            margin: 20px 0 0 0;
+        }
+
+        .code {
+            width: 30px;
+            height: 30px;
+            float: right;
+            margin: 35px 25px 0 0;
+        }
+
+        .setting {
+            background: white;
+            width: 100%;
+            margin: 25px 0 0 0;
+        }
+
+        .quit {
+            background: white;
+            width: 100%;
+            margin: 25px 0 0 0;
+        }
+
+        .device-info {
+            margin: 25px 0 0 0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">插件</h1>
+    <span onclick="mui.back()" class="mui-icon mui-icon-back"></span>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+
+
+
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item" href="#tabbar-with-pack">
+        <span class="mui-icon mui-icon-home"></span>
+        <span class="mui-tab-label">打包</span>
+    </a>
+    <a class="mui-tab-item  mui-active" href="#tabbar-with-plugins">
+        <span class="mui-icon mui-icon-list"></span>
+        <span class="mui-tab-label">插件</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-document">
+        <span class="mui-icon mui-icon-help"></span>
+        <span class="mui-tab-label">文档</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-self">
+        <span class="mui-icon mui-icon-gear"></span>
+        <span class="mui-tab-label">设置</span>
+    </a>
+</nav>
+
+<div class="mui-content">
+    <div id="tabbar-with-pack" class="mui-control-content">
+        <ul id="pack-apps" class="mui-table-view">
+
+        </ul>
+        <div hidden="true" id="load-error" style="text-align:center;padding-top:17rem;width:100%;height:35rem;">
+            加载数据失败，点击重试~
+        </div>
+    </div>
+
+    <div id="tabbar-with-plugins" class="mui-control-content  mui-active">
+        <ul id="pluginsList" class="mui-table-view mui-table-view-chevron">
+        </ul>
+    </div>
+
+    <div id="tabbar-with-document" class="mui-control-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">欢迎界面</a>
+                <div class="mui-collapse-content">
+                    <h5>➤ navigator.splashscreen.show()</h5>
+                    <p>启动欢迎界面</p>
+                    <h5>➤ navigator.splashscreen.hide()</h5>
+                    <p>关闭欢迎界面</p>
+                </div>
+                <div class="mui-collapse-content">
+                </div>
+            </li>
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">基础功能</a>
+                <div class="mui-collapse-content">
+                    <h5>➤ navigator.basis.loadUrl(url, [props])</h5>
+                    <p style="text-indent: 30px;">
+                        加载页面。线上应用url需是绝对路径地址，如“http://www.baidu.com”；离线应用url需是路线资源根目录的相对路径地址，如“example/test.html”</p>
+                    <p>示例代码:</p>
+                    <p>var url="http://www.baidu.com";<br>
+                        var props = {"clearHistory":true};<br>
+                        navigator.basis.loadUrl(url, props);</p>
+                    <h5>➤ navigator.basis.clearCache()</h5>
+                    <p style="text-indent: 30px;">清楚Web组件缓存</p>
+                    <h5>➤ navigator.basis.clearHistory()</h5>
+                    <p style="text-indent: 30px;">清楚Web组件历史记录</p>
+                    <h5>➤ navigator.basis.logout()</h5>
+                    <p style="text-indent: 30px;">注销并返回登录界面</p>
+                    <h5>➤ navigator.basis.exitApp()</h5>
+                    <p style="text-indent: 30px;">退出应用</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="tabbar-with-self" class="mui-control-content">
+        <div class="info">
+            <!--<img class="head" src="local://img/4g.png"/>-->
+            <img class="head" src="img/logo.png"/>
+            <div class="usernamediv">
+                <label>HCMobile</label>
+                <p>账号：<span id="account"></span></p>
+            </div>
+            <img class="code" src="img/code.png"/>
+        </div>
+        <div class="setting">
+            <ul id="settingUl" class="mui-table-view">
+                <li class="mui-table-view-cell">登录界面</li>
+            </ul>
+        </div>
+
+        <div class="quit">
+            <ul class="mui-table-view">
+                <li onclick="logout()" class="mui-table-view-cell">注销</li>
+                <li onclick="exitApp()" class="mui-table-view-cell">退出</li>
+            </ul>
+        </div>
+
+        <div class="device-info">
+            <ul class="mui-table-view">
+                <li onclick="deviceInfo()" class="mui-table-view-cell">关于手机</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/mui.min.js"></script>
+
+<script>
+
+    mui.init();
+
+    document.addEventListener('tap', function () {
+        var tab = mui.targets.tab;
+        if (tab) {
+            if (tab.toString().indexOf("tabbar-with-plugins") >= 0) {
+                $(".mui-title").text("插件");
+                $(".mui-pull-right").removeClass("mui-icon-plus");
+                $(".mui-pull-right").addClass("mui-icon-refresh");
+                $(".mui-pull-right").click(function () {
+                    window.location.reload();
+                });
+            } else if (tab.toString().indexOf("tabbar-with-pack") >= 0) {
+                $(".mui-title").text("打包");
+                $(".mui-pull-right").removeClass("mui-icon-refresh");
+                $(".mui-pull-right").addClass("mui-icon-plus");
+                $(".mui-pull-right").click(function () {
+                    mui.openWindow('pages/pack/create-app.html')
+                });
+            } else if (tab.toString().indexOf("tabbar-with-document") >= 0) {
+                $(".mui-title").text("文档");
+            } else if (tab.toString().indexOf("tabbar-with-self") >= 0) {
+                $(".mui-title").text("设置");
+            }
+        }
+    });
+
+
+    $(document).ready(function () {
+
+
+        initPackList();
+        initPluginsList();
+
+        $("ul#settingUl").on("click", "li", function () {      //只需要找到你点击的是哪个ul里面的就行
+            javascript:mui.openWindow("pages/setting/loginSetting.html");
+        });
+
+        $("#rightBtn").click(function () {
+            window.location.reload();
+        });
+
+        $("#load-error").click(function () {
+            initPackList();
+        });
+    });
+
+    function initPackList() {
+        $("#load-error").hide();
+        $("#pack-apps").show();
+        // $.ajax({
+        //     url: "http://10.10.21.153:8070/hcmobile/account/admin/apps/start/0/limit/10",
+        //     dataType: 'json',//服务器返回json格式数据
+        //     type: 'get',//HTTP请求类型
+        //     contentType: "application/json",
+        //     timeout: 10000,//超时时间设置为10秒
+        //     success: function (data) {
+        //         console.log(data);
+        //         $("#pack-apps").empty();
+        //         $.each(data.list, function (i, item) {
+        //             var appHtml = "<li class='mui-table-view-cell mui-media'>"
+        //                 + "<a href='pages/pack/versions.html?params=" + item.id + "," + item.name + "'>"
+        //                 + "<img class='mui-media-object mui-pull-left' src='img/logo.png'>"
+        //                 + "<div class='mui-media-body'>" + item.name
+        //                 + "<p 'class='mui-ellipsis'>" + item.description + "</p>"
+        //                 + "</div>"
+        //                 + "</a>"
+        //                 + "</li>";
+        //             $("#pack-apps").append($(appHtml));
+        //         });
+        //     },
+        //     error: function () {
+        //         $("#load-error").show();
+        //         $("#pack-apps").hide();
+        //     }
+        // });
+    }
+
+    function initPluginsList() {
+        var plugins = [
+            ["3dmodel", "pages/plugins/3dmodel.html", "img/plugin_3D.png", "3DModel插件", "集成3D模型展示功能"],
+            ["adview", "pages/plugins/adview.html", "img/plugin_adview.png", "AdView插件", "集成AdView展示广告功能，支持开屏、横幅、插屏、原生、视频等广告样式"],
+            ["alipay", "pages/plugins/wechat.html?type=alipay", "img/plugin_alipay.png", "Alipay插件", "集成支付宝分享和支付功能"],
+            ["basis", "pages/plugins/app.html", "img/plugin_basis.png", "App插件", "整个应用的相关行为"],
+            ["basis", "pages/plugins/appInfo.html", "img/plugin_basis.png", "AppInfo插件", "获取app相关信息"],
+            ["arcSoftFace", "pages/plugins/arcSoftFace.html", "img/plugin_basis.png", "ArcSoftFace插件", "提供虹软人脸识别功能"],
+            ["audio", "pages/plugins/audio.html", "img/plugin_media.png", "Audio插件", "录音"],
+            ["audiopicker", "pages/plugins/audiopicker.html", "img/plugin_media.png", "AudioPicker插件", "录音文件选取（包含录音预览插件）"],
+            ["bdidcard", "pages/plugins/bdidcard.html", "img/plugin_bdidcard.png", "BDIdcard插件", "百度身份证识别"],
+            ["bdlicensebusiness", "pages/plugins/bdlicensebusiness.html", "img/plugin_bdlicensebusiness.png", "BDLicensebusiness插件", "营业执照识别"],
+            ["bdlicenseplate", "pages/plugins/bdlicenseplate.html", "img/plugin_bdlicenseplate.png", "BDLicenseplate插件", "车牌识别"],
+            ["bdrecognition", "pages/plugins/bdrecognition.html", "img/plugin_bdrecognition.png", "BDRecognition插件", "文字识别"],
+            ["bluetooth", "pages/plugins/ble.html", "img/plugin_bluetooth.png", "Bluetooth插件", "蓝牙"],
+            ["camera", "pages/plugins/camera.html", "img/plugin_media.png", "Camera插件", "拍照、录像"],
+            ["network", "pages/plugins/network.html", "img/plugin_network.png", "Connection插件", "获取与监听手机设备当前的网络状态"],
+            ["crash", "pages/plugins/crash.html", "img/plugin_media.png", "Crash插件", "集成崩溃统计功能"],
+            ["database", "pages/plugins/database.html", "img/plugin_database.png", "Database插件", "手机数据库基础操作--增、删、改、查"],
+            ["device", "pages/plugins/device.html", "img/plugin_device.png", "Device插件", "获取手机设备信息,如设备唯一码、品牌等"],
+            ["dialing", "pages/plugins/dialing.html", "img/plugin_basis.png", "Dialing插件", "拨打电话"],
+            ["dialogs", "pages/plugins/dialogs.html", "img/plugin_dialogs.png", "Dialogs插件", "弹出对话框,包括警告框、确认框、提示框"],
+            ["documentpicker", "pages/plugins/documentpicker.html", "img/plugin_media.png", "DocumentPicker插件", "仿QQ样式文档选择器（包含文件预览插件）"],
+            ["filepicker", "pages/plugins/filpicker.html", "img/plugin_media.png", "FilePicker插件", "图片，视频，录音，文件选取"],
+            ["file", "pages/plugins/file-transfer.html", "img/plugin_file_transfer.png", "FileTransfer插件", "提供文件的上传和下载功能"],
+            ["fingerprint", "pages/plugins/fingerprint.html", "img/plugin_fingerprint.png", "Fingerprint插件", "提供指纹识别与验证功能"],
+            ["geolocation", "pages/plugins/geolocation.html", "img/plugin_geolocation.png", "Geolocation插件", "获取、监听设备当前的位置信息"],
+            ["hik", "pages/plugins/Hik.html", "img/plugin_hik.png", "Hik插件", "海康视频登录,预览,资源查询"],
+            // ["nim", "pages/plugins/im.html", "img/plugin_nim.png", "IM插件", "网易云信"],
+            ["imagepicker", "pages/plugins/imagepicker.html", "img/plugin_media.png", "ImagePicker插件", "仿微信样式图片选择器"],
+            ["log", "pages/plugins/log.html", "img/plugin_log.png", "Log插件", "日志记录、获取、删除"],
+            ["map", "pages/plugins/map.html", "img/plugin_map.png", "Map插件", "原生高德地图相关功能"],
+            ["smallProgram", "pages/plugins/smallProgram.html", "img/plugin_basis.png", "MiniProgram插件", "加载小程序"],
+            ["modal", "pages/plugins/modal.html", "img/plugin_basis.png", "Modal插件", "消息提醒"],
+            ["nfc", "pages/plugins/nfc.html", "img/plugin_nfc.png", "NFC插件", "近场通信，读取RFID卡的内容"],
+            ["panorama", "pages/plugins/panorama.html", "img/plugin_basis.png", "Panorama插件", "全景图插件"],
+            ["photopicker", "pages/plugins/photopicker.html", "img/plugin_media.png", "PhotoPicker插件", "仿QQ样式图片选择器"],
+            ["photopreviewer", "pages/plugins/photopreviewer.html", "img/plugin_media.png", "PhotoPreviewer插件", "照片预览"],
+            ["qq", "pages/plugins/wechat.html?type=qq", "img/plugin_qq.png", "QQ插件", "集成QQ登录、分享和支付功能"],
+            ["scan", "pages/plugins/scanner.html", "img/plugin_scan.png", "Scanner插件", "条码、二维码的扫描与生成"],
+            ["vpn", "pages/plugins/sfvpn.html", "img/plugin_vpn.png", "SFVPN(深信服)插件", "集成深信服VPN功能"],
+            ["sina", "pages/plugins/wechat.html?type=sina", "img/plugin_sina.png", "Sina插件", "集成微博登录、分享和支付功能"],
+            ["sign", "pages/plugins/sign.html", "img/plugin_sign.png", "Sign插件", "电子签名"],
+            ["sms", "pages/plugins/sms.html", "img/plugin_basis.png", "Sms插件", "手机发信息"],
+            ["speechrecognition", "pages/plugins/speechrecognition.html", "img/plugin_speechrecognition.png", "SpeechRecognition插件", "科大讯飞语音识别"],
+            ["speechSynthesis", "pages/plugins/speechsynthesis.html", "img/plugin_speechSynthesis.png", "SpeechSynthesis插件", "科大讯飞语音合成"],
+            ["storage", "pages/plugins/storage.html", "img/plugin_basis.png", "Storage插件", "提供一些基础操作功能，包括简单的数据存取、记录等的操作"],
+            ["uhf", "pages/plugins/uhf.html", "img/plugin_uhf.png", "UHF插件", "Android读取UHF卡片标签内容，设置和读取发射频率"],
+            ["umeng", "pages/plugins/umeng.html", "img/plugin_umeng.png", "Umeng插件", "集成友盟推送,获取推送消息、deviceToken"],
+            ["update", "pages/plugins/update.html", "img/plugin_update.png", "Update插件", "应用的版本更新"],
+            ["videopicker", "pages/plugins/videopicker.html", "img/plugin_media.png", "VideoPicker插件", "仿QQ样式视频选择器"],
+            ["videopreviewer", "pages/plugins/videopreviewer.html", "img/plugin_ijkplayer.png", "VideoPreviewer插件", "视频预览器"],
+            ["basis", "pages/plugins/webview.html", "img/plugin_basis.png", "webView插件", "原生WebView"],
+            ["wechat", "pages/plugins/wechat.html?type=wechat", "img/plugin_wechat.png", "Wechat插件", "集成微信登录、分享和支付功能"],
+            ["mail", "pages/plugins/mail.html", "img/plugin_mail.png", "Mail插件", "提供邮件发送功能"],
+            ["mqtt", "pages/plugins/mqtt.html", "img/plugin_mqtt.png", "MQTT插件", "提供物联网功能"],
+            ["dingding", "pages/plugins/dingding.html", "img/plugin_ding.png", "DingTalk插件", "提供钉钉登录、分享功能"]
+
+            // ["basis", "pages/plugins/basis.html", "img/plugin_basis.png", "基础功能插件-3", "App基础操作,包括对Web组件的操作"],
+            // ["file", "pages/plugins/media.html", "img/plugin_file.png", "文件选取插件-3", "手机文件查看器，包括图片、音频、视频文件"],
+            // ["media", "pages/plugins/media.html", "img/plugin_media.png", "多媒体插件-3", "音频/视频/图片的拍摄，依赖文件选取插件"],
+            // // ["vpn", "pages/plugins/vpn.html", "img/plugin_vpn.png", "VPN插件", "登录VPN"],
+            // ["ijk", "pages/plugins/ijkplayer.html", "img/plugin_ijkplayer.png", "视频播放器插件-3", "原生视频播放器"],
+            // ["guidepage", "pages/plugins/guidepage.html", "img/plugin_guidepage.png", "Guidepage插件-3", "引导页插件"],
+            // ["faceClock", "pages/plugins/FaceClock.html", "img/plugin_basis.png", "人脸打卡-3", "人脸识别打卡"],
+            // ["speechSpeakText", "pages/plugins/SpeechSpeakText.html", "img/plugin_basis.png", "文字转语音-3", "图片识别文字转语音"],
+
+
+            // ["bluetooth", "pages/plugins/building.html", "img/plugin_bluetooth.png", "蓝牙传输插件", "获取手机定位信息，如经纬度、精确度等"]
+        ];
+        $.each(plugins, function (i, item) {
+            var pluginHtml = $("<li class=\"mui-table-view-cell mui-media\" >"
+                + "<a class=\"mui-navigate-right\" href=\"javascript:mui.openWindow('" + item[1] + "?title=" + item[3] + "');\">"
+                + "<img class=\"mui-media-object mui-pull-left\" src=\"" + item[2] + "\">"
+                + "<div class=\"mui-media-body\">"
+                + item[3]
+                + "<p class='mui-ellipsis'>" + item[4] + "</p>"
+                + "</div>"
+                + "</a>"
+                + "</li>");
+            $("#pluginsList").append(pluginHtml);
+        });
+    }
+
+    function baidu() {
+        var message = {
+            'url' : 'http://192.168.2.63:8080/baidu/index.html'
+        };
+        window.webkit.messageHandlers.webViewApp.postMessage(message);
+    }
+
+    function logout() {
+        navigator.notification.confirm(
+            '注销登录？', // message
+            function (result) {
+                if (result == 1)
+                    navigator.basis.logout();
+            },            // callback to invoke with index of button pressed
+            '提示',           // title
+            ['确定', '取消']     // buttonLabels
+        );
+    }
+
+    function exitApp() {
+        navigator.notification.confirm(
+            '退出应用？', // message
+            function (result) {
+                if (result == 1)
+                    navigator.basis.exitApp();
+            },            // callback to invoke with index of button pressed
+            '提示',           // title
+            ['确定', '取消']     // buttonLabels
+        );
+    }
+
+    function deviceInfo() {
+        mui.openWindow("pages/plugins/device.html?title=设备信息");
+    }
+
+
+</script>
+</html>

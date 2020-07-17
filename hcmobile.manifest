@@ -1,0 +1,1526 @@
+[
+  {
+    "file": "1.json",
+    "hash": "7f86d066558e5107e3233b62f9d7cf0a"
+  },
+  {
+    "file": "1566554403000.wav",
+    "hash": "15f4e3371642d84f84fa1b50f6fd09c0"
+  },
+  {
+    "file": "a.gif",
+    "hash": "73eed77a3f402876ddafd28411659d05"
+  },
+  {
+    "file": "arrow.png",
+    "hash": "000f0287471d4d4c6254ee56d3368fbe"
+  },
+  {
+    "file": "b.png",
+    "hash": "0887b9067ab878576b0ad49c0682b1b4"
+  },
+  {
+    "file": "baidu/1.json",
+    "hash": "7f86d066558e5107e3233b62f9d7cf0a"
+  },
+  {
+    "file": "baidu/1566554403000.wav",
+    "hash": "15f4e3371642d84f84fa1b50f6fd09c0"
+  },
+  {
+    "file": "baidu/a.gif",
+    "hash": "73eed77a3f402876ddafd28411659d05"
+  },
+  {
+    "file": "baidu/arrow.png",
+    "hash": "000f0287471d4d4c6254ee56d3368fbe"
+  },
+  {
+    "file": "baidu/b.png",
+    "hash": "0887b9067ab878576b0ad49c0682b1b4"
+  },
+  {
+    "file": "baidu/chatList.html",
+    "hash": "7141fdc95bf606980f4eb7cff9155ac6"
+  },
+  {
+    "file": "baidu/css/app.css",
+    "hash": "6aa36c3e369bcf145f5e7fe3e2facae4"
+  },
+  {
+    "file": "baidu/css/base.css",
+    "hash": "8374c3dacb5fb28504b3bc01d0af5384"
+  },
+  {
+    "file": "baidu/css/bootstrap.css",
+    "hash": "c9919db426ef5de42afc3b68a64b0106"
+  },
+  {
+    "file": "baidu/css/bootstrap.min.css",
+    "hash": "95df726a7936892cf645a57c1ccf3b75"
+  },
+  {
+    "file": "baidu/css/default.css",
+    "hash": "539f3d515698c4171d25757fef1ddfc5"
+  },
+  {
+    "file": "baidu/css/jquery.mloading.css",
+    "hash": "507988b3e3adde8222fb8377b37a0acb"
+  },
+  {
+    "file": "baidu/css/mintUi.css",
+    "hash": "eb458a8a30927ce2bd12f8128eb038e0"
+  },
+  {
+    "file": "baidu/css/mui.css",
+    "hash": "c4a101f0969e7de89e55a0bf9ffe6a6a"
+  },
+  {
+    "file": "baidu/css/mui.min.css",
+    "hash": "b128d506236c2da9966cf1a09a50134b"
+  },
+  {
+    "file": "baidu/css/normalize.css",
+    "hash": "4f90cf1c26534c8bc23d827021555a3c"
+  },
+  {
+    "file": "baidu/css/project_base.css",
+    "hash": "e9851ca402fe82f8ced86b180fb48fbe"
+  },
+  {
+    "file": "baidu/css/radialindicator.css",
+    "hash": "368fc4376a2c63548e76ffcba9238e52"
+  },
+  {
+    "file": "baidu/ExampleApp.html",
+    "hash": "a4095acd7fad13a7ba773231ec9da91f"
+  },
+  {
+    "file": "baidu/fonts/iconfont.ttf",
+    "hash": "3e8f8f9d777b9b0cd563e04690759510"
+  },
+  {
+    "file": "baidu/fonts/mui.ttf",
+    "hash": "8820b7f6582a3c45b7527ae6b183dd2f"
+  },
+  {
+    "file": "baidu/img/394-google2.png",
+    "hash": "cc3f016ffd84d2ead32f8225cba110b7"
+  },
+  {
+    "file": "baidu/img/4g.png",
+    "hash": "f54ab1214c4f86c5d0359d4e1e586f54"
+  },
+  {
+    "file": "baidu/img/add_media.png",
+    "hash": "9087d6d66a13cda6dfe7697108b55f2e"
+  },
+  {
+    "file": "baidu/img/audio_default.png",
+    "hash": "f95a685e041e1595e80b2466142c4401"
+  },
+  {
+    "file": "baidu/img/avatar_user.png",
+    "hash": "57ddc0705935cde4278c000ea985c64a"
+  },
+  {
+    "file": "baidu/img/bg_login.png",
+    "hash": "2c21f974f4a48378246bcb34a7f95810"
+  },
+  {
+    "file": "baidu/img/building.gif",
+    "hash": "12ee6ca0551ab636c6cdb61888c23d7d"
+  },
+  {
+    "file": "baidu/img/code.png",
+    "hash": "d9628192abaf9b3c208b6a3af37a8731"
+  },
+  {
+    "file": "baidu/img/continue.png",
+    "hash": "d92b773503beae6bcf893d9e27b2acf6"
+  },
+  {
+    "file": "baidu/img/create_bar_code.png",
+    "hash": "d6088abeb5caccd1cd6559d575c85c9e"
+  },
+  {
+    "file": "baidu/img/create_qr_code.png",
+    "hash": "9afc02368bd31727f563bdf0e4e9d836"
+  },
+  {
+    "file": "baidu/img/default-img.png",
+    "hash": "e761cdbe9b786263d3483c3f72bee0bd"
+  },
+  {
+    "file": "baidu/img/download-from-cloud.png",
+    "hash": "589240ce389c2ec2834adf708455fd30"
+  },
+  {
+    "file": "baidu/img/download.png",
+    "hash": "e7561bf23eb0ab740130ac64c89ee04b"
+  },
+  {
+    "file": "baidu/img/error.png",
+    "hash": "54257b87d3ed03c7988066295cdec924"
+  },
+  {
+    "file": "baidu/img/location.png",
+    "hash": "4e69cfb11d03e88b155b9513703a24fb"
+  },
+  {
+    "file": "baidu/img/login_diy_default.png",
+    "hash": "0eff63bbb8ce92293ef9e60151e08215"
+  },
+  {
+    "file": "baidu/img/login_line_bottom.jpg",
+    "hash": "9c85f0f1bd5ef3272c8439be79562b34"
+  },
+  {
+    "file": "baidu/img/login_line_center.jpg",
+    "hash": "7b42425d54bd306773863afa0a30f747"
+  },
+  {
+    "file": "baidu/img/login_round_bottom.jpg",
+    "hash": "c07eece20bada82b2f485efe369c4abe"
+  },
+  {
+    "file": "baidu/img/login_round_center.jpg",
+    "hash": "bdd52a6d6fa437e25797fc178e071c1d"
+  },
+  {
+    "file": "baidu/img/logo.png",
+    "hash": "77ffc6f9ebd066b5c8f370224ad4a299"
+  },
+  {
+    "file": "baidu/img/offline.png",
+    "hash": "afc9b4a4f905ff10d7c1cc93f6a10a24"
+  },
+  {
+    "file": "baidu/img/pack_failed.png",
+    "hash": "b7acaa525ee7d62b6687da6dbf77e17c"
+  },
+  {
+    "file": "baidu/img/pause.png",
+    "hash": "49c16ab586ec7b2bb271bb8c9a70870e"
+  },
+  {
+    "file": "baidu/img/plugin_alipay.png",
+    "hash": "3e4a535cbed507b5221130e6e6f819fa"
+  },
+  {
+    "file": "baidu/img/plugin_basis.png",
+    "hash": "0e8ab859cd6412af5e732528d2f9eb8c"
+  },
+  {
+    "file": "baidu/img/plugin_bdidcard.png",
+    "hash": "4ab44840e6537a9815db6d91b6754be8"
+  },
+  {
+    "file": "baidu/img/plugin_bdlicensebusiness.png",
+    "hash": "56f6ad59fa2c2dd3fcd9fce77d1c9c31"
+  },
+  {
+    "file": "baidu/img/plugin_bdlicenseplate.png",
+    "hash": "09f973f4fef894a827c8dcde0e3d2231"
+  },
+  {
+    "file": "baidu/img/plugin_bdrecognition.png",
+    "hash": "0b9f68d615b88166d2167e5ea6eb40a0"
+  },
+  {
+    "file": "baidu/img/plugin_bluetooth.png",
+    "hash": "5d47a75fddb9935d6e3fc1a3d3167355"
+  },
+  {
+    "file": "baidu/img/plugin_camera.png",
+    "hash": "ea4898f43ffe4700798fe39371bcaa9e"
+  },
+  {
+    "file": "baidu/img/plugin_crash.png",
+    "hash": "4285a8d0f656cdb5bfe6871ad7f6a851"
+  },
+  {
+    "file": "baidu/img/plugin_database.png",
+    "hash": "83f24513a74af9529f1f0498dbdfab7d"
+  },
+  {
+    "file": "baidu/img/plugin_device.png",
+    "hash": "0b29391cf76faf2fe6fe8fdd6a47402e"
+  },
+  {
+    "file": "baidu/img/plugin_dialogs.png",
+    "hash": "25dde7ffe5fa50d7ce974f3702aaaa06"
+  },
+  {
+    "file": "baidu/img/plugin_file.png",
+    "hash": "1dcca5516e115c93cdf05f6e0955ec39"
+  },
+  {
+    "file": "baidu/img/plugin_file_transfer.png",
+    "hash": "3e1b63f0c199a61d12592a737dae5fcd"
+  },
+  {
+    "file": "baidu/img/plugin_fingerprint.png",
+    "hash": "10bee1821814ea67b69625c61b6f400e"
+  },
+  {
+    "file": "baidu/img/plugin_geolocation.png",
+    "hash": "747b710128f22f548638e0aa42cf4497"
+  },
+  {
+    "file": "baidu/img/plugin_guidepage.png",
+    "hash": "44e9f178c7fccdc398bb8138001b6eab"
+  },
+  {
+    "file": "baidu/img/plugin_hik.png",
+    "hash": "a48892af8029a1afb295c6188a105d86"
+  },
+  {
+    "file": "baidu/img/plugin_ijkplayer.png",
+    "hash": "078c749d8bbb2fa3735ae25b34e4f0c0"
+  },
+  {
+    "file": "baidu/img/plugin_log.png",
+    "hash": "756cb39c0a0b8b4482282c82b02c1d39"
+  },
+  {
+    "file": "baidu/img/plugin_map.png",
+    "hash": "07e134e2496bf1abd6c37f5c78035745"
+  },
+  {
+    "file": "baidu/img/plugin_media.png",
+    "hash": "902335cce1cee5267d33a3a3143531e1"
+  },
+  {
+    "file": "baidu/img/plugin_network.png",
+    "hash": "fbc1acfade79f458ddfb1ae9697c154f"
+  },
+  {
+    "file": "baidu/img/plugin_nfc.png",
+    "hash": "3c5ba2d44dcaa06d53b9a5dd66465a5e"
+  },
+  {
+    "file": "baidu/img/plugin_nim.png",
+    "hash": "1f59bd406c20b179b18e873cd7bbbc9d"
+  },
+  {
+    "file": "baidu/img/plugin_qq.png",
+    "hash": "eae72eb80ab021ca53ba7404f03ff36d"
+  },
+  {
+    "file": "baidu/img/plugin_scan.png",
+    "hash": "95c66a9fa86ae0f5742df9ad701506c3"
+  },
+  {
+    "file": "baidu/img/plugin_sina.png",
+    "hash": "c4896a565b0bd834ea55dc06aa84b19f"
+  },
+  {
+    "file": "baidu/img/plugin_speechrecognition.png",
+    "hash": "2dd9cdbf3b77ecb116537bdedb717e12"
+  },
+  {
+    "file": "baidu/img/plugin_speechSynthesis.png",
+    "hash": "e5db291dabb773ff06ce8c9bbb0a1a12"
+  },
+  {
+    "file": "baidu/img/plugin_uhf.png",
+    "hash": "39c9c4b551125ac13c477420257b6550"
+  },
+  {
+    "file": "baidu/img/plugin_umeng.png",
+    "hash": "6f6b496857606e21a7da9d216faf6e99"
+  },
+  {
+    "file": "baidu/img/plugin_update.png",
+    "hash": "64af8721e8b812cf90f798831366dcfc"
+  },
+  {
+    "file": "baidu/img/plugin_vpn.png",
+    "hash": "ffe91c049745068f5a86fd1bd1f2ccd5"
+  },
+  {
+    "file": "baidu/img/plugin_wechat.png",
+    "hash": "ab676ba130569d413534ef2721db5c3c"
+  },
+  {
+    "file": "baidu/img/plugin_welocme.png",
+    "hash": "2b545195cb9bf409009fddfc3034b50c"
+  },
+  {
+    "file": "baidu/img/processing.gif",
+    "hash": "1c17aa8879745e6b1899f20a2cae7c2c"
+  },
+  {
+    "file": "baidu/img/scan.png",
+    "hash": "9f1155cd182a6afd1b067c98d7567fab"
+  },
+  {
+    "file": "baidu/img/spring-running.jpg",
+    "hash": "deb93b7960d35518cd5d15a037ae5f74"
+  },
+  {
+    "file": "baidu/img/success.png",
+    "hash": "572732fe0566acc27c6862b27421b291"
+  },
+  {
+    "file": "baidu/img/upload.png",
+    "hash": "28fee2bfc954aab69e5a34dd03e89804"
+  },
+  {
+    "file": "baidu/img/uploaded.png",
+    "hash": "3754e0934d2d3f07446321d8a80802e9"
+  },
+  {
+    "file": "baidu/img/video_default.png",
+    "hash": "e7597a31d194ece8e1ac1c8d31744741"
+  },
+  {
+    "file": "baidu/img/video_flag.png",
+    "hash": "fa13992858107a6849c0b67b7b6ff0c6"
+  },
+  {
+    "file": "baidu/img/wifi.png",
+    "hash": "ad2ac92b2bec3300acb823c5e7e3ea8e"
+  },
+  {
+    "file": "baidu/index.html",
+    "hash": "aac9d56c25307076a89bf17192f7febe"
+  },
+  {
+    "file": "baidu/js/base.js",
+    "hash": "84501e2be8bfa26219cff3ca7f33efcd"
+  },
+  {
+    "file": "baidu/js/bootstrap.js",
+    "hash": "ce645263c46a2e4d5b8784eeb1915afc"
+  },
+  {
+    "file": "baidu/js/bootstrap.min.js",
+    "hash": "46b549bdc90920f18a911f186b9dd75c"
+  },
+  {
+    "file": "baidu/js/demo.js",
+    "hash": "23df530361fa649ea30c1446e0ceb14f"
+  },
+  {
+    "file": "baidu/js/hc.js",
+    "hash": "8e6de1f8d7fe7d304c01f43cae81798e"
+  },
+  {
+    "file": "baidu/js/jquery-3.2.1.min.js",
+    "hash": "c9f5aeeca3ad37bf2aa006139b935f0a"
+  },
+  {
+    "file": "baidu/js/jquery-migrate-1.2.1.js",
+    "hash": "7b880b08c2085478d10836eaae53cc00"
+  },
+  {
+    "file": "baidu/js/jquery.mloading.js",
+    "hash": "7f392c3a615141190bd0b6b7c904bb2c"
+  },
+  {
+    "file": "baidu/js/jquery.poshytip.min.js",
+    "hash": "3fd4331e984e9a84f907c684a3d9c1cc"
+  },
+  {
+    "file": "baidu/js/mui.enterfocus.js",
+    "hash": "3df4ec7716ce029f7d7f2b7143144318"
+  },
+  {
+    "file": "baidu/js/mui.js",
+    "hash": "1cac0776501b0b5bcf699360faa26016"
+  },
+  {
+    "file": "baidu/js/mui.min.js",
+    "hash": "b4c1c985c87ae38b578b65a0a4e13315"
+  },
+  {
+    "file": "baidu/js/mui.pullToRefresh.js",
+    "hash": "ed8f8cce2567561599286b694bb98df5"
+  },
+  {
+    "file": "baidu/js/mui.pullToRefresh.material.js",
+    "hash": "79fa24943119412146ab69cf7f8314ef"
+  },
+  {
+    "file": "baidu/js/popper.min.js",
+    "hash": "aad2475f1e2615224fa9716b53954be2"
+  },
+  {
+    "file": "baidu/js/project_base.js",
+    "hash": "fec30b02d19a94f8b3dbf47b492b7303"
+  },
+  {
+    "file": "baidu/js/radialIndicator.min.js",
+    "hash": "3d404894d43742ddfe2974e069296fb8"
+  },
+  {
+    "file": "baidu/js/vue.min.js",
+    "hash": "17e942ea0854bd9dce2070bae6826937"
+  },
+  {
+    "file": "baidu/left.png",
+    "hash": "9fa43c607d41668851f8057097164533"
+  },
+  {
+    "file": "baidu/left2.png",
+    "hash": "6871c8b5cb8ed8053fefc4f66dbbe665"
+  },
+  {
+    "file": "baidu/line.json",
+    "hash": "98937ea61b9712e889370dbe5f1e9dca"
+  },
+  {
+    "file": "baidu/line2.json",
+    "hash": "4dc4c3bb322c6ca791c01a1b82bbc561"
+  },
+  {
+    "file": "baidu/login.html",
+    "hash": "32ed3c66dccc54ea079fb6e40891f5a3"
+  },
+  {
+    "file": "baidu/pages/pack/create-app.html",
+    "hash": "cf3a735c4eb22655f2956799c8702a36"
+  },
+  {
+    "file": "baidu/pages/pack/create-version.html",
+    "hash": "571e7366e410f367768af95ca975618a"
+  },
+  {
+    "file": "baidu/pages/pack/versions.html",
+    "hash": "23c69a8b425b2b317473a0116aea8589"
+  },
+  {
+    "file": "baidu/pages/plugins/a.js",
+    "hash": "b0f1245cb0dd214497e9abed295cf9ca"
+  },
+  {
+    "file": "baidu/pages/plugins/app.html",
+    "hash": "48143faa5af7cb5f98ae11235f2504b6"
+  },
+  {
+    "file": "baidu/pages/plugins/appInfo.html",
+    "hash": "8ab9d4fd02310c9f00f7018e9e5dc82a"
+  },
+  {
+    "file": "baidu/pages/plugins/audio-preview.html",
+    "hash": "00ba2f5a1a125d001266352edbdc1200"
+  },
+  {
+    "file": "baidu/pages/plugins/audio.html",
+    "hash": "026c908580695f0b02468cfa026c5471"
+  },
+  {
+    "file": "baidu/pages/plugins/audiopicker.html",
+    "hash": "88b7a05e201f72fab3a9c5293788e945"
+  },
+  {
+    "file": "baidu/pages/plugins/basis.html",
+    "hash": "594236d8de6cae716ce7a8d9f0c0002d"
+  },
+  {
+    "file": "baidu/pages/plugins/bdidcard.html",
+    "hash": "d46908053da23ff85fd8cbe4d4cdaa23"
+  },
+  {
+    "file": "baidu/pages/plugins/bdlicensebusiness.html",
+    "hash": "ed02cda159016d336a9372bd07a32b2b"
+  },
+  {
+    "file": "baidu/pages/plugins/bdlicenseplate.html",
+    "hash": "6b13a3e9c78257672e2377bf513804dc"
+  },
+  {
+    "file": "baidu/pages/plugins/bdrecognition.html",
+    "hash": "bb3e909433366dd62d9f79b595f3d557"
+  },
+  {
+    "file": "baidu/pages/plugins/ble.html",
+    "hash": "cbe5ee638f60648fbf99c0c337a2f68b"
+  },
+  {
+    "file": "baidu/pages/plugins/ble_with_characteristic.html",
+    "hash": "ae18919cb6a44f3232d2b27a1bac0e0d"
+  },
+  {
+    "file": "baidu/pages/plugins/bluetooth.html",
+    "hash": "d946e33370dc02f1f5dbc2b94eb6b8a8"
+  },
+  {
+    "file": "baidu/pages/plugins/building.html",
+    "hash": "678b05135be900d132157673e97803ec"
+  },
+  {
+    "file": "baidu/pages/plugins/camera-video-preview.html",
+    "hash": "06f6133f27bbc6116789790dc0901945"
+  },
+  {
+    "file": "baidu/pages/plugins/camera.html",
+    "hash": "96550becc83b3a5cd272efb7f7d78ede"
+  },
+  {
+    "file": "baidu/pages/plugins/chatnim.html",
+    "hash": "677a07bf49501328780562c60c190069"
+  },
+  {
+    "file": "baidu/pages/plugins/database.html",
+    "hash": "5ed4105f8b299b87e9451b846752e4cb"
+  },
+  {
+    "file": "baidu/pages/plugins/device.html",
+    "hash": "8040ef88e11221c9c44a3947c09d33a3"
+  },
+  {
+    "file": "baidu/pages/plugins/dialing.html",
+    "hash": "b0c35d0316685b42348b383a2e5d63db"
+  },
+  {
+    "file": "baidu/pages/plugins/dialogs.html",
+    "hash": "c7bc80aac52adf908ae2da80c0ee3ad0"
+  },
+  {
+    "file": "baidu/pages/plugins/documentpicker.html",
+    "hash": "3828a4823f02890e9000a183ac5d530f"
+  },
+  {
+    "file": "baidu/pages/plugins/file-transfer.html",
+    "hash": "b462cf1203a1ee9c3a3da0696d4e2332"
+  },
+  {
+    "file": "baidu/pages/plugins/filpicker.html",
+    "hash": "c7b8b5625e3c87982f0b9492b79cae3e"
+  },
+  {
+    "file": "baidu/pages/plugins/fingerprint.html",
+    "hash": "0517c2e6491a5b77073f8be99a68df82"
+  },
+  {
+    "file": "baidu/pages/plugins/geolocation.html",
+    "hash": "f69cf1ef8e3dc1a9aa566e3d3e8d41ed"
+  },
+  {
+    "file": "baidu/pages/plugins/guidepage.html",
+    "hash": "1c8ac8cd2dc822c0adf14384a5dd6c90"
+  },
+  {
+    "file": "baidu/pages/plugins/Hik.html",
+    "hash": "3115167d2d90b4be2b1698069ff0f215"
+  },
+  {
+    "file": "baidu/pages/plugins/hikResource.html",
+    "hash": "491cf89db027f47dee677b58f47c3d3e"
+  },
+  {
+    "file": "baidu/pages/plugins/ijkplayer.html",
+    "hash": "14dcdac4c14711767eb49f92c05688fa"
+  },
+  {
+    "file": "baidu/pages/plugins/imagepicker.html",
+    "hash": "0cb83e643452bbfeb757ed43013f12c6"
+  },
+  {
+    "file": "baidu/pages/plugins/log.html",
+    "hash": "52f1294bf40a7bcb2179d0270926d8f4"
+  },
+  {
+    "file": "baidu/pages/plugins/map.html",
+    "hash": "f3a326cbc85556410eeaf611b43830db"
+  },
+  {
+    "file": "baidu/pages/plugins/media.html",
+    "hash": "7fd082248bb13558cc70f40cfd505b35"
+  },
+  {
+    "file": "baidu/pages/plugins/modal.html",
+    "hash": "aa56a0afb66b0ef4ad5cdb43cb956304"
+  },
+  {
+    "file": "baidu/pages/plugins/network.html",
+    "hash": "889f81a7f27072b3697e3c673d44e993"
+  },
+  {
+    "file": "baidu/pages/plugins/nfc.html",
+    "hash": "d5543eff7a6aa29f16f15cbb91a772a8"
+  },
+  {
+    "file": "baidu/pages/plugins/nim.html",
+    "hash": "369f0f3d447dafdc03b57eecefb1142b"
+  },
+  {
+    "file": "baidu/pages/plugins/photopicker.html",
+    "hash": "bb20d1703c03a97c4bfaac3a476bc953"
+  },
+  {
+    "file": "baidu/pages/plugins/scanner.html",
+    "hash": "30e87416e1066d3b17b1792d6e4e429e"
+  },
+  {
+    "file": "baidu/pages/plugins/setItem.html",
+    "hash": "363ea7eca3d343738103b71feb0072a9"
+  },
+  {
+    "file": "baidu/pages/plugins/sfvpn.html",
+    "hash": "d5facd4a8c2930aed347e100486587e5"
+  },
+  {
+    "file": "baidu/pages/plugins/shareImage.html",
+    "hash": "f9c97d3f50272863249339b744078aba"
+  },
+  {
+    "file": "baidu/pages/plugins/shareText.html",
+    "hash": "3b44fe6f4597d810b632a167d72ab8bc"
+  },
+  {
+    "file": "baidu/pages/plugins/shareWebpage.html",
+    "hash": "1a0a0f41d8a2d8ae01c490421ac3786f"
+  },
+  {
+    "file": "baidu/pages/plugins/sms.html",
+    "hash": "e6e1bf607363c1abd9cf5d92d5cceccc"
+  },
+  {
+    "file": "baidu/pages/plugins/speechrecognition.html",
+    "hash": "764fd436ba839be1f55a8339af52841c"
+  },
+  {
+    "file": "baidu/pages/plugins/speechsynthesis.html",
+    "hash": "a717ea16405119b05646fa4bb25193d7"
+  },
+  {
+    "file": "baidu/pages/plugins/storage.html",
+    "hash": "c47a5fa767ad8e7d466d1a86c61a3fff"
+  },
+  {
+    "file": "baidu/pages/plugins/thirdLogin.html",
+    "hash": "a807cb4efa4ab08f3844ee34e87e291a"
+  },
+  {
+    "file": "baidu/pages/plugins/toast.html",
+    "hash": "711ad4be221a1af75be27f7a917190d6"
+  },
+  {
+    "file": "baidu/pages/plugins/umeng.html",
+    "hash": "84d3c8fd7eaab7bb15983e46d84b0154"
+  },
+  {
+    "file": "baidu/pages/plugins/upload.png",
+    "hash": "f2825d46e5ab4881c3571f16e75c419a"
+  },
+  {
+    "file": "baidu/pages/plugins/videopicker.html",
+    "hash": "c531f8ba4718657eb607053ea8f42b92"
+  },
+  {
+    "file": "baidu/pages/plugins/videopreviewer.html",
+    "hash": "96109dd22e3b2f28a13991cee357c45a"
+  },
+  {
+    "file": "baidu/pages/plugins/vpn.html",
+    "hash": "ef43e174f9f7f5a3355ba9ca6e0cda16"
+  },
+  {
+    "file": "baidu/pages/plugins/webview.html",
+    "hash": "aeecb20f2d05dd7edaa4b380f12c45f6"
+  },
+  {
+    "file": "baidu/pages/plugins/wechat.html",
+    "hash": "a71511ad8dd646ed0db190f395be7499"
+  },
+  {
+    "file": "baidu/pages/setting/loginSetting.html",
+    "hash": "9e895b5c8183c1ae8455a8abef41df2a"
+  },
+  {
+    "file": "baidu/points.json",
+    "hash": "6d44e12a2193da9547ced3b815170302"
+  },
+  {
+    "file": "baidu/right.png",
+    "hash": "0887b9067ab878576b0ad49c0682b1b4"
+  },
+  {
+    "file": "baidu/right2.png",
+    "hash": "c4f63a07d291624102f59e17c7e9c14c"
+  },
+  {
+    "file": "baidu/setting.html",
+    "hash": "ec6c175c8e43ad7405aa28140a3c1d4f"
+  },
+  {
+    "file": "baidu/SimpleBLEPeripheral_A.bin",
+    "hash": "0b61d633fba23913f29e6500992f738c"
+  },
+  {
+    "file": "baidu/SimpleBLEPeripheral_B.bin",
+    "hash": "cda755e29f8bddbb534502abfc950051"
+  },
+  {
+    "file": "baidu/straight.png",
+    "hash": "705abc9b4d500da277424cd381fda065"
+  },
+  {
+    "file": "baidu/test.html",
+    "hash": "ea5b2efc3a24d1e17798c78b431460d3"
+  },
+  {
+    "file": "baidu/util.js",
+    "hash": "57dd5e947ef52a9eb2dfc6c47ed8f131"
+  },
+  {
+    "file": "baidu/weex/index.js",
+    "hash": "680c63da03cb8508eed015f67d1fe155"
+  },
+  {
+    "file": "baidu/zhyy/components/ctm-searchbar.js",
+    "hash": "084df6de902da9595980462ecdc40026"
+  },
+  {
+    "file": "baidu/zhyy/index.js",
+    "hash": "f81fa3c26605c067adaa5134f78fee23"
+  },
+  {
+    "file": "chatList.html",
+    "hash": "7141fdc95bf606980f4eb7cff9155ac6"
+  },
+  {
+    "file": "css/app.css",
+    "hash": "6aa36c3e369bcf145f5e7fe3e2facae4"
+  },
+  {
+    "file": "css/base.css",
+    "hash": "8374c3dacb5fb28504b3bc01d0af5384"
+  },
+  {
+    "file": "css/bootstrap.css",
+    "hash": "c9919db426ef5de42afc3b68a64b0106"
+  },
+  {
+    "file": "css/bootstrap.min.css",
+    "hash": "95df726a7936892cf645a57c1ccf3b75"
+  },
+  {
+    "file": "css/default.css",
+    "hash": "539f3d515698c4171d25757fef1ddfc5"
+  },
+  {
+    "file": "css/jquery.mloading.css",
+    "hash": "507988b3e3adde8222fb8377b37a0acb"
+  },
+  {
+    "file": "css/mintUi.css",
+    "hash": "eb458a8a30927ce2bd12f8128eb038e0"
+  },
+  {
+    "file": "css/mui.css",
+    "hash": "c4a101f0969e7de89e55a0bf9ffe6a6a"
+  },
+  {
+    "file": "css/mui.min.css",
+    "hash": "b128d506236c2da9966cf1a09a50134b"
+  },
+  {
+    "file": "css/normalize.css",
+    "hash": "4f90cf1c26534c8bc23d827021555a3c"
+  },
+  {
+    "file": "css/project_base.css",
+    "hash": "e9851ca402fe82f8ced86b180fb48fbe"
+  },
+  {
+    "file": "css/radialindicator.css",
+    "hash": "368fc4376a2c63548e76ffcba9238e52"
+  },
+  {
+    "file": "ExampleApp.html",
+    "hash": "a4095acd7fad13a7ba773231ec9da91f"
+  },
+  {
+    "file": "fonts/iconfont.ttf",
+    "hash": "3e8f8f9d777b9b0cd563e04690759510"
+  },
+  {
+    "file": "fonts/mui.ttf",
+    "hash": "8820b7f6582a3c45b7527ae6b183dd2f"
+  },
+  {
+    "file": "img/394-google2.png",
+    "hash": "cc3f016ffd84d2ead32f8225cba110b7"
+  },
+  {
+    "file": "img/4g.png",
+    "hash": "f54ab1214c4f86c5d0359d4e1e586f54"
+  },
+  {
+    "file": "img/add_media.png",
+    "hash": "9087d6d66a13cda6dfe7697108b55f2e"
+  },
+  {
+    "file": "img/audio_default.png",
+    "hash": "f95a685e041e1595e80b2466142c4401"
+  },
+  {
+    "file": "img/avatar_user.png",
+    "hash": "57ddc0705935cde4278c000ea985c64a"
+  },
+  {
+    "file": "img/bg_login.png",
+    "hash": "2c21f974f4a48378246bcb34a7f95810"
+  },
+  {
+    "file": "img/building.gif",
+    "hash": "12ee6ca0551ab636c6cdb61888c23d7d"
+  },
+  {
+    "file": "img/code.png",
+    "hash": "d9628192abaf9b3c208b6a3af37a8731"
+  },
+  {
+    "file": "img/continue.png",
+    "hash": "d92b773503beae6bcf893d9e27b2acf6"
+  },
+  {
+    "file": "img/create_bar_code.png",
+    "hash": "d6088abeb5caccd1cd6559d575c85c9e"
+  },
+  {
+    "file": "img/create_qr_code.png",
+    "hash": "9afc02368bd31727f563bdf0e4e9d836"
+  },
+  {
+    "file": "img/default-img.png",
+    "hash": "e761cdbe9b786263d3483c3f72bee0bd"
+  },
+  {
+    "file": "img/download-from-cloud.png",
+    "hash": "589240ce389c2ec2834adf708455fd30"
+  },
+  {
+    "file": "img/download.png",
+    "hash": "e7561bf23eb0ab740130ac64c89ee04b"
+  },
+  {
+    "file": "img/error.png",
+    "hash": "54257b87d3ed03c7988066295cdec924"
+  },
+  {
+    "file": "img/location.png",
+    "hash": "4e69cfb11d03e88b155b9513703a24fb"
+  },
+  {
+    "file": "img/login_diy_default.png",
+    "hash": "0eff63bbb8ce92293ef9e60151e08215"
+  },
+  {
+    "file": "img/login_line_bottom.jpg",
+    "hash": "9c85f0f1bd5ef3272c8439be79562b34"
+  },
+  {
+    "file": "img/login_line_center.jpg",
+    "hash": "7b42425d54bd306773863afa0a30f747"
+  },
+  {
+    "file": "img/login_round_bottom.jpg",
+    "hash": "c07eece20bada82b2f485efe369c4abe"
+  },
+  {
+    "file": "img/login_round_center.jpg",
+    "hash": "bdd52a6d6fa437e25797fc178e071c1d"
+  },
+  {
+    "file": "img/logo.png",
+    "hash": "77ffc6f9ebd066b5c8f370224ad4a299"
+  },
+  {
+    "file": "img/offline.png",
+    "hash": "afc9b4a4f905ff10d7c1cc93f6a10a24"
+  },
+  {
+    "file": "img/pack_failed.png",
+    "hash": "b7acaa525ee7d62b6687da6dbf77e17c"
+  },
+  {
+    "file": "img/pause.png",
+    "hash": "49c16ab586ec7b2bb271bb8c9a70870e"
+  },
+  {
+    "file": "img/plugin_alipay.png",
+    "hash": "3e4a535cbed507b5221130e6e6f819fa"
+  },
+  {
+    "file": "img/plugin_basis.png",
+    "hash": "0e8ab859cd6412af5e732528d2f9eb8c"
+  },
+  {
+    "file": "img/plugin_bdidcard.png",
+    "hash": "4ab44840e6537a9815db6d91b6754be8"
+  },
+  {
+    "file": "img/plugin_bdlicensebusiness.png",
+    "hash": "56f6ad59fa2c2dd3fcd9fce77d1c9c31"
+  },
+  {
+    "file": "img/plugin_bdlicenseplate.png",
+    "hash": "09f973f4fef894a827c8dcde0e3d2231"
+  },
+  {
+    "file": "img/plugin_bdrecognition.png",
+    "hash": "0b9f68d615b88166d2167e5ea6eb40a0"
+  },
+  {
+    "file": "img/plugin_bluetooth.png",
+    "hash": "5d47a75fddb9935d6e3fc1a3d3167355"
+  },
+  {
+    "file": "img/plugin_camera.png",
+    "hash": "ea4898f43ffe4700798fe39371bcaa9e"
+  },
+  {
+    "file": "img/plugin_crash.png",
+    "hash": "4285a8d0f656cdb5bfe6871ad7f6a851"
+  },
+  {
+    "file": "img/plugin_database.png",
+    "hash": "83f24513a74af9529f1f0498dbdfab7d"
+  },
+  {
+    "file": "img/plugin_device.png",
+    "hash": "0b29391cf76faf2fe6fe8fdd6a47402e"
+  },
+  {
+    "file": "img/plugin_dialogs.png",
+    "hash": "25dde7ffe5fa50d7ce974f3702aaaa06"
+  },
+  {
+    "file": "img/plugin_file.png",
+    "hash": "1dcca5516e115c93cdf05f6e0955ec39"
+  },
+  {
+    "file": "img/plugin_file_transfer.png",
+    "hash": "3e1b63f0c199a61d12592a737dae5fcd"
+  },
+  {
+    "file": "img/plugin_fingerprint.png",
+    "hash": "10bee1821814ea67b69625c61b6f400e"
+  },
+  {
+    "file": "img/plugin_geolocation.png",
+    "hash": "747b710128f22f548638e0aa42cf4497"
+  },
+  {
+    "file": "img/plugin_guidepage.png",
+    "hash": "44e9f178c7fccdc398bb8138001b6eab"
+  },
+  {
+    "file": "img/plugin_hik.png",
+    "hash": "a48892af8029a1afb295c6188a105d86"
+  },
+  {
+    "file": "img/plugin_ijkplayer.png",
+    "hash": "078c749d8bbb2fa3735ae25b34e4f0c0"
+  },
+  {
+    "file": "img/plugin_log.png",
+    "hash": "756cb39c0a0b8b4482282c82b02c1d39"
+  },
+  {
+    "file": "img/plugin_map.png",
+    "hash": "07e134e2496bf1abd6c37f5c78035745"
+  },
+  {
+    "file": "img/plugin_media.png",
+    "hash": "902335cce1cee5267d33a3a3143531e1"
+  },
+  {
+    "file": "img/plugin_network.png",
+    "hash": "fbc1acfade79f458ddfb1ae9697c154f"
+  },
+  {
+    "file": "img/plugin_nfc.png",
+    "hash": "3c5ba2d44dcaa06d53b9a5dd66465a5e"
+  },
+  {
+    "file": "img/plugin_nim.png",
+    "hash": "1f59bd406c20b179b18e873cd7bbbc9d"
+  },
+  {
+    "file": "img/plugin_qq.png",
+    "hash": "eae72eb80ab021ca53ba7404f03ff36d"
+  },
+  {
+    "file": "img/plugin_scan.png",
+    "hash": "95c66a9fa86ae0f5742df9ad701506c3"
+  },
+  {
+    "file": "img/plugin_sina.png",
+    "hash": "c4896a565b0bd834ea55dc06aa84b19f"
+  },
+  {
+    "file": "img/plugin_speechrecognition.png",
+    "hash": "2dd9cdbf3b77ecb116537bdedb717e12"
+  },
+  {
+    "file": "img/plugin_speechSynthesis.png",
+    "hash": "e5db291dabb773ff06ce8c9bbb0a1a12"
+  },
+  {
+    "file": "img/plugin_uhf.png",
+    "hash": "39c9c4b551125ac13c477420257b6550"
+  },
+  {
+    "file": "img/plugin_umeng.png",
+    "hash": "6f6b496857606e21a7da9d216faf6e99"
+  },
+  {
+    "file": "img/plugin_update.png",
+    "hash": "64af8721e8b812cf90f798831366dcfc"
+  },
+  {
+    "file": "img/plugin_vpn.png",
+    "hash": "ffe91c049745068f5a86fd1bd1f2ccd5"
+  },
+  {
+    "file": "img/plugin_wechat.png",
+    "hash": "ab676ba130569d413534ef2721db5c3c"
+  },
+  {
+    "file": "img/plugin_welocme.png",
+    "hash": "2b545195cb9bf409009fddfc3034b50c"
+  },
+  {
+    "file": "img/processing.gif",
+    "hash": "1c17aa8879745e6b1899f20a2cae7c2c"
+  },
+  {
+    "file": "img/scan.png",
+    "hash": "9f1155cd182a6afd1b067c98d7567fab"
+  },
+  {
+    "file": "img/spring-running.jpg",
+    "hash": "deb93b7960d35518cd5d15a037ae5f74"
+  },
+  {
+    "file": "img/success.png",
+    "hash": "572732fe0566acc27c6862b27421b291"
+  },
+  {
+    "file": "img/upload.png",
+    "hash": "28fee2bfc954aab69e5a34dd03e89804"
+  },
+  {
+    "file": "img/uploaded.png",
+    "hash": "3754e0934d2d3f07446321d8a80802e9"
+  },
+  {
+    "file": "img/video_default.png",
+    "hash": "e7597a31d194ece8e1ac1c8d31744741"
+  },
+  {
+    "file": "img/video_flag.png",
+    "hash": "fa13992858107a6849c0b67b7b6ff0c6"
+  },
+  {
+    "file": "img/wifi.png",
+    "hash": "ad2ac92b2bec3300acb823c5e7e3ea8e"
+  },
+  {
+    "file": "index.html",
+    "hash": "f825f4758689327bf21407371cd5e621"
+  },
+  {
+    "file": "js/base.js",
+    "hash": "84501e2be8bfa26219cff3ca7f33efcd"
+  },
+  {
+    "file": "js/bootstrap.js",
+    "hash": "ce645263c46a2e4d5b8784eeb1915afc"
+  },
+  {
+    "file": "js/bootstrap.min.js",
+    "hash": "46b549bdc90920f18a911f186b9dd75c"
+  },
+  {
+    "file": "js/demo.js",
+    "hash": "23df530361fa649ea30c1446e0ceb14f"
+  },
+  {
+    "file": "js/hc.js",
+    "hash": "8e6de1f8d7fe7d304c01f43cae81798e"
+  },
+  {
+    "file": "js/jquery-3.2.1.min.js",
+    "hash": "c9f5aeeca3ad37bf2aa006139b935f0a"
+  },
+  {
+    "file": "js/jquery-migrate-1.2.1.js",
+    "hash": "7b880b08c2085478d10836eaae53cc00"
+  },
+  {
+    "file": "js/jquery.mloading.js",
+    "hash": "7f392c3a615141190bd0b6b7c904bb2c"
+  },
+  {
+    "file": "js/jquery.poshytip.min.js",
+    "hash": "3fd4331e984e9a84f907c684a3d9c1cc"
+  },
+  {
+    "file": "js/mui.enterfocus.js",
+    "hash": "3df4ec7716ce029f7d7f2b7143144318"
+  },
+  {
+    "file": "js/mui.js",
+    "hash": "1cac0776501b0b5bcf699360faa26016"
+  },
+  {
+    "file": "js/mui.min.js",
+    "hash": "b4c1c985c87ae38b578b65a0a4e13315"
+  },
+  {
+    "file": "js/mui.pullToRefresh.js",
+    "hash": "ed8f8cce2567561599286b694bb98df5"
+  },
+  {
+    "file": "js/mui.pullToRefresh.material.js",
+    "hash": "79fa24943119412146ab69cf7f8314ef"
+  },
+  {
+    "file": "js/popper.min.js",
+    "hash": "aad2475f1e2615224fa9716b53954be2"
+  },
+  {
+    "file": "js/project_base.js",
+    "hash": "fec30b02d19a94f8b3dbf47b492b7303"
+  },
+  {
+    "file": "js/radialIndicator.min.js",
+    "hash": "3d404894d43742ddfe2974e069296fb8"
+  },
+  {
+    "file": "js/vue.min.js",
+    "hash": "17e942ea0854bd9dce2070bae6826937"
+  },
+  {
+    "file": "left.png",
+    "hash": "9fa43c607d41668851f8057097164533"
+  },
+  {
+    "file": "left2.png",
+    "hash": "6871c8b5cb8ed8053fefc4f66dbbe665"
+  },
+  {
+    "file": "line.json",
+    "hash": "98937ea61b9712e889370dbe5f1e9dca"
+  },
+  {
+    "file": "line2.json",
+    "hash": "4dc4c3bb322c6ca791c01a1b82bbc561"
+  },
+  {
+    "file": "login.html",
+    "hash": "32ed3c66dccc54ea079fb6e40891f5a3"
+  },
+  {
+    "file": "pages/pack/create-app.html",
+    "hash": "cf3a735c4eb22655f2956799c8702a36"
+  },
+  {
+    "file": "pages/pack/create-version.html",
+    "hash": "571e7366e410f367768af95ca975618a"
+  },
+  {
+    "file": "pages/pack/versions.html",
+    "hash": "23c69a8b425b2b317473a0116aea8589"
+  },
+  {
+    "file": "pages/plugins/a.js",
+    "hash": "b0f1245cb0dd214497e9abed295cf9ca"
+  },
+  {
+    "file": "pages/plugins/app.html",
+    "hash": "48143faa5af7cb5f98ae11235f2504b6"
+  },
+  {
+    "file": "pages/plugins/appInfo.html",
+    "hash": "8ab9d4fd02310c9f00f7018e9e5dc82a"
+  },
+  {
+    "file": "pages/plugins/audio-preview.html",
+    "hash": "00ba2f5a1a125d001266352edbdc1200"
+  },
+  {
+    "file": "pages/plugins/audio.html",
+    "hash": "026c908580695f0b02468cfa026c5471"
+  },
+  {
+    "file": "pages/plugins/audiopicker.html",
+    "hash": "88b7a05e201f72fab3a9c5293788e945"
+  },
+  {
+    "file": "pages/plugins/basis.html",
+    "hash": "594236d8de6cae716ce7a8d9f0c0002d"
+  },
+  {
+    "file": "pages/plugins/bdidcard.html",
+    "hash": "d46908053da23ff85fd8cbe4d4cdaa23"
+  },
+  {
+    "file": "pages/plugins/bdlicensebusiness.html",
+    "hash": "ed02cda159016d336a9372bd07a32b2b"
+  },
+  {
+    "file": "pages/plugins/bdlicenseplate.html",
+    "hash": "6b13a3e9c78257672e2377bf513804dc"
+  },
+  {
+    "file": "pages/plugins/bdrecognition.html",
+    "hash": "bb3e909433366dd62d9f79b595f3d557"
+  },
+  {
+    "file": "pages/plugins/ble.html",
+    "hash": "cbe5ee638f60648fbf99c0c337a2f68b"
+  },
+  {
+    "file": "pages/plugins/ble_with_characteristic.html",
+    "hash": "ae18919cb6a44f3232d2b27a1bac0e0d"
+  },
+  {
+    "file": "pages/plugins/bluetooth.html",
+    "hash": "d946e33370dc02f1f5dbc2b94eb6b8a8"
+  },
+  {
+    "file": "pages/plugins/building.html",
+    "hash": "678b05135be900d132157673e97803ec"
+  },
+  {
+    "file": "pages/plugins/camera-video-preview.html",
+    "hash": "06f6133f27bbc6116789790dc0901945"
+  },
+  {
+    "file": "pages/plugins/camera.html",
+    "hash": "96550becc83b3a5cd272efb7f7d78ede"
+  },
+  {
+    "file": "pages/plugins/chatnim.html",
+    "hash": "677a07bf49501328780562c60c190069"
+  },
+  {
+    "file": "pages/plugins/database.html",
+    "hash": "5ed4105f8b299b87e9451b846752e4cb"
+  },
+  {
+    "file": "pages/plugins/device.html",
+    "hash": "8040ef88e11221c9c44a3947c09d33a3"
+  },
+  {
+    "file": "pages/plugins/dialing.html",
+    "hash": "b0c35d0316685b42348b383a2e5d63db"
+  },
+  {
+    "file": "pages/plugins/dialogs.html",
+    "hash": "c7bc80aac52adf908ae2da80c0ee3ad0"
+  },
+  {
+    "file": "pages/plugins/documentpicker.html",
+    "hash": "3828a4823f02890e9000a183ac5d530f"
+  },
+  {
+    "file": "pages/plugins/file-transfer.html",
+    "hash": "b462cf1203a1ee9c3a3da0696d4e2332"
+  },
+  {
+    "file": "pages/plugins/filpicker.html",
+    "hash": "c7b8b5625e3c87982f0b9492b79cae3e"
+  },
+  {
+    "file": "pages/plugins/fingerprint.html",
+    "hash": "0517c2e6491a5b77073f8be99a68df82"
+  },
+  {
+    "file": "pages/plugins/geolocation.html",
+    "hash": "f69cf1ef8e3dc1a9aa566e3d3e8d41ed"
+  },
+  {
+    "file": "pages/plugins/guidepage.html",
+    "hash": "1c8ac8cd2dc822c0adf14384a5dd6c90"
+  },
+  {
+    "file": "pages/plugins/Hik.html",
+    "hash": "3115167d2d90b4be2b1698069ff0f215"
+  },
+  {
+    "file": "pages/plugins/hikResource.html",
+    "hash": "491cf89db027f47dee677b58f47c3d3e"
+  },
+  {
+    "file": "pages/plugins/ijkplayer.html",
+    "hash": "14dcdac4c14711767eb49f92c05688fa"
+  },
+  {
+    "file": "pages/plugins/imagepicker.html",
+    "hash": "0cb83e643452bbfeb757ed43013f12c6"
+  },
+  {
+    "file": "pages/plugins/log.html",
+    "hash": "52f1294bf40a7bcb2179d0270926d8f4"
+  },
+  {
+    "file": "pages/plugins/map.html",
+    "hash": "f3a326cbc85556410eeaf611b43830db"
+  },
+  {
+    "file": "pages/plugins/media.html",
+    "hash": "7fd082248bb13558cc70f40cfd505b35"
+  },
+  {
+    "file": "pages/plugins/modal.html",
+    "hash": "aa56a0afb66b0ef4ad5cdb43cb956304"
+  },
+  {
+    "file": "pages/plugins/network.html",
+    "hash": "889f81a7f27072b3697e3c673d44e993"
+  },
+  {
+    "file": "pages/plugins/nfc.html",
+    "hash": "d5543eff7a6aa29f16f15cbb91a772a8"
+  },
+  {
+    "file": "pages/plugins/nim.html",
+    "hash": "369f0f3d447dafdc03b57eecefb1142b"
+  },
+  {
+    "file": "pages/plugins/photopicker.html",
+    "hash": "bb20d1703c03a97c4bfaac3a476bc953"
+  },
+  {
+    "file": "pages/plugins/scanner.html",
+    "hash": "30e87416e1066d3b17b1792d6e4e429e"
+  },
+  {
+    "file": "pages/plugins/setItem.html",
+    "hash": "363ea7eca3d343738103b71feb0072a9"
+  },
+  {
+    "file": "pages/plugins/sfvpn.html",
+    "hash": "d5facd4a8c2930aed347e100486587e5"
+  },
+  {
+    "file": "pages/plugins/shareImage.html",
+    "hash": "f9c97d3f50272863249339b744078aba"
+  },
+  {
+    "file": "pages/plugins/shareText.html",
+    "hash": "3b44fe6f4597d810b632a167d72ab8bc"
+  },
+  {
+    "file": "pages/plugins/shareWebpage.html",
+    "hash": "1a0a0f41d8a2d8ae01c490421ac3786f"
+  },
+  {
+    "file": "pages/plugins/smallProgram.html",
+    "hash": "ff0e81d9c3f4986c67b4310e5d211ca3"
+  },
+  {
+    "file": "pages/plugins/sms.html",
+    "hash": "e6e1bf607363c1abd9cf5d92d5cceccc"
+  },
+  {
+    "file": "pages/plugins/speechrecognition.html",
+    "hash": "764fd436ba839be1f55a8339af52841c"
+  },
+  {
+    "file": "pages/plugins/speechsynthesis.html",
+    "hash": "a717ea16405119b05646fa4bb25193d7"
+  },
+  {
+    "file": "pages/plugins/storage.html",
+    "hash": "c47a5fa767ad8e7d466d1a86c61a3fff"
+  },
+  {
+    "file": "pages/plugins/thirdLogin.html",
+    "hash": "a807cb4efa4ab08f3844ee34e87e291a"
+  },
+  {
+    "file": "pages/plugins/toast.html",
+    "hash": "711ad4be221a1af75be27f7a917190d6"
+  },
+  {
+    "file": "pages/plugins/umeng.html",
+    "hash": "84d3c8fd7eaab7bb15983e46d84b0154"
+  },
+  {
+    "file": "pages/plugins/upload.png",
+    "hash": "f2825d46e5ab4881c3571f16e75c419a"
+  },
+  {
+    "file": "pages/plugins/videopicker.html",
+    "hash": "c531f8ba4718657eb607053ea8f42b92"
+  },
+  {
+    "file": "pages/plugins/videopreviewer.html",
+    "hash": "96109dd22e3b2f28a13991cee357c45a"
+  },
+  {
+    "file": "pages/plugins/vpn.html",
+    "hash": "ef43e174f9f7f5a3355ba9ca6e0cda16"
+  },
+  {
+    "file": "pages/plugins/webview.html",
+    "hash": "aeecb20f2d05dd7edaa4b380f12c45f6"
+  },
+  {
+    "file": "pages/plugins/wechat.html",
+    "hash": "a71511ad8dd646ed0db190f395be7499"
+  },
+  {
+    "file": "pages/setting/loginSetting.html",
+    "hash": "9e895b5c8183c1ae8455a8abef41df2a"
+  },
+  {
+    "file": "points.json",
+    "hash": "6d44e12a2193da9547ced3b815170302"
+  },
+  {
+    "file": "right.png",
+    "hash": "0887b9067ab878576b0ad49c0682b1b4"
+  },
+  {
+    "file": "right2.png",
+    "hash": "c4f63a07d291624102f59e17c7e9c14c"
+  },
+  {
+    "file": "setting.html",
+    "hash": "ec6c175c8e43ad7405aa28140a3c1d4f"
+  },
+  {
+    "file": "SimpleBLEPeripheral_A.bin",
+    "hash": "0b61d633fba23913f29e6500992f738c"
+  },
+  {
+    "file": "SimpleBLEPeripheral_B.bin",
+    "hash": "cda755e29f8bddbb534502abfc950051"
+  },
+  {
+    "file": "straight.png",
+    "hash": "705abc9b4d500da277424cd381fda065"
+  },
+  {
+    "file": "test.html",
+    "hash": "ea5b2efc3a24d1e17798c78b431460d3"
+  },
+  {
+    "file": "util.js",
+    "hash": "57dd5e947ef52a9eb2dfc6c47ed8f131"
+  },
+  {
+    "file": "weex/index.js",
+    "hash": "680c63da03cb8508eed015f67d1fe155"
+  },
+  {
+    "file": "zhyy/components/ctm-searchbar.js",
+    "hash": "084df6de902da9595980462ecdc40026"
+  },
+  {
+    "file": "zhyy/index.js",
+    "hash": "f81fa3c26605c067adaa5134f78fee23"
+  }
+]

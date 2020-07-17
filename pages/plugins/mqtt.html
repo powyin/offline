@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>MQTT插件</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="../../css/mui.min.css">
+
+	<style>
+		.mui-bar-nav {
+			background-color: white;
+		}
+
+		p {
+			text-indent: 22px;
+		}
+
+		.mui-card:after {
+			visibility: hidden
+		}
+
+
+
+	</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+	<h1 class="mui-title">MQTT插件</h1>
+	<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+	<div class="mui-content-padded">
+		<p>以下将演示MQTT插件所包含的接口能力，具体参数详见HCB开发文档</p>
+	</div>
+
+	<div class="mui-card">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="connect()">连接服务器</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="subscribe()">订阅主题</a>
+			</li>
+		</ul>
+		<!--<ul class="mui-table-view">-->
+			<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right" onclick="listen()">监听主题</a>-->
+			<!--</li>-->
+		<!--</ul>-->
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="publish()">发布消息</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="unsubscribe()">取消订阅主题</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="disconnect()">断开连接</a>
+			</li>
+		</ul>
+	</div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+	mui.init();
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		console.log('deviceready');
+	}
+	// document.addEventListener("aiot/notice/change", function(e){
+	// 	console.log(e.payload)
+	// 	alert(JSON.stringify(e));
+	// }, false);
+
+	function connect(){
+		//ios连接成功
+		navigator.mqtt.connect({
+			'url':"tcp://10.10.100.83",
+			'port':1993,
+			'clientId':'mqttjs_' + Math.random().toString(16).substr(2, 8),
+			// 'connectionTimeout':3000,
+			// 'username':"uname",
+			// 'password':'pass',
+			// 'keepAlive':60,
+			success:function(s){
+				alert("connect success"+JSON.stringify(s));
+				console.log("connect success"+JSON.stringify(s));
+			},
+			error:function(e){
+				alert("connect error"+JSON.stringify(e));
+				console.log("connect error"+JSON.stringify(e));
+			},
+			onConnectionLost:function (e){
+				console.log("disconnect连接断开==="+JSON.stringify(e));
+				alert("disconnect连接断开==="+JSON.stringify(e));
+			},onPublish:function (topic,payload) {
+				alert("onPublish==="+JSON.stringify(topic)+JSON.stringify(payload));
+				console.log("topic："+JSON.stringify(topic)+"payload："+JSON.stringify(payload));
+			}
+		});
+	}
+	function subscribe(){
+		//订阅频道
+		navigator.mqtt.subscribe({
+			topic:"aiot/notice/change",
+			qos:0,
+			success:function(s){
+				alert("subscribe success==="+JSON.stringify(s));
+				console.log("订阅成功==="+JSON.stringify(s));
+			},
+			error:function(e){
+				alert(JSON.stringify(e));
+				console.log(JSON.stringify(e));
+			}
+		});
+	}
+
+	// function listen() {
+	// 	navigator.mqtt.listen("aiot/notice/change",function(payload,params){
+	// 		//Callback:- (If the user has published to /topic/room/hall)
+	// 		//payload : contains payload data
+	// 		//params : {singlewc:room,multiwc:hall}
+	// 		alert('listen111'+JSON.stringify(payload)+'params'+JSON.stringify(params));
+	// 	});
+	// }
+
+	function publish(){
+		//发布到频道
+		navigator.mqtt.publish({
+			topic:"aiot/notice/change",
+			payload:"hello from the plugin",
+			qos:0,
+			retain:false,
+			success:function(s){
+				alert("publish success"+JSON.stringify(s));
+				console.log("发布成功"+JSON.stringify(s));
+			},
+			error:function(e){
+				alert('publish error'+JSON.stringify(e));
+				console.log("发布失败"+JSON.stringify(e));
+			}
+		})
+	}
+
+	function unsubscribe(){
+		//取消订阅频道
+		navigator.mqtt.unsubscribe({
+			topic:"aiot/notice/change",
+			success:function(s){
+				alert('unsubscribe success'+JSON.stringify(s));
+				console.log('取消订阅 success'+JSON.stringify(s));
+			},
+			error:function(e){
+				alert('取消订阅失败'+JSON.stringify(e));
+				console.log('取消订阅失败'+JSON.stringify(e));
+			}
+		})
+	}
+
+	function disconnect(){
+		//断开与服务器的连接
+		navigator.mqtt.disconnect({
+			success:function(s){
+				alert('disconnect'+JSON.stringify(s));
+				console.log('disconnect'+JSON.stringify(s));
+			},
+			error:function(e){
+				alert('disconnect-error'+JSON.stringify(e));
+				console.log('disconnect-error'+JSON.stringify(e));
+			}
+		})
+	}
+
+
+</script>
+</body>
+
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+
+	<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+	<!--<meta name="format-detection" content="telephone=no">-->
+	<!--<meta name="msapplication-tap-highlight" content="no">-->
+	<!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
+	<!--<title>Mqtt Test</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>-->
+	<!--<h4>Connect</h4>-->
+	<!--<p>P.S:- "mqtt://" protocol is not supported by this plugin. Instead use "tcp://" which works with any broker.</p>-->
+	<!--<label for="url">Url:&nbsp;</label><input type="text" id="url" name="url" value="tcp://10.10.100.83"><br>-->
+	<!--<label for="port">Port:&nbsp;</label><input type="number" id="port" name="port" value="1993"><br>-->
+	<!--<label for="clientid">Client id</label><input type="text" id="clientId" name="clientid" value='mqttjs_'>{{ + Math.random().toString(16).substr(2, 8)}}<br>-->
+	<!--<button id="connect">Connect</button><button id="disconnect" style="display:none">Disconnect</button>-->
+<!--</div>-->
+<!--<div>-->
+	<!--<h4>Subscribe</h4>-->
+	<!--<label for="topic_sub">Topic:&nbsp;</label><input type="text" id="topic_sub" name="topic_sub" value="aiot/notice/change"><br>-->
+	<!--<button id="subscribe">Subscribe</button><button id="unsubscribe" style="display:none">Unsubscribe</button>-->
+<!--</div>-->
+<!--<div>-->
+	<!--<h4>Publish</h4>-->
+	<!--<label for="topic_pub">Topic:&nbsp;</label><input type="text" id="topic_pub" name="topic_pub" value="aiot/notice/change"><br>-->
+	<!--<label for="payload">Payload:&nbsp;</label><input type="text" id="payload" name="payload" value="556gaggaga">-->
+	<!--<button id="publish">Publish</button>-->
+<!--</div>-->
+<!--<div>-->
+	<!--<h4>Activity Log</h4>-->
+	<!--<div id="activity"></div>-->
+<!--</div>-->
+<!--<script src="../../js/mui.min.js"></script>-->
+<!--<script src="../../js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>-->
+<!--<script src="../../js/hc.js"></script>-->
+<!--<script src="../../js/index.js"></script>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Storage插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <!--App自定义的css-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-btn-block {
+            padding: 10px 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Storage插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+
+    <form id="input-group" class="mui-input-group">
+        <div class="mui-input-row">
+            <label>Key:</label>
+            <input type="text" name="key" class="mui-input-clear" placeholder="请输入key">
+        </div>
+        <div class="mui-input-row">
+            <label>Value:</label>
+            <input type="text" name="value" class="mui-input-clear" placeholder="请输入value">
+        </div>
+    </form>
+    ﻿
+
+
+    <div class="mui-content-padded">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="confrim()">确认</button>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        console('deviceready')
+    }
+
+    function addKeyValue() {
+        var index = document.getElementsByTagName("form").length;
+        alert(index);
+    }
+
+    function confrim() {
+        var key = $("input[ name='key']").val();
+        var value = $("input[ name='value']").val();
+        if (!key.length){
+            alert('请输入key值');
+            return;
+        }
+
+        if (!value.length){
+            alert('请输入value值');
+            return;
+        }
+        var params = {};
+        params[key] = value;
+        navigator.storage.setItem(function (success) {
+            alert(success);
+            mui.back()
+        }, null, params);
+
+    }
+
+</script>
+</body>
+
+</html>

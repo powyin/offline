@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Mail插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/mui.picker.css">
+    <script src="../../js/mui.picker.js"></script>
+    <link rel="stylesheet" href="../../css/mui.poppicker.css">
+    <script src="../../js/mui.poppicker.js"></script>
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Mail插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+        <p>以下将演示Mail插件所包含的接口能力，具体参数详见HCB开发文档</p>
+        <h5>发件人邮箱：(必选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="fromEmail" placeholder="发件人" value="1194387333@qq.com">
+        </div>
+
+        <h5 id="shareTitle">发件人的SMTP的授权码：(必选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="SMTP" placeholder="授权码" value="zdsuvnwnyjkabacj">
+        </div>
+
+        <h5 id="mode">mode：(必选,0:从默认邮箱类型中选择;1:自己输入服务器及端口号配置)</h5>
+        <form class="mui-input-group" style="padding:10px">
+
+            <div class="mui-input-row mui-radio" id="falseDiv">
+                <label>0</label>
+                <input name="radio" type="radio" id="falseInput" value=0 checked>
+            </div>
+            <div class="mui-input-row mui-radio"id="trueDiv">
+                <label>1</label>
+                <input name="radio" type="radio"id="trueInput" value=1>
+            </div>
+        </form>
+
+        <h5 id="typechoose">选择邮箱：(必选)</h5>
+        <div class="mui-input-row">
+        <input type="text" id="nomalMail" placeholder="请选择邮箱" value="@qq.com" style="margin-left: 15px;width: 50%">
+        <button type="button" id="seleBtn" class="mui-btn mui-btn-block mui-btn-primary " style="margin-right:15px;width: 40%" onclick="selectMail()" >选择邮箱</button>
+        </div>
+
+        <h5>代理服务器：(必选)</h5>
+        <div class="mui-input-row" >
+            <input type="text" id="fromHost" placeholder="代理服务器" value="smtp.qq.com">
+        </div>
+        <h5>端口号：(必选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="fromPort" placeholder="端口号" value="587">
+        </div>
+        <h5>SSL：(必选)</h5>
+        <form class="mui-input-group" style="padding:10px" id="ssljj">
+
+        <div class="mui-input-row mui-radio" id="trueSSL">
+            <label>true</label>
+            <input name="radio1" type="radio" id="trueSSLInput" value=0 checked>
+        </div>
+        <div class="mui-input-row mui-radio"id="falseSSLDiv">
+            <label>false</label>
+            <input name="radio1" type="radio"id="falseSSLInput" value=1>
+        </div>
+        </form>
+    </div>
+    <div style="margin-top: 30px">
+
+        <button type="button" id="haoyouShare" class="mui-btn mui-btn-block mui-btn-primary" onclick="sendMail()">发送邮件
+        </button>
+
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+        // var nomalMail=document.getElementById("typechoose");
+        // nomalMail.innerHTML = '选择邮箱：(必选)';
+        document.getElementById("nomalMail").removeAttribute("disabled");
+        document.getElementById("typechoose").removeAttribute("disabled");
+        document.getElementById("seleBtn").removeAttribute("disabled");
+        document.getElementById("fromPort").setAttribute("disabled", true);
+        document.getElementById("fromHost").setAttribute("disabled", true);
+        document.getElementById("falseSSLInput").setAttribute("disabled", true);
+        document.getElementById("trueSSLInput").setAttribute("disabled", true);
+        $('input:radio').click(function () {
+            var mode = $("input[name='radio']:checked").val();
+            if (mode=='0') {//从默认邮箱选择
+                document.getElementById("nomalMail").removeAttribute("disabled");
+                document.getElementById("typechoose").removeAttribute("disabled");
+                document.getElementById("seleBtn").removeAttribute("disabled");
+                document.getElementById("fromPort").setAttribute("disabled", true);
+                document.getElementById("fromHost").setAttribute("disabled", true);
+                document.getElementById("falseSSLInput").setAttribute("disabled", true);
+                document.getElementById("trueSSLInput").setAttribute("disabled", true);
+            }else {
+                document.getElementById("nomalMail").setAttribute("disabled", true);
+                document.getElementById("typechoose").setAttribute("disabled", true);
+                document.getElementById("seleBtn").setAttribute("disabled", true);
+                document.getElementById("fromPort").removeAttribute("disabled");
+                document.getElementById("fromHost").removeAttribute("disabled");
+                document.getElementById("falseSSLInput").removeAttribute("disabled");
+                document.getElementById("trueSSLInput").removeAttribute("disabled");
+
+            }
+        });
+    }
+    function selectMail() {
+        var picker = new mui.PopPicker();
+        picker.setData([{
+            value: "1",
+            text: "@qq.com"
+        }, {
+            value: "2",
+            text: "@foxmail.com"
+        }, {
+            value: "3",
+            text: "@exmail.qq.com"
+        }, {
+            value: "4",
+            text: "@outlook.com"
+        }, {
+            value: "5",
+            text: "@yeah.net"
+        }, {
+            value: "6",
+            text: "@163.com"
+        }, {
+            value: "7",
+            text: "@126.com"
+        }]);
+        picker.pickers[0].setSelectedIndex(0, 2000);
+        picker.show(function(SelectedItem) {
+            var nomalMail=document.getElementById("nomalMail");
+            nomalMail.value=SelectedItem[0].text;
+        })
+    }
+
+
+    function sendMail() {
+        var mode = $("input[name='radio']:checked").val();
+        var nomalMail=$('#nomalMail').val();
+        var fromEmail = $('#fromEmail').val();
+        var SMTP = $('#SMTP').val();
+        if (fromEmail == '' || fromEmail == undefined || fromEmail == null ) {
+            alert('请填写发件人')
+            return;
+        }
+        if (SMTP == '' || SMTP == undefined || SMTP == null ) {
+            alert('请填写授权码')
+            return;
+        }
+        if (mode=='0') {//从默认邮箱选择
+            var obj = {'fromEmail':fromEmail,'pass':SMTP,'mode':parseInt(mode),'type':nomalMail};
+            navigator.mail.sendMail(obj, function (successCallback) {
+                alert(JSON.stringify(successCallback));
+            }, function (errorCallback) {
+                alert(JSON.stringify(errorCallback));
+            });
+        }else {
+            var fromHost = $('#fromHost').val();
+            var fromPort = $('#fromPort').val();
+            var sslss = $("input[name='radio1']:checked").val();
+            var ssl = true;
+            if (sslss=='0') {//从默认邮箱选择
+                ssl = true;
+            }else {
+                ssl = false;
+            }
+            var obj = {'fromEmail':fromEmail,'pass':SMTP,'mode':1,'host':fromHost,'port':parseInt(fromPort),'ssl':ssl};
+            navigator.mail.sendMail(obj, function (successCallback) {
+                alert(JSON.stringify(successCallback));
+            }, function (errorCallback) {
+                alert(JSON.stringify(errorCallback));
+            });
+
+        }
+
+
+
+
+    }
+
+</script>
+</body>
+
+</html>

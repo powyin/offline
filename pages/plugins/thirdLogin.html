@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-btn-block {
+            width: 90%;
+            left: 5%;
+            padding: 10px 0;
+            bottom: 10px;
+        }
+        .round_icon{
+            width: 80px;
+            height: 80px;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top: 10px;
+        }
+        .nicheng{
+            width: 80%;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top: 10px;}
+        .contentLogin{
+            width: 90%;
+            height: 150px;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">登录</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+    <div>
+        <img id="loginimg" src="../../img/logo.png" class="round_icon"  alt="">
+        <h4 class="nicheng">昵称:</h4>
+        <h5 class="contentLogin"></h5>
+    </div>
+
+    <div style="margin-top: 30px">
+
+        <button type="button" id="shareLogin" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareLogin()">登录
+        </button>
+        <button type="button" id="shareLogout" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareLogout()">退出登录
+        </button>
+
+    </div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    var type = getQueryString("type");
+    // alert(type);
+    var title = document.getElementsByTagName("h1")[0];
+    if (type==='wechat') {
+        title.innerHTML = '微信登录';
+    }else if (type==='qq') {
+        title.innerHTML = 'QQ登录';
+    }else if (type==='alipay') {
+        title.innerHTML = '支付宝登录';
+    }else if (type==='sina') {
+        title.innerHTML = '新浪登录';
+    }
+    //登录
+    function shareLogin() {
+        // 2.调用移动端分享方法
+        if (type==='wechat') {
+            navigator.wechat.getAuth(function (successCallback) {
+                alert(JSON.stringify(successCallback));
+                var data = successCallback;
+                var title1 = document.getElementsByTagName("h4")[0];
+                title1.innerHTML = data['nickname'];
+                var title2 = document.getElementsByTagName("h5")[0];
+                title2.innerHTML = JSON.stringify(data);
+                $("#loginimg").attr("src",data['headimgurl']);
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                }
+            )
+        }else if (type==='qq') {
+            navigator.qq.getAuth(function (successCallback) {
+                var data = successCallback;
+                var title1 = document.getElementsByTagName("h4")[0];
+                title1.innerHTML = data['nickname'];
+                var title2 = document.getElementsByTagName("h5")[0];
+                title2.innerHTML = JSON.stringify(data);
+                $("#loginimg").attr("src",data['figureurl_qq']);
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                }
+            )
+
+        }else if (type==='alipay') {
+
+        }else if (type==='sina') {
+            navigator.sina.getAuth(function (successCallback) {
+                var data = successCallback;
+                var title1 = document.getElementsByTagName("h4")[0];
+                title1.innerHTML = data['screen_name'];
+                var title2 = document.getElementsByTagName("h5")[0];
+                title2.innerHTML = JSON.stringify(data);
+                $("#loginimg").attr("src",data['avatar_hd']);
+            },function (errorCallback) {
+                alert(JSON.stringify(errorCallback));
+            });
+
+        }
+
+    }
+    //退出
+    function shareLogout() {
+        if (type==='wechat') {
+            navigator.wechat.logout(function (successCallback) {
+                var title = document.getElementsByTagName("h4")[0];
+                title.innerHTML = '昵称：';
+                var title1 = document.getElementsByTagName("h5")[0];
+                title1.innerHTML = '';
+                $("#loginimg").attr("src",'../../img/logo.png');
+                // alert(JSON.stringify(successCallback));
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                }
+            )
+        }else if (type==='qq') {
+            navigator.qq.logout(function (successCallback) {
+                var title = document.getElementsByTagName("h4")[0];
+                title.innerHTML = '昵称：';
+                var title1 = document.getElementsByTagName("h5")[0];
+                title1.innerHTML = '';
+                $("#loginimg").attr("src",'../../img/logo.png');
+                    alert(JSON.stringify(successCallback));
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                }
+            )
+
+        }else if (type==='alipay') {
+
+        }else if (type==='sina') {
+            navigator.sina.logout(function (successCallback) {
+                var title = document.getElementsByTagName("h4")[0];
+                title.innerHTML = '昵称：';
+                var title1 = document.getElementsByTagName("h5")[0];
+                title1.innerHTML = '';
+                $("#loginimg").attr("src",'../../img/logo.png');
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                }
+            )
+        }
+
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+</script>
+</body>
+</html>

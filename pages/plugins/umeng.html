@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>友盟推送插件</title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=")+1);
+        $('#title').text(title);
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+
+        navigator.umeng.addPushListener(function(result){
+            if (result){
+                $('#push-content').text(JSON.stringify(result));
+            }
+        });
+
+        navigator.umeng.getDeviceToken(
+		function (res) {
+            if (res){
+                $('#deviceToken').val(res);
+            }
+        },
+            function (error) {
+               alert(error);
+            }
+)
+
+
+        // navigator.umeng.deleteAlias({
+        //     'alias': '测试1',
+        //     'alias_type': 'HCB1'
+        // }, function () {
+        //     alert('成功')
+        // }, function (error) {
+        //     alert(error)
+        // });
+
+    }
+    function addTags() {
+        navigator.umeng.addTags(
+            ['test', 'user'],
+            function(result) {
+                alert(JSON.stringify(result));
+            },
+            function(error) {
+                alert(JSON.stringify(error));
+            }
+        )
+    }
+    function deleteTags() {
+        navigator.umeng.deleteTags(
+            ['test'],
+            function(result) {
+                alert(JSON.stringify(result));
+            },
+            function(error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+    function getTags() {
+        navigator.umeng.getTags(
+            function(result) {
+                alert(JSON.stringify(result));
+            },
+            function(error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+    function addAlias() {
+        navigator.umeng.addAlias(
+            {
+                'alias': '测试1',
+                'alias_type': 'HCB'
+            },
+            function() {
+                alert('成功');
+            }, function(error) {
+                console.log(error);
+            }
+        );
+    }
+    function setAlias() {
+        navigator.umeng.setAlias(
+            {
+                'alias': '测试2',
+                'alias_type': 'HCB'
+            },
+            function() {
+                alert('成功');
+            }, function(error) {
+                console.log(error);
+            }
+        );
+    }
+    function deleteAlias() {
+        navigator.umeng.deleteAlias(
+            {
+                'alias': '测试2',
+                'alias_type': 'HCB'
+            },
+            function() {
+                alert('成功');
+            }, function(error) {
+                console.log(error);
+            }
+        );
+    }
+
+</script>
+<header class="mui-bar mui-bar-nav" style="position: static;">
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <span onclick="window.location.reload()" id="back" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div>
+    <div style="margin: 10px;">
+
+        <td>deviceToken：</td>
+        <div style="word-wrap: break-word;white-space : normal; padding-top: 10px">
+            <!--<p id="deviceToken"></p>-->
+            <textarea  id="deviceToken" style="padding: 0px; border: 0px;"></textarea>
+        </div>
+
+        <td>推送内容：</td>
+        <div style="word-wrap: break-word;white-space : normal; padding-top: 10px">
+            <span  id="push-content"></span>
+        </div>
+
+    </div>
+    <div class="mui-button-left" style="padding-left:10px;padding-bottom:10px;padding-right:10px;padding-top: 30px">
+        <button type="button" onclick="addTags()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >给设备绑定'标签'</button>
+        <button type="button" onclick="deleteTags()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >删除设备绑定的'标签'</button>
+        <button type="button" onclick="getTags()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >获取设备绑定'标签'</button>
+        <button type="button" onclick="addAlias()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >绑定一个别名至设备</button>
+        <button type="button" onclick="setAlias()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >绑定一个别名至设备,并解绑这个别名曾绑定过的设备</button>
+        <button type="button" onclick="deleteAlias()" class="mui-btn mui-btn-primary"style="margin-bottom:5px;" >删除一个设备的别名绑定</button>
+    </div>
+</div>
+</body>
+</html>

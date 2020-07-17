@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>H5音频预览</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 44px;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content audio {
+            margin-left: 15px;
+            margin-right: 15px;
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">H5音频预览</h1>
+</header>
+<div class="content">
+
+
+</div>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/hc.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+        var src = getQueryString('source');
+
+        console.log('src:'+src);
+
+
+        var htmlStr = "<audio src=\""+src+"\" controls=\"controls\"></audio>";
+
+        $(".content").append($(htmlStr));
+
+    }
+
+</script>
+</body>
+
+</html>

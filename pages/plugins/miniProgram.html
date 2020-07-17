@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>小程序列表</title>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <style>
+        .mui-date-right {
+            position: absolute;
+            top: 11px;
+            right: 15px;
+            font-size: 13px;
+            line-height: 21px
+        }
+
+        .mui-badge-right {
+            position: absolute;
+            top: 32px;
+            right: 15px;
+            color: #fff;
+            background-color: #dd524d;
+            font-size: 12px;
+            line-height: 1;
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 100px;
+        }
+        img{
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+        <h1 class="mui-title">小程序列表</h1>
+        <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+    </header>
+    <div class="mui-content">
+        <ul style="margin: 0" class="mui-table-view mui-grid-view">
+            <li  v-for="(session, index) in sessions" class="mui-table-view-cell mui-media mui-col-xs-4">
+                <a href="javascript:;" @click="openMiniProgrom(session)">
+                <img class="mui-media-object mui-pull-left" onerror="this.src='../../img/avatar_user.png'" :src="session.logoUrl" />
+                <div class="mui-media-body mui-slider-handle">{{session.name}}</div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="../../js/vue.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script>
+    mui.init();
+    var data = {
+        sessions: []
+    };
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            openMiniProgrom(session){
+                alert(JSON.stringify(session.uniqueCode));
+                navigator.miniProgram.openMiniProgram(session.uniqueCode,
+                    function (success) {
+                        // alert(JSON.stringify(success));
+                    },
+                    function (error) {
+                        alert(JSON.stringify(error));
+                    },'Wh2em60HZKKWK8N0bAc2KgzWRPx3cDjP'
+                );
+            },
+        },
+        data: data
+    });
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        // var options = {'APPID':'1157596574863'};
+        // var options = {'APPID':'3bf53f6a9af440d58a4c07045d30a446','token':'Wh2em60HZKKWK8N0bAc2KgzWRPx3cDjP'};
+        // navigator.miniProgram.getMiniProgramList(options,
+        //     function (success) {
+        //         var arr =  (success && success.list ) || [];
+        //         // alert(JSON.stringify(arr));
+        //         data.sessions = arr;
+        //         // alert(JSON.stringify(data));
+        //     },
+        //     function (error) {
+        //         alert(JSON.stringify(error));
+        //     }
+        // );
+
+        var urltype = getQueryString('a');
+        var options = {'APPID':urltype};
+        navigator.miniProgram.getMiniProgramList(options,
+            function (success) {
+                var arr =  (success && success.list ) || [];
+                // alert(JSON.stringify(arr));
+                data.sessions = arr;
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+                mui.back();
+            }
+        );
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+
+</script>
+
+</html>

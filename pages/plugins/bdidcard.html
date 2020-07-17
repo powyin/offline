@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bdidcard插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+        .nicheng{
+            width: 80%;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top: 10px;}
+        .contentLogin{
+            width: 90%;
+            height: 50%;
+            overflow: hidden;
+            margin:0 auto;
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Bdidcard插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Bdidcard插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">身份证识别</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="recognizeIDCard()">正面识别</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="recognizeIDCardBack()">反面识别</a>
+        </div>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">身份证本地控制质量识别</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="recognizeIDCardQuality()">正面识别</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="recognizeIDCardQualityBack()">反面识别</a>
+        </div>
+    </div>
+
+    <div>
+        <h4 class="nicheng">识别结果:</h4>
+        <h5 class="contentLogin"></h5>
+    </div>
+
+
+
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+    function recognizeIDCard() {
+        navigator.bdidcard.recognizeIDCard(
+            function (success) {
+                var data = JSON.parse(success).message;
+                if (JSON.parse(success).status==='normal')  {
+                    var d = 'name:'+data.name+'<br/>'+'birth:'+data.birth+'<br/>'+'idCard:'+data.idCard+'<br/>'+'gender:'+data.gender+'<br/>'+'address:'+data.address+'<br/>'+'nation:'+data.nation+'<br/>'
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }else {
+                    var d = JSON.parse(success).status
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }
+
+            },
+            function (error) {
+                alert(error);
+            },{'idType':0,'imgPath':0,'imgType':0}
+        )
+    }
+    function recognizeIDCardBack() {
+        navigator.bdidcard.recognizeIDCard(
+            function (success) {
+                var data = JSON.parse(success).message;
+                if (JSON.parse(success).status==='normal')  {
+                    var d = 'organization:'+data.organization+'<br/>'+'issueDate:'+data.issueDate+'<br/>'+'invalidDate:'+data.invalidDate+'<br/>'
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }else {
+                    var d = JSON.parse(success).status
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }
+            },
+            function (error) {
+                alert(error);
+            },{'idType':1,'imgPath':0,'imgType':1}
+        )
+    }
+    function recognizeIDCardQuality() {
+        navigator.bdidcard.recognizeIDCardQuality(
+            function (success) {
+                var data = JSON.parse(success).message;
+                if (JSON.parse(success).status==='normal')  {
+                    var d = 'name:'+data.name+'<br/>'+'birth:'+data.birth+'<br/>'+'idCard:'+data.idCard+'<br/>'+'gender:'+data.gender+'<br/>'+'address:'+data.address+'<br/>'+'nation:'+data.nation+'<br/>'
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }else {
+                    var d = JSON.parse(success).status
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }
+            },
+            function (error) {
+                alert(error);
+            },{'idType':0,'imgPath':0,'imgType':0}
+        )
+    }
+    function recognizeIDCardQualityBack() {
+        navigator.bdidcard.recognizeIDCardQuality(
+            function (success) {
+                var data = JSON.parse(success).message;
+                if (JSON.parse(success).status==='normal')  {
+                    var d = 'organization:'+data.organization+'<br/>'+'issueDate:'+data.issueDate+'<br/>'+'invalidDate:'+data.invalidDate+'<br/>'
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }else {
+                    var d = JSON.parse(success).status
+
+                    var title2 = document.getElementsByTagName("h5")[0];
+                    title2.innerHTML = JSON.stringify(d);
+                }
+            },
+            function (error) {
+                alert(error);
+            },{'idType':1,'imgPath':1,'imgType':1}
+        )
+    }
+
+</script>
+</body>
+
+</html>

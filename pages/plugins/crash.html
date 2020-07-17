@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Crash插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Crash插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Log插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card mui-table-view-cell">
+        <a class="mui-navigate-right" onclick="getCrashReport()">获取崩溃日志</a>
+    </div>
+    <div class="mui-card mui-table-view-cell">
+        <a class="mui-navigate-right" onclick="deleteCrashReport()">删除崩溃日志</a>
+    </div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    function getCrashReport() {
+        navigator.crash.getCrashReport(function (res) {
+            alert(JSON.stringify(res));
+            // navigator.notification.confirm(
+            //     '是否上传崩溃日志',
+            //     function (buttonIndex) {
+            //
+            //         if (buttonIndex === 1){
+            //             var options = new FileUploadOptions();
+            //             options.fileKey = res.name;
+            //             options.fileName = res.name;
+            //             options.mimeType = res.type;
+            //             var ft = new FileTransfer();
+            //             ft.upload(res.fullPath, encodeURI("http://10.10.21.189:8081/TestApp/UploadServlet"), function (result) {
+            //                 alert(JSON.stringify(result));
+            //             }, function (error) {
+            //                 alert(JSON.stringify(error));
+            //             }, options);
+            //         }
+            //     },
+            //     '提示',
+            //     ['是','否']
+            // );
+
+        }, function (errorCallback) {
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+    function deleteCrashReport() {
+        navigator.notification.confirm(
+            '是否删除崩溃日志?',
+            function (buttonIndex) {
+
+                if (buttonIndex === 1){
+                    navigator.crash.deleteCrashReport(function (res) {
+                        alert(JSON.stringify(res))
+                    },function (error) {
+                        alert(JSON.stringify(error))
+                    })
+                }
+            },
+            '提示',
+            ['是','否']
+        );
+    }
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,303 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+	<!--<meta charset="utf-8">-->
+	<!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+	<!--<title></title>-->
+	<!--<link href="../../css/mui.min.css" rel="stylesheet"/>-->
+	<!--<link href="../../css/bootstrap.min.css" rel="stylesheet"/>-->
+	<!--<style>-->
+		<!--table tr td {-->
+			<!--font-size: 1.5rem;-->
+		<!--}-->
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="mui-bar mui-bar-nav" style="position: static;">-->
+	<!--<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>-->
+	<!--<h1 class="mui-title" id="title"></h1>-->
+	<!--<span onclick="window.location.reload()" id="back" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>-->
+<!--</header>-->
+<!--<div>-->
+	<!--<div style="margin: 10px;">-->
+		<!--<table>-->
+			<!--<tr>-->
+				<!--<td>卡片ID：</td><td id="cardId"></td>-->
+			<!--</tr>-->
+		<!--</table>-->
+	<!--</div>-->
+<!--</div>-->
+<!--<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>-->
+<!--<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>-->
+<!--<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>-->
+<!--<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">-->
+  	<!--$(document).ready(function(){-->
+	    <!--var title = decodeURI(location.search);-->
+	    <!--title = title.substring(title.indexOf("=")+1);-->
+	    <!--$('#title').text(title);-->
+	    <!---->
+	<!--});-->
+
+	<!--document.addEventListener("deviceready", onDeviceReady, false);-->
+    <!--function onDeviceReady() {-->
+    	<!--nfc.addTagDiscoveredListener(-->
+		    <!--function(data){-->
+		        <!--var tag = data.tag;-->
+		        <!--$("#cardId").text(nfc.bytesToHexString(tag.id));-->
+		    <!--},-->
+		    <!--function() {-->
+		    	<!---->
+		    <!--},-->
+		    <!--function(error) {-->
+		        <!--alert(error);-->
+		    <!--}-->
+		<!--);-->
+    <!--}-->
+
+  <!--</script>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>NFC插件</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="../../css/mui.min.css">
+
+	<style>
+		.mui-bar-nav {
+			background-color: white;
+		}
+
+		p {
+			text-indent: 22px;
+		}
+
+		.mui-card:after {
+			visibility: hidden
+		}
+
+
+
+	</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+	<h1 class="mui-title">NFC插件</h1>
+	<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+	<div class="mui-content-padded">
+		<p>以下将演示NFC插件所包含的接口能力，具体参数详见HCB开发文档</p>
+	</div>
+
+	<div class="mui-card">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="addNdefListener()">NDEF注册</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="removeNdefListener()">NDEF删除</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="addTagDiscoveredListener()">侦听器注册(Android)</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="removeTagDiscoveredListener()">侦听器删除(Android)</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="enabled()">检查NFC是否可用</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="beginSession()">NFC开始会话(iOS)</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="invalidateSession()">NFC会话移除(iOS)</a>
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right" onclick="showSettings()">NFC设置(Android)</a>
+			</li>
+		</ul>
+	</div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+	mui.init();
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		console('deviceready')
+
+	}
+	let u = navigator.userAgent;
+	let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+	let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+	function addNdefListener() {
+		nfc.addNdefListener(
+				function(nfcEvent){
+					var tag = nfcEvent.tag;
+					alert(JSON.stringify(nfcEvent.tag));
+					alert(nfc.bytesToHexString(tag.id));
+				},
+				function() {
+					alert("Listening for NDEF tags.");
+				},
+				function(error) {
+					alert(error);
+				}
+		);
+	}
+	//NDEF删除
+	function removeNdefListener() {
+		nfc.removeNdefListener(
+				function(nfcEvent){
+					var tag = nfcEvent.tag;
+					alert(JSON.stringify(nfcEvent.tag));
+					alert(nfc.bytesToHexString(tag.id));
+				},
+				function() {
+					alert("Listening for NDEF tags.");
+				},
+				function(error) {
+					alert(error);
+				}
+		);
+	}
+	//侦听器注册
+	function addTagDiscoveredListener() {
+		if (isAndroid) {
+			//这个是安卓操作系统
+			nfc.addTagDiscoveredListener(
+					function(nfcEvent){
+						var tag = nfcEvent.tag;
+						alert(JSON.stringify(nfcEvent.tag));
+						alert(nfc.bytesToHexString(tag.id));
+					},
+					function(success) {
+						alert(success);
+					},
+					function(error) {
+						alert(error);
+					}
+			);
+		}
+		if (isIOS) {
+			//这个是ios操作系统
+			alert('此接口只适用于Android端')
+		}
+
+	}
+	
+	//侦听器删除
+	function removeTagDiscoveredListener() {
+		if (isAndroid) {
+			//这个是安卓操作系统
+			function callback(nfcEvent){
+				var tag = nfcEvent.tag;
+				alert(JSON.stringify(nfcEvent.tag));
+				alert(nfc.bytesToHexString(tag.id));
+			}
+			nfc.removeTagDiscoveredListener(
+					callback,
+					function(success) {
+						alert(success);
+						alert("Removing for non-NDEF tags.");
+					},
+					function(error) {
+						alert(error);
+					});
+		}
+		if (isIOS) {
+			//这个是ios操作系统
+			alert('此接口只适用于Android端')
+		}
+	}
+	//NFC启用
+	function enabled() {
+		nfc.enabled(function(str){
+					alert(str);
+				},function(error){
+					alert(error);
+				}
+		);
+	}
+	//NFC会话
+	function beginSession() {
+		if (isAndroid) {
+			//这个是安卓操作系统
+			alert('此接口只适用于iOS端')
+		}
+		if (isIOS) {
+			//这个是ios操作系统
+			nfc.beginSession(function(str){
+				alert(str);
+			},function(error){
+				alert(error);
+			});
+		}
+
+	}
+	//NFC会话初始化
+	function invalidateSession() {
+		if (isAndroid) {
+			//这个是安卓操作系统
+			alert('此接口只适用于iOS端')
+		}
+		if (isIOS) {
+			//这个是ios操作系统
+			nfc.invalidateSession(function(str){
+				alert(str);
+			},function(error){
+				alert(error);
+			});
+		}
+
+	}
+	//NFC设置
+	function showSettings() {
+		if (isAndroid) {
+			//这个是安卓操作系统
+			nfc.showSettings(function(success){
+				alert(success);
+			},function(failure){
+				alert(failure);
+			});
+		}
+		if (isIOS) {
+			//这个是ios操作系统
+			alert('此接口只适用于Android端')
+		}
+
+	}
+	
+</script>
+</body>
+
+</html>

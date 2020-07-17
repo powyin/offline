@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="../../css/radialindicator.css" rel="stylesheet"/>
+	<style>
+		.mui-control-content {
+			background-color: white;
+			min-height: 215px;
+		}
+		.mui-control-content .mui-loading {
+			margin-top: 50px;
+		}
+
+		.mui-progressbar-success {
+			background-color:transparent;
+		}
+
+		.mui-progressbar-success span {
+			background-color: #4cd964;
+		}
+		.upload {
+		}
+	</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div>
+
+</div>>
+<div class="mui-content" style="background: white;">
+
+	<div style="padding: 5px 10px;">
+		<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+			<a id="uploadTab" class="mui-control-item mui-active" href="#uploadDev">上传</a>
+			<a id="downloadTab" class="mui-control-item" href="#downloadDev">下载</a>
+		</div>
+
+	</div>
+	<span id="rightBtn" name="upload" class="mui-icon" style="right:40px;position: absolute;">
+		<img  class="upload" src="../../img/upload.png" />
+	</span>
+
+	<div>
+
+		<div class="mui-control-content mui-active" id="uploadDev" style="width: 40%; height:30rem;padding: 2px; position: relative;top: 40px">
+
+		</div>
+		<div class="mui-control-content" id="downloadDev" style="width: 40%; height:30rem;padding: 2px; position: relative;top: 40px">
+
+		</div>
+
+	</div>
+
+</div>
+
+<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom" >
+	<ul class="mui-table-view" style="max-height: 1000px;">
+		<li class="mui-table-view-cell">
+			<a href="#" onclick="photoImage()">拍照</a>
+		</li>
+		<li  class="mui-table-view-cell">
+			<a href="#chooseImage" onclick="chooseImage()">相册</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a href="#picture"><b>取消</b></a>
+		</li>
+	</ul>
+</div>
+
+<!--<div id="progress" class="mui-popover mui-popover-action mui-popover-bottom" >
+	<ul id="progressUl" class="mui-table-view" style="max-height: 1000px;">
+
+	</ul>
+</div>-->
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/radialIndicator.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+	var width, height, padding = 5, itemWidth;
+	var columnCount = 3;
+	var index = 0;
+	var mediaFiles = new Array();
+
+	let u = navigator.userAgent;
+	let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+	let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+
+	$(document).ready(function(){
+		var title = decodeURI(location.search);
+		title = title.substring(title.indexOf("=")+1);
+		$('#title').text(title);
+		width = window.screen.availWidth;
+		height = window.screen.availHeight;
+		itemWidth = (width - padding*(columnCount+1))/columnCount;
+		generateUploadItem(null);
+
+
+		$("#uploadTab").on("tap", function() {
+			$(".upload").attr("src", "../../img/upload.png");
+			$("#rightBtn").attr("name", "upload");
+		});
+
+		$("#downloadTab").on("tap", function() {
+			$(".upload").attr("src", "../../img/download-from-cloud.png");
+			$("#rightBtn").attr("name", "download");
+			$("#downloadDev").empty();
+			generateDownloadItem();
+		});
+
+		$("#rightBtn").click(function() {
+			var type = $(this).attr("name");
+			if (type == "upload") {
+				uploadFiles();
+			} else {
+				downloadFiles();
+			}
+		});
+	});
+//拍照
+	function photoImage() {
+		// $("#capture_image").click(function() {
+		// 	mui('#picture').popover('toggle');
+		// 	alert(navigator.media);
+		// 	navigator.media.captureImage(onSuccess, onFailed, {path:Media.Path.APP});
+		// });
+		mui('#picture').popover('toggle');
+		var captureSuccess = function(mediaFiles) {
+			generateItem(mediaFiles);
+		};
+		var captureError = function(error) {
+			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		};
+		navigator.camera.takePhoto(onSuccess, captureError,true,1024);
+	}
+
+	function chooseImage() {
+		mui('#picture').popover('toggle');
+		navigator.filePicker.open(onSuccess,function (err) {
+			console.log(JSON.stringify(err))
+		},{image:true,video: true,audio: true,document: false})
+		//
+		// navigator.filePicker.open(function (res) {
+		// 	alert(JSON.stringify(res))
+		// },function (err) {
+		// 	console.log(JSON.stringify(err))
+		// },{image:true,video: true,audio: true,document: false})
+	}
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() {
+	}
+
+
+	function onSuccess(data) {
+		if (data instanceof Array) {
+			$.each(data, function(i, item) {
+				generateUploadItem(item)
+			});
+		} else {
+			generateUploadItem(data);
+		}
+	}
+
+	function onFailed() {
+
+	}
+
+
+	function generateUploadItem(mediaFile) {
+		var uploadProgressId,uploadedId,downloadProgressId,downloadedId;
+		if (mediaFile != null) {
+			index++;
+			uploadProgressId = "upload_progress_" + index;
+			uploadedId = "uploaded_" + index;
+			downloadProgressId = "download_progress_" + index;
+			downloadedId = "downloaded_" + index;
+
+			var fileItem = new FileItem(mediaFile, uploadProgressId, uploadedId, downloadProgressId, downloadedId);
+			mediaFiles.push(fileItem);
+		}
+		var row,col,src,itemHtml,typeStyle = "display:none", count = mediaFiles.length;
+		if (count == 0) {
+			row = 0;
+			col = 0;
+			src = "../../img/add_media.png";
+			typeStyle = "display:none;";
+			itemHtml = "<div onclick=\"mui('#picture').popover('toggle')\" style='position: absolute; left: "+padding+"px; top:"+padding+"px'>"
+					+ "<img style='width: "+itemWidth+"px; height:"+itemWidth+"px; position: absolute;' src='"+src+"' />"
+					+ "<img style='width:21px; height:14px;left:"+(itemWidth-31)+"px;top:"+(itemWidth-24)+"px;position:absolute;"+typeStyle+"' src='../../img/video_flag.png'/>"
+					+ "</div>";
+		} else {
+			row = Math.floor(count/columnCount);
+			col = count % columnCount;
+			var left = col*itemWidth + padding*(col+1);
+			var top = row*itemWidth+ padding*(row+1);
+
+			if (mediaFile.type.indexOf("audio") > -1) {
+				src = "../../img/audio_default.png"
+			} else {
+				if (mediaFile.thumbLocalURL != null && mediaFile.thumbLocalURL != undefined) {
+					src = mediaFile.thumbLocalURL;
+				} else {
+					src = mediaFile.localURL;
+				}
+
+				if (mediaFile.type.indexOf("video") > -1) {
+					typeStyle = "";
+				}
+			}
+
+			itemHtml = "<div onclick='albumItemClick("+(count-1)+");' style='position: absolute; left: "+left+"px; top:"+top+"px'>"
+					+ "<img style='background-color:lightblue; width: "+itemWidth+"px; height:"+itemWidth+"px; position: absolute;' src='"+src+"' />"
+					+ "<img style='width:21px; height:14px;left:"+(itemWidth-31)+"px;top:"+(itemWidth-24)+"px;position:absolute;"+typeStyle+"' src='../../img/video_flag.png'/>"
+					+ "<p id='"+uploadProgressId+"' class='mui-progressbar mui-progressbar-success' style='height:0.4rem;position: absolute; width:"+itemWidth+"px;'><span></span></p>"
+					+ "<img id='"+uploadedId+"' style='width:30px; height:30px;left:"+(itemWidth-30)+"px;position:absolute;display:none' src='../../img/uploaded.png'/>"
+					+ "</div>";
+		}
+
+		$("#uploadDev").append($(itemHtml));
+	}
+
+	function generateDownloadItem() {
+		var row,col,left,top;
+		$.each(mediaFiles, function(i, item) {
+			if (item.remoteFileName != null) {
+				row = Math.floor(i/columnCount);
+				col = i%columnCount;
+				left = itemWidth*col + padding*(col+1);
+				top = itemWidth*row + padding*(row+1);
+				var itemHtml = "<div style='background:red;position:absolute;left:"+left+"px;top:"+top+"px'>"
+						+ "<div id='"+item.downloadProgressId+"' style='position:absolute;display:none;' name='downloadProgressBar'></div>"
+						+ "<img name='download-default-img' id='"+item.downloadedId+"' src='../../img/default-img.png' style='position:absolute;width:"+itemWidth+"px;height:"+itemWidth+"px' />"
+						+ "</div>";
+				$("#downloadDev").append($(itemHtml));
+			}
+		});
+		$("div[name='downloadProgressBar']").radialIndicator({
+			barColor: '#87CEEB',
+			barWidth: 8,
+			roundCorner : true,
+			percentage: true
+		});
+	}
+
+	function uploadFiles() {
+		// alert(JSON.stringify(mediaFiles))
+		$.each(mediaFiles, function(i, item) {
+			// alert(JSON.stringify(item))
+			uploadFile(item);
+		});
+	}
+
+	function uploadFile(fileItem) {
+		var options = new FileUploadOptions();
+		options.fileKey = "uploadFile";
+		var params = {};
+		params.path = "upload";
+		options.params = params;
+
+		var ft = new FileTransfer();
+		ft.onprogress = function(progressEvent) {
+			if (progressEvent.lengthComputable) {
+				var progress = Math.floor(100 * progressEvent.loaded / progressEvent.total)
+				mui("#"+fileItem.uploadProgressId).progressbar().setProgress(progress);
+
+			}
+		};
+		ft.upload(fileItem.mediaFile.localURL, encodeURI("http://10.10.21.14:8080/hot/offline"),
+				function(data){
+			// alert(JSON.stringify(data))
+					// var returnJo;
+					// if (typeof data.response == "string") {
+					// 	returnJo = $.parseJSON(data.response);
+					// } else {
+					// 	returnJo = data.response;
+					// }
+					// fileItem.remoteFileName = returnJo.fileName;
+					// $("#"+fileItem.uploadProgressId).hide();
+					// $("#"+fileItem.uploadedId).show();
+					alert("上传成功");
+				}, function (error) {
+					alert("source: "+error.source+"\n target :"+error.target+"\n code: "+error.code+"\n http\_status: "+error.http_status+"\n body: "+error.body+"\n exception : "+error.exception);
+				},options);
+
+	}
+
+	function downloadFiles() {
+		// 写死下载图片地址
+		var ft = new FileTransfer();
+		var source = encodeURI("http://img1.imgtn.bdimg.com/it/u=1790581998,574682143&fm=26&gp=0.jpg");
+		ft.download(source,function(entry) {
+					var src;
+					var itemHtml = mediaFiles.length;
+					if (isAndroid) {
+						//这个是安卓操作系统
+						if (entry.fullPath != null) {
+							src = entry.nativeURL;
+							resolveLocalFileSystemURL(src, function(entry) {
+								src = entry.toInternalURL();
+								itemHtml = "<a href='#picture' style='left: " + padding + "px; top:" + padding + "px'>"
+										+ "<img style='width: " + itemWidth + "px; height:" + itemWidth + "px;' src='" + src + "' />"
+										+ "</a>";
+
+								$("#downloadDev").append($(itemHtml));
+							})
+
+						}
+					}
+					if (isIOS) {
+						//这个是ios操作系统
+						if (entry.nativeURL != null) {
+							resolveLocalFileSystemURL(entry.nativeURL, function(entry) {
+								src = entry.toInternalURL();
+								itemHtml = "<a href='#picture' style='left: " + padding + "px; top:" + padding + "px'>"
+										+ "<img style='width: " + itemWidth + "px; height:" + itemWidth + "px;' src='" + src + "' />"
+										+ "</a>";
+
+								$("#downloadDev").append($(itemHtml));
+							})
+						}
+					}
+                    alert("下载成功");
+				},
+				function(error) {
+					alert(JSON.stringify(error))
+				},false,{
+					headers: {
+						"Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+					}
+				}
+		);
+
+	//	ft.onprogress = function(progressEvent) {
+		//	if (progressEvent.lengthComputable) {
+	//			var progress = Math.floor(100 * progressEvent.loaded / progressEvent.total)
+	//			radialObj.animate(progress);
+	//		}
+		//};
+//
+
+
+
+
+
+
+
+
+		//ft.onprogress = function(progressEvent) {
+		//	if (progressEvent.lengthComputable) {
+			//	var progress = Math.floor(100 * progressEvent.loaded / progressEvent.total)
+			//	radialObj.animate(progress);
+		//	}
+	//	};
+
+		// $("img[name='download-default-img']").hide();
+		// $("div[name='downloadProgressBar']").show();
+		// $.each(mediaFiles, function(i, item) {
+		// 	downloadFile(item);
+		// });
+	}
+
+	function downloadFile(fileItem) {
+	//	var radialObj = $('#'+fileItem.downloadProgressId).data('radialIndicator');
+		var ft = new FileTransfer();
+		var source = encodeURI("http://10.10.21.14:8080/hot/offline/" + fileItem.remoteFileName);
+
+		ft.download(
+				source,
+				function(entry) {
+		//			radialObj.animate(100);
+					window.resolveLocalFileSystemURL(entry.toURL(),
+							function(data) {
+								$('#'+fileItem.downloadProgressId).hide();
+								var img = $("#"+fileItem.downloadedId);
+								img.attr("src", data.toInternalURL());
+								img.show();
+							});
+				},
+				function(error) {
+				},
+				false,{headers: {
+						"Authorization": "Basic dGVzdHVzZXJuYW1lOnRlc3RwYXNzd29yZA=="
+					}}
+		);
+
+		//ft.onprogress = function(progressEvent) {
+		//	if (progressEvent.lengthComputable) {
+		//		var progress = Math.floor(100 * progressEvent.loaded / progressEvent.total)
+		//		radialObj.animate(progress);
+		//	}
+		//};
+	}
+
+	function FileItem(mediaFile, uploadProgressId, uploadedId, downloadProgressId, downloadedId) {
+		this.mediaFile = mediaFile;
+		this.uploadProgressId = uploadProgressId;
+		this.uploadedId = uploadedId;
+		this.downloadProgressId = downloadProgressId;
+		this.downloadedId = downloadedId;
+		this.remoteFileName = null;
+	}
+
+</script>
+</body>
+</html>

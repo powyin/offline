@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Speechrecognition插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Speechrecognition插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Speechrecognition插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="speechRecognition()">语音识别</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="speechStreamRecognition()">音频流识别</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="stopRecognition()">停止识别</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="cancelRecognition()">取消识别</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+var audioPath;
+    function speechRecognition() {
+        navigator.speechrecognition.speechRecognition(
+            function (successCallback) {
+                alert(JSON.stringify(successCallback));
+                audioPath = successCallback.audioPath;
+            },function (errorCallback) {
+                alert(JSON.stringify(errorCallback));
+            },{'haveView':'false','speechTimeout':'50000','language':'zh_cn','dot':'1','accent':'mandarin','isPath':'true','audioFormat':'wav'});
+    }
+
+    function speechStreamRecognition() {
+        if (audioPath === null || !audioPath.length) return;
+        navigator.speechrecognition.speechStreamRecognition(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            },{'audioPath':audioPath}
+        );
+    }
+    function stopRecognition() {
+        navigator.speechrecognition.stopRecognition(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+
+    function cancelRecognition() {
+        navigator.speechrecognition.cancelRecognition(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    }
+</script>
+</body>
+
+</html>

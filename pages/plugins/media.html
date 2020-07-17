@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<style>
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+  	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+    }
+  	
+  	var width, height, padding = 2, itemWidth;
+  	var columnCount = 3;
+  	var mediaFiles = new Array();
+  	
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text(title);
+	    
+	    width = window.screen.availWidth - padding * 2;
+	    height = window.screen.availHeight;
+	    itemWidth = (width - padding*(columnCount+1))/columnCount;
+	    
+	    $("#preview").height(height*0.85);
+	    $("#preview").css("left", (width-$("#preview").width())/2)
+	    generateItem(null);	
+	   
+	    $("#capture_image").click(function() {
+	    		mui('#picture').popover('toggle');
+		    	navigator.media.captureImage(onSuccess, onFailed, {path:Media.Path.CAMERA, isOriginal: true});
+		    });
+		    
+		    $("#capture_video").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	navigator.media.captureVideo(onSuccess, onFailed, {path:Media.Path.APP});
+		    });
+		    
+		    $("#capture_audio").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	navigator.media.captureAudio(onSuccess, onFailed, {path:Media.Path.APP});
+		    });
+		    
+		    $("#select_image").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	// navigator.file.open(onSuccess, {image:true,video:false,audio:false});
+                navigator.file.selectImage(onSuccess, onFailed);
+		    });
+		    
+		    $("#select_video").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	navigator.file.open(onSuccess, {image:false,video:true,audio:false});
+		    });
+		    
+		    $("#select_audio").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	navigator.file.open(onSuccess, {image:false,video:false,audio:true});
+		    });
+		    
+		    $("#select_media").click(function() {
+		    	mui('#picture').popover('toggle');
+		    	navigator.file.open(onSuccess, {image:true,video:true,audio:true, document: true});
+		    });
+	});
+	
+	function onSuccess(data) {
+		if (data instanceof Array) {
+			$.each(data, function(i, item) {
+				// alert(JSON.stringify(item));
+				generateItem(item)
+			});
+		} else {
+			generateItem(data);
+		}
+	}
+	
+	function onFailed() {
+		
+	}
+	
+	function generateItem(mediaFile) {
+		if (mediaFile != null) mediaFiles.push(mediaFile);
+		var row,col,src,itemHtml,typeStyle = "display:none", count = mediaFiles.length;
+		if (count == 0) {
+			row = 0;
+			col = 0;
+			src = "../../img/add_media.png";
+			typeStyle = "display:none;";
+			itemHtml = "<a href='#picture' style='position: absolute; left: "+padding+"px; top:"+padding+"px'>"
+					+ "<img style='width: "+itemWidth+"px; height:"+itemWidth+"px; position: absolute;' src='"+src+"' />"
+					+ "<img style='width:21px; height:14px;left:"+(itemWidth-31)+"px;top:"+(itemWidth-24)+"px;position:absolute;"+typeStyle+"' src='../../img/video_flag.png'/>"
+					+ "</a>";
+		} else {
+
+
+
+
+			row = Math.floor(count/columnCount);
+			col = count % columnCount;
+			var left = col*itemWidth + padding*(col+1);
+			var top = row*itemWidth+ padding*(row+1);
+
+			if (mediaFile.type.indexOf("audio") > -1) {
+				src = "../../img/audio_default.png"
+			} else {
+				if (mediaFile.thumbLocalURL != null && mediaFile.thumbLocalURL != undefined) {
+
+                    src = mediaFile.thumbLocalURL;
+
+				} else {
+					src = mediaFile.localURL;
+				}
+				
+				if (mediaFile.type.indexOf("video") > -1) {
+					typeStyle = "";
+				}
+			}
+			
+			itemHtml = "<div onclick='albumItemClick("+(count-1)+");' style='position: absolute; left: "+left+"px; top:"+top+"px'>"
+					+ "<img style='background-color:lightblue; width: "+itemWidth+"px; height:"+itemWidth+"px; position: absolute;' src='"+src+"' />"
+					+ "<img style='width:21px; height:14px;left:"+(itemWidth-31)+"px;top:"+(itemWidth-24)+"px;position:absolute;"+typeStyle+"' src='../../img/video_flag.png'/>"
+					+ "</div>";
+		}
+		
+		console.log(itemHtml);
+		$("#album").append($(itemHtml));
+	}
+	
+	function albumItemClick(index) {
+
+
+
+
+		var mediaFile = mediaFiles[index];
+		var content = "文件名:"+mediaFile.name+
+					"\n类型: "+mediaFile.type+
+					"\n大小: "+mediaFile.size+
+		            "\n最后修改时间: "+mediaFile.lastModifiedDate+
+					"\n本地路径:"+mediaFile.fullPath+
+					"\n通用路径: "+mediaFile.localURL+
+					"\n缩略图路径: "+mediaFile.thumbLocalURL;
+		
+		// navigator.notification.alert(
+		//     content,  // message
+		//     null,         // callback
+		//     '详情',            // title
+		//     '确定'                  // buttonLabel
+		// );
+
+
+
+		navigator.file.preview(mediaFile.fullPath, function () {
+
+        });
+
+
+        // cordova.plugins.fileOpener2.open(
+        //     mediaFile.localURL,
+        //     mediaFile.type,
+        //     {
+        //         error : function(){ },
+        //         success : function(){ }
+        //     }
+        // );
+
+
+
+	}
+
+  </script>
+<header class="mui-bar mui-bar-nav" style="position: fixed;">
+	<span onclick="mui.back()" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()"class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+
+<div id="album" style="width: 100%; padding: 2px; position: relative; margin-top: 44px">
+	
+</div>
+
+<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom" >
+	<ul class="mui-table-view" style="max-height: 1000px;">
+		<li id="capture_image" class="mui-table-view-cell">
+			<a>拍照</a>
+		</li>
+		<li id="capture_video" class="mui-table-view-cell">
+			<a>录像</a>
+		</li>
+		<li id="capture_audio" class="mui-table-view-cell">
+			<a>录音</a>
+		</li>
+		<li id="select_image" class="mui-table-view-cell">
+			<a>选择照片</a>
+		</li>
+		<li id="select_video" class="mui-table-view-cell">
+			<a>选择视频</a>
+		</li>
+		<li id="select_audio" class="mui-table-view-cell">
+			<a>选择音频</a>
+		</li>
+		<li id="select_media" class="mui-table-view-cell">
+			<a href="#">选择多媒体</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">
+			<a href="#picture"><b>取消</b></a>
+		</li>
+	</ul>
+</div>
+</body>
+</html>

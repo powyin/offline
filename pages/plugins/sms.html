@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sms插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <!--App自定义的css-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Sms插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Sms插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <form id="input-group" class="mui-input-group">
+        <div class="mui-input-row">
+            <label>消息内容:</label>
+            <input type="text" name="message" class="mui-input-clear" placeholder="请输入消息内容">
+        </div>
+        <div class="mui-input-row">
+            <label>手机号码:</label>
+            <input type="number" name="phoneNum" class="mui-input-clear" placeholder="请输入手机号码">
+        </div>
+    </form>
+    ﻿
+
+    <div class="mui-content-padded">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="confrim()">确认</button>
+    </div>
+
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console('deviceready')
+    }
+
+    function confrim() {
+
+        var message = $("input[ name='message']").val();
+        var phoneNum = $("input[ name='phoneNum']").val();
+
+        if (!message.length){
+            alert('请输入message值');
+            return;
+        }
+
+        if (!phoneNum.length){
+            alert('请输入phoneNum值');
+            return;
+        }
+
+
+        sendSms(message, phoneNum);
+
+
+
+
+    }
+
+</script>
+</body>
+
+</html>

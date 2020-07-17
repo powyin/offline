@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PhotoPicker插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">PhotoPicker插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示PhotoPicker插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="selectImage()">选择照片</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div id="photos">
+        <div id="img-content" class="mui-card" v-for="(photo, index) in photos">
+            <div class="mui-card-header mui-card-media">
+                <!--缩略图-->
+				<img width="10%" :src="photo.localURL"/>
+                <!--名称 + 大小-->
+                <div class="mui-media-body">
+                    <p id="img-name">{{photo.name}}</p>
+                    <p >{{photo.size}}B</p>
+                </div>
+            </div>
+            <div class="mui-card-content" @click="photopreview(photo.localURL)">
+                <img width="100%" :src="photo.localURL"/>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+
+    var data = {
+        photos: []
+    };
+
+
+    new Vue({
+        el: '#photos',
+        methods: {
+            photopreview(src) {
+                navigator.photoPreviewer.preview(src);
+            }
+        },
+        data: data
+    });
+
+
+    function selectImage() {
+        navigator.photoPicker.open(function (res) {
+            data.photos = res;
+        },function (err) {
+            alert(err)
+        })
+    }
+
+
+
+
+</script>
+</body>
+
+</html>

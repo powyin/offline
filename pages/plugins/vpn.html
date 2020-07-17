@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>VPN插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">VPN插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示VPN插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">登录</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="authLogin" class="mui-navigate-right" onclick="vpnLogin()">登录</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" href="http://172.16.70.85:8080/HZSWDD/login">访问内网</a>
+        </div>
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">连接状态</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareText2" class="mui-navigate-right" onclick="vpnStatus()">连接状态</a>
+        </div>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">退出</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="vpnLogout()">退出</a>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    function vpnLogin() {
+        var obj = new VPNObject();
+        obj.host = '118.24.36.154';
+        obj.userName = 'vpnuser';
+        obj.passWord = 'jts7VwN4rAdKmDu9';
+        obj.sharedSecret = 'yrAwf4HKEqaseff3Vmrk';
+        navigator.vpn.connectToL2TP(obj,function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function vpnStatus() {
+        navigator.vpn.isOnlineL2TP(function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function vpnLogout() {
+        navigator.vpn.disConnectL2TP(function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+</script>
+</body>
+
+</html>

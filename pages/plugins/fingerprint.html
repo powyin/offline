@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=")+1);
+        $('#title').text(title);
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+
+        // navigator.fingerprint.isAvailable(function (result) {
+        //
+        //     switch (result){
+        //         case Fingerprint.Result.SUPPORT_FINGERPRINT:
+        //             navigator.basis.tip('支持指纹识别');
+        //             break;
+        //         case Fingerprint.Result.VERIFY_SUCCESS:
+        //             navigator.basis.tip('指纹验证成功');
+        //             break;
+        //         case Fingerprint.Result.NO_SUPPORT_FINGERPRINT:
+        //             navigator.basis.tip('不支持指纹识别');
+        //             break;
+        //         case Fingerprint.Result.NO_LOCK_SCREEN_CIPHER:
+        //             navigator.basis.tip('未设置锁屏密码');
+        //             break;
+        //         case Fingerprint.Result.NO_FINGERPRINT:
+        //             navigator.basis.tip('未录入指纹');
+        //             break;
+        //         case Fingerprint.Result.FINGERPRINT_ERROR:
+        //             navigator.basis.tip('输入指纹错误');
+        //             break;
+        //         case Fingerprint.Result.MANY_TIMES_ERROR:
+        //             navigator.basis.tip('尝试次数过多，请稍后重试');
+        //             break;
+        //         case Fingerprint.Result.OTHER_ERRORS:
+        //             navigator.basis.tip('其他错误');
+        //             break;
+        //         default:
+        //             break;
+        //
+        //     }
+        //
+        // });
+
+
+
+        navigator.fingerprint.verifyFingerprint(
+            function(result){
+
+                switch (result){
+                    case Fingerprint.Result.SUPPORT_FINGERPRINT:
+                        navigator.notification.alert('支持指纹识别');
+                        break;
+                    case Fingerprint.Result.VERIFY_SUCCESS:
+                        navigator.notification.alert('指纹验证成功');
+                        break;
+                    case Fingerprint.Result.NO_SUPPORT_FINGERPRINT:
+                        navigator.notification.alert('不支持指纹识别');
+                        break;
+                    case Fingerprint.Result.NO_LOCK_SCREEN_CIPHER:
+                        navigator.notification.alert('未设置锁屏密码');
+                        break;
+                    case Fingerprint.Result.NO_FINGERPRINT:
+                        navigator.notification.alert('未录入指纹');
+                        break;
+                    case Fingerprint.Result.FINGERPRINT_ERROR:
+                        navigator.notification.alert('输入指纹错误');
+                        break;
+                    case Fingerprint.Result.MANY_TIMES_ERROR:
+                        navigator.notification.alert('尝试次数过多，请稍后重试');
+                        break;
+                    case Fingerprint.Result.OTHER_ERRORS:
+                        navigator.notification.alert('其他错误');
+                        break;
+                    default:
+                        break;
+
+                }
+
+            });
+
+
+
+    }
+
+</script>
+<header class="mui-bar mui-bar-nav" style="position: fixed;">
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div>
+    <!--<div style="margin: 10px;">-->
+    <!--<table>-->
+    <!--<tr>-->
+    <!--<td>设备名称：</td><td id="model"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>设备系统：</td><td id="platform"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>设备唯一码：</td><td id="uuid"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>系统版本：</td><td id="version"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>制造商：</td><td id="manufacturer"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+    <!--<td>序列号：</td><td id="serial"></td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</div>-->
+</div>
+</body>
+</html>

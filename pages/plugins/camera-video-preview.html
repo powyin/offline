@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>H5视频预览</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+
+        .content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 44px;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content video {
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">H5视频预览</h1>
+</header>
+<div class="content">
+
+
+</div>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/hc.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+        var src = getQueryString('source');
+        var poster = getQueryString('poster');
+
+        console.log('src:'+src);
+        console.log('poster:'+poster);
+
+        var htmlStr = "<video width='100%' poster='"+poster+"'  muted  src='"+src+"' preload=\"auto\" controls>" +
+            "</video>";
+
+        $(".content").append($(htmlStr));
+
+    }
+
+
+
+
+
+    //
+    // var promise = document.querySelector('video').play();
+    //
+    // if (promise !== undefined) {
+    //     promise.catch(error => {
+    //         // Auto-play was prevented
+    //         // Show a UI element to let the user manually start playback
+    //     }).then(() => {
+    //         // Auto-play started
+    //     });
+    // }
+
+
+
+
+</script>
+</body>
+
+</html>

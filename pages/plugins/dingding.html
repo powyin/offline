@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dingtalk插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Dingtalk插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Dingtalk插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="getAuth()">登录</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">分享</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareText2" class="mui-navigate-right" onclick="shareText()">分享文字</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareImage" class="mui-navigate-right" onclick="shareImage()">分享图片</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareMusic" class="mui-navigate-right " onclick="shareMusic()">音频分享</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareVideo" class="mui-navigate-right " onclick="shareVideo()">视频分享</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareLink" class="mui-navigate-right " onclick="shareNet()">网页分享</a>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready');
+    }
+
+    function getAuth(){
+        //登录钉钉
+        navigator.ddshare.getAuth(function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback) {
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+    function shareText(){
+        //分享文字
+        var obj = new ShareTextObject('钉钉文字分享测试');
+        navigator.ddshare.share(obj,function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+
+    function shareImage(){
+        //分享图片
+        var obj = new ShareImageObject('http://hot.online.sh.cn/images/attachement/jpeg/site1/20180225/IMGf48e3894467146954814361.jpeg');
+        navigator.ddshare.share(obj,function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+    function shareMusic(){
+        //分享音频
+        var obj = new ShareWebpageObject('http://y.qq.com/i/song.html?songid=432451&source=mobileQQ%23wechat_redirect','歌曲名：不要说话','专辑名：不想放手歌手名：陈奕迅','http://imgcache.qq.com/music/photo/mid_album_300/V/E/000J1pJ50cDCVE.jpg');
+        navigator.ddshare.share(obj, function (successCallback) {
+            alert(JSON.stringify(successCallback));
+        }, function (errorCallback) {
+            alert(JSON.stringify(errorCallback));
+        });
+
+        // 分享视频
+        // var obj = new ShareWebpageObject('http://url.cn/5ciXSIz','视频《画》',
+        //     'G.E.M.邓紫棋','http://hot.online.sh.cn/images/attachement/jpeg/site1/20180225/IMGf48e3894467146954814361.jpeg');
+        // navigator.ddshare.share(obj, function (successCallback) {
+        //     alert(JSON.stringify(successCallback));
+        // }, function (errorCallback) {
+        //     alert(JSON.stringify(errorCallback));
+        // });
+
+        // //分享
+        // var obj = new ShareWebpageObject();
+        // obj.webpageUrl =  'http://www.qlwb.com.cn/2019/0214/1397405.shtml';
+        // obj.title = '网页标题';
+        // navigator.ddshare.share(obj, function (successCallback) {
+        //     alert(JSON.stringify(successCallback));
+        // }, function (errorCallback) {
+        //     alert(JSON.stringify(errorCallback));
+        // });
+    }
+function shareVideo() {
+    //分享视频
+    var obj = new ShareWebpageObject();
+    obj.webpageUrl = 'http://url.cn/5ciXSIz';
+    obj.title = '视频《画》';
+    obj.description = 'G.E.M.邓紫棋';
+    obj.thumbImage = 'http://hot.online.sh.cn/images/attachement/jpeg/site1/20180225/IMGf48e3894467146954814361.jpeg';
+    navigator.ddshare.share(obj, function (successCallback) {
+        alert(JSON.stringify(successCallback));
+    }, function (errorCallback) {
+        alert(JSON.stringify(errorCallback));
+    });
+}
+function shareNet() {
+    //分享
+    var obj = new ShareWebpageObject();
+    obj.webpageUrl =  'http://www.qlwb.com.cn/2019/0214/1397405.shtml';
+    obj.title = '网页标题';
+    navigator.ddshare.share(obj, function (successCallback) {
+        alert(JSON.stringify(successCallback));
+    }, function (errorCallback) {
+        alert(JSON.stringify(errorCallback));
+    });
+}
+
+</script>
+</body>
+
+</html>

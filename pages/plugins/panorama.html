@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PhotoPreviewer插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Panorama插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Panorama插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="showByConfig()">展示全景图</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console('deviceready')
+    }
+    function showByConfig() {
+			var music = "http://172.16.2.46:8888/cc/%e8%83%8c%e6%99%af%e9%9f%b3%e4%b9%90.mp3";
+            var succ0 = {
+                "url": "http://172.16.2.46:8888/cc/supcon入场.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th1-欢迎区.jpg",
+                "title": "中控信息",
+                "des":"中控信息公司展厅参观路线：\n" +
+                "1欢迎区→2公司介绍→3领导关怀→4荣誉墙+宣传片→5智慧架构（全面感知、综合监控、智能管理、智慧运营）→6智慧大交通（公路、城市、轨道交通）→7智慧大环境（水务、建筑、旅游、管廊）→8业务总览→9大数据展示平台→10照片墙\n",
+                "lookAt":0.6915733,
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+
+
+                hot: [
+                    {
+                        "x": 0.452777777777,
+                        "y": 0.5,
+                        "width": "0.07",
+                        "height": "0.07",
+                        "title": "照片墙",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "clickJump": 1,
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 9, dell)
+                        }
+                    },
+
+                    {
+                        "x": 0.935777777777,
+                        "y": 0.5,
+
+                        "title": "公司介绍",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 1, dell)
+                        }
+                    }
+                ]
+            };
+            var succ1 = {
+                "url": "http://172.16.2.46:8888/cc/supcon关于中控.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th2-公司介绍.jpg",
+                "title": "关于中控",
+                "lookAt":0.3951825,
+                "des": "中控集团\n" +
+                "中控集团，始创于1993年，总部位于杭州滨江。作为中国领先的自动化、信息化与智能化技术、产品与解决方案供应商，业务涉及流程工业自动化及智能制造、智慧城市、工业操作系统、工控安全、智能芯片、高端仪器、运维服务等众多领域。“中控”与“SUPCON”已成为业内国际知名品牌。\n" +
+                "中控信息\n" +
+                "浙江浙大中控信息技术有限公司（简称：中控信息）是中控集团重要的组成部分，核心业务是“智慧城市”解决方案及相关信息系统集成服务。\n" +
+                "中控信息以城市综合管理系统建设为核心，集成多种信息系统、控制系统及海量数据，通过一个完整架构、一套公共基础设施（网络基础设施、海量数据中心、城市公共服务云、安全运维平台）和两大业务应用板块（大交通、大环境）的“1+1+2”系统建设，完成众多成功案例，为城市建设打造涵盖大交通、大环境领域众多智能基础设施，使“智慧城市”成功地从概念走向现实。\n" +
+                "以“ｅ城市·易生活”为理念，“智慧大交通”、“智慧大环境”、新型智慧城市为主要内容的智慧城市建设者。业务领域覆盖智慧城市全产业链，建设项目遍及中国32个省份区域及东南亚、非洲等地，为城市打造了涵盖大交通、大环境领域众多智能基础设施，助力智慧城市从概念走向现实。\n",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+
+                hot: [
+                    {
+                        "x": 0.64243513,
+                        "y": 0.5598257,
+                        "title": "欢迎区",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 0, dell)
+                        }
+                    },
+                    {
+                        "x": 0.136,
+                        "y": 0.55,
+
+                        "title": "领导关怀",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 2, dell)
+                        }
+                    }
+                ]
+            };
+            var succ2 = {
+                "url": "http://172.16.2.46:8888/cc/supcon_333.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th3-领导关怀.jpg",
+                "title": "中控生活",
+                "lookAt":0.04744907,
+                "des": "",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                "des": "中控的成长和发展得到各级领导、社会各界人士的关心与支持，习近平、胡锦涛、李克强、温家宝等党和国家领导人都曾亲临中控视察指导。",
+
+                "hot": [
+
+
+                    {
+                        "x": 0.28543523,
+                        "y": 0.50340056,
+                        "title": "公司介绍",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 1, dell)
+                        }
+                    },
+
+                    {
+                        "x": 0.7448026,
+                        "y": 0.5322425,
+
+                        "title": "荣誉墙+宣传片",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 3, dell)
+                        }
+                    }
+
+                ]
+            };
+            var succ3 = {
+                "url": "http://172.16.2.46:8888/cc/supcon沙盘.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th4-荣誉墙+宣传片.jpg",
+                "title": "沙盘",
+                "lookAt":0.5008638,
+                "des": "成立以来，中控信息始终专注于智慧城市各领域的开拓和建设，在各个行业都得到了用户、政府、行业协会、媒体等社会各界的肯定。",
+
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                "hot": [
+                    {
+                        "x": 0.27556917,
+                        "y": 0.51995543,
+                        "width": "0.35",
+                        "height": "0.35",
+                        "url": "http://172.16.2.46:8888/cc/web_test_blue.html",
+                        align: "rightTop",
+
+                        "clickJump": 1,
+
+                        direct() {
+                            console.log("ffffffffffffffffffffffffffffffffffff1111111")
+                        }
+                    },
+                    {
+                        "x": 0.935777777777,
+                        "y": 0.53,
+                        "title": "领导关怀",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 2, dell)
+                        }
+                    },
+                    {
+                        "x": 0.07702022,
+                        "y": 0.5309525,
+
+                        "title": "智能架构",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 4, dell)
+                        }
+                    },
+                    {
+                        "x": 0.4955869,
+                        "y": 0.5003478,
+                        "icon": "点我查看.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.16",
+                        "height": "0.16",
+
+                        direct() {
+                            navigator.videoPreviewer.preview("http://172.16.2.46:8888/cc/mp4.mp4", "title", function (info) {
+                            }, function (info) {
+                            })
+                        }
+                    },
+                    {
+                        "x": 0.74908614,
+                        "y": 0.5034073,
+                        "width": "0.25",
+                        "height": "0.25",
+                        "icon": "jbtm.png",
+                        "video": "",
+                        "clickJump": 1,
+                        direct() {
+                            navigator.glPreview.preview("http://172.16.2.46:8888/cc/ok.zip", "jiangbei.obj", function (info) {
+                            }, function (inof) {
+                            });
+                        }
+                    }
+                ]
+            };
+            var succ4 = {
+                "url": "http://172.16.2.46:8888/cc/supcon智能管理+智慧公路交通.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th5-智慧架构.jpg",
+                "title": "智能管理+智能公路交通",
+                "lookAt":0.2622174,
+                "des": "中控信息于2010年提出“易城市·e生活”的智慧城市理念。智慧城市，就是从全面感知、综合监控到智能管理和智慧运营的全过程。",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                "hot": [
+                    {
+                        "x": 0.55731045,
+                        "y": 0.5646671,
+                        "title": "荣誉墙+宣传片",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 3, dell)
+                        }
+                    },
+                    {
+                        "x": 0.0150803293,
+                        "y": 0.50174904,
+                        "title": "智慧大交通",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 5, dell)
+                        }
+                    }
+                ]
+            };
+            var succ5 = {
+                "url": "http://172.16.2.46:8888/cc/supcon智慧城市交通+运营.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th7-智慧大交通.jpg",
+                "title": "城市交通+运营",
+                "lookAt":0.38835844,
+                "des": "致力于以技术手段缓解中国高速增长的交通压力，摆脱交通困局，建立“实时、准确、高效的交通综合管理服务体系”。\n" +
+                "1、公路交通：\n" +
+                "为全国200多条高速公里、长大隧道建设了收费、监控、通信系统。\n" +
+                "2、城市交通：\n" +
+                "为全国100多个城市建设智能交通信号控制系统、交通集成管控指挥平台。\n" +
+                "3、轨道交通：\n" +
+                "参与全国14座城市、29条线路、600多座车站的建设运营\n",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                hot: [
+                    {
+                        "x": 0.15587069,
+                        "y": 0.5794839,
+                        "title": "智能架构",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 4, dell)
+                        }
+                    },
+                    {
+                        "x": 0.6334136,
+                        "y": 0.5440861,
+                        "title": "智慧大环境",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 6, dell)
+                        }
+                    }
+                ]
+            };
+            var succ6 = {
+                "url": "http://172.16.2.46:8888/cc/supcon智慧环境.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th6-智慧大环境.jpg",
+                "title": "智慧环境",
+                "lookAt":0.15323061,
+                "des": "为与自然和谐共生，提出建设“绿色、低碳、舒适的可持续发展环境服务体系”。\n" +
+                "1、智慧水务：\n" +
+                "为全国400多家自来水和废水处理企业提供数字水厂、智慧水务管控平台\n" +
+                "2、智慧建筑：\n" +
+                "为全国上百家综合性医院及多个大型智慧园区、智能楼宇等建设智能建筑运维管控平台\n" +
+                "3、智慧旅游：\n" +
+                "成功打造了近百个智慧旅游项目，涉及旅游大数据、智慧景区、古城保护与遗产监测、智慧小镇等。\n" +
+                "4、智慧管廊：\n" +
+                "参与杭州、长沙、海口、唐山、苏州等10多个大中城市的综合管廊智慧化生产和管理。\n",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                hot: [
+                    {
+                        "x": 0.40940917,
+                        "y": 0.5560313,
+                        "title": "智慧大交通",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 5, dell)
+                        }
+                    },
+                    {
+                        "x": 0.9086028,
+                        "y": 0.51730883,
+                        "title": "业务总览",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 7, dell)
+                        }
+                    }
+                ]
+            };
+            var succ7 = {
+                "url": "http://172.16.2.46:8888/cc/supcon智慧交通+旅游.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th8-业务总览.jpg",
+                "title": "智慧交通+旅游",
+                "lookAt":0.40709653,
+                "des": "围绕“智慧大交通”、“智慧大环境”以及新型智慧城市建设为核心业务领域，中控信息致力于“e城市，易生活”城市运行综合管理信息化解决方案的建设，在交通大脑、城市交通、公路交通、轨道交通、环境大脑、智慧水务、智慧建筑、智慧旅游、智慧管廊、新型智慧城市等各个业务领域都取得了一系列成果。",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                hot: [
+                    {
+                        "x": 0.1288547,
+                        "y": 0.5087873,
+                        "title": "智慧大环境",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 6, dell)
+                        }
+                    },
+                    {
+                        "x": 0.5711054,
+                        "y": 0.570388,
+                        "title": "大数据平台区",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 8, dell)
+                        }
+                    }
+                ]
+            };
+            var succ8 = {
+                "url": "http://172.16.2.46:8888/cc/supcon主展厅.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th9-大数据平台展示区.jpg",
+                "title": "主展厅",
+                "lookAt":0.11910807,
+                "des": "实时大数据展示平台，包括杭州综合交通信息指挥中心平台、杭州水务供排水一体化调度系统、轨道交通网络化运营大脑、浙江省旅游产业信息中心平台、轨道监控平台、建筑运维平台等。",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                hot: [
+                    {
+                        "x": 0.5605289,
+                        "y": 0.5004598,
+                        "title": "业务总览",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 7, dell)
+                        }
+                    },
+                    {
+                        "x": 0.11910807,
+                        "y": 0.5003478,
+                        "icon": "http://172.16.2.46:8888/cc/点我查看.gif",
+                        "video": "",
+                        "clickJump": 1,
+                        "width": "0.16",
+                        "height": "0.16",
+                        direct() {
+                            navigator.videoPreviewer.preview("http://172.16.2.46:8888/cc/中控集团宣传片.mp4", "title", function (info) {
+                            }, function (info) {
+                            })
+                        }
+                    },
+                    {
+                        "x": 0.6607184,
+                        "y": 0.5004598,
+                        "title": "照片墙",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 9, dell)
+                        }
+                    }
+                ]
+            };
+            var succ9 = {
+                "url": "http://172.16.2.46:8888/cc/supcon照片墙.jpg",
+                "thumbnail": "http://172.16.2.46:8888/cc/th10-照片墙.jpg",
+                "title": "照片墙",
+                "lookAt":0.37377456,
+                "des": "这是中控信息官微二维码，欢迎扫描关注，了解中控信息最新动态。",
+                "bgm": "mp3.mp3",
+                "tel": 400-690-0999,
+                hot: [
+                    {
+                        "x": 0.62810386,
+                        "y": 0.58079875,
+                        "width": "0.07",
+                        "height": "0.07",
+                        "title": "欢迎区",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "clickJump": 1,
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 0, dell)
+                        }
+                    },
+                    {
+                        "x": 0.14120233,
+                        "y": 0.5814512,
+                        "title": "大数据平台区",
+                        "icon": "http://172.16.2.46:8888/cc/panorama_drop.gif",
+                        "width": "0.06",
+                        "height": "0.06",
+
+
+                        direct() {
+                            navigator.panorama.showByConfig(all, 8, dell)
+                        }
+                    }
+                ]
+            };
+
+
+            var all = [succ0, succ1, succ2, succ3, succ4,succ5,succ6,succ7,succ8, succ9];
+            // var all = [succ0];
+
+            function dell(info) {
+                console.log(JSON.stringify(info));
+                if (info.type === 0) {
+                    console.log("show success 显示成功: " + info);
+                }
+                if (info.type === 1) {
+                    console.log("show success 处理点击: " + info);
+                    all[info.panoramaIndex].hot[info.hotIndex].direct();
+                }
+                if (info.type === -1) {
+                    console.log("show success 处理错误: " + info);
+                    console.log(info.message);
+                }
+            }
+
+
+
+            navigator.panorama.showByConfig(all, 0, dell);
+    }
+</script>
+</body>
+
+</html>

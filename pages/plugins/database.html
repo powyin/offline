@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function execSQL(){
+        navigator.db.execSQL("CREATE TABLE table1(number INTEGER,name TEXT,class TEXT)"
+            ,function(str){
+                alert("成功创建表");
+            },function(error){
+                alert(error);
+            });
+    }
+    function insert(){
+        var sql = "INSERT INTO table1 VALUES (1,'张三','二班')";
+        navigator.db.execSQL(sql,function(str){
+            alert("成功插入一行");
+        },function(error){
+            alert(error);
+        });
+    }
+    function de(){
+        var sql = "delete from table1 where number = 1";
+        navigator.db.execSQL(sql,function(str){
+            alert("成功删除数据");
+        },function(error){
+            alert(error);
+        });
+    }
+    function update(){
+        var sql = "update table1 set class = '李四' where number = 1";
+        navigator.db.execSQL(sql,function(str){
+            alert("成功更新数据");
+        },function(error){
+            alert(error);
+        });
+    }
+    function query(){
+        navigator.db.rawQuery("SELECT * from table1",
+            function(result){
+                for(var i =0; i<result.length; i++){
+                    alert("序号："+result[i].number+"姓名："+result[i].name+"班级："+result[i].class);
+                }
+            },function(error){
+                alert(error);
+            });
+    }
+    function loadFromJson(){
+        var json = [
+            {
+                "name": "Google",
+                "number": "1"
+            },
+            {
+                "name": "Baidu",
+                "number": "2"
+            },
+            {
+                "name": "SoSo",
+                "number": "3"
+            }
+        ];
+        var Jsonstr = JSON.stringify(json);
+        var cols = ['number','name'];
+        navigator.db.loadFromJson(Jsonstr,'table1',cols,function(){
+            alert("成功创建或打开数据库");
+        },function(error){
+            alert(error);
+        });
+    }
+    function onDeviceReady() {
+
+    }
+
+</script>
+<header class="mui-bar mui-bar-nav" style="position: static;">
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <span onclick="window.location.reload()" id="back" class="mui-icon mui-icon-refresh"
+          style="position:absolute; right:15px"></span>
+</header>
+<div>
+    <div style="margin: 10px;">
+
+        <div style="justify-content: space-around;display: flex; padding-top: 10px">
+            <button type="button" onclick="execSQL()" class="mui-btn mui-btn-primary">创建表</button>
+            <button type="button" onclick="insert()" class="mui-btn mui-btn-primary">插入数据</button>
+        </div>
+
+        <div style="justify-content: space-around;display: flex; padding-top: 10px">
+            <button type="button" onclick="de()" class="mui-btn mui-btn-primary">删除一条数据</button>
+            <button type="button" onclick="update()" class="mui-btn mui-btn-primary">更新数据</button>
+        </div>
+        <div style="justify-content: space-around;display: flex; padding-top: 10px">
+            <button type="button" onclick="query()" class="mui-btn mui-btn-primary">数据库查询</button>
+            <button type="button" onclick="loadFromJson()" class="mui-btn mui-btn-primary">打开或创建数据库</button>
+        </div>
+        <div style="margin-top: 10px">
+
+            <label for="sql-cmd" style=" width: 100%">命令类型
+
+                <select id="sql-cmd"
+                        style=" width: 70%; margin-left: 30px; vertical-align: center; horiz-align: center">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </label>
+
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

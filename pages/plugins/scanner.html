@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+		.scan-group {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.code-div {
+			width: 100%;
+			text-align: center;
+		}
+		.bar-code-img {
+			width: 200px;
+			height: 100px;
+		}
+
+		.qr-code-img {
+			width: 200px;
+			height: 200px;
+		}
+
+		.scan-img{
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			right: 10px;
+			padding: 10px;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		td {
+			text-align: center;
+		}
+
+
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text(title);
+
+	    $('#scanner').click(function() {
+    		navigator.scanner.scan(function(code) {
+    			$("#code_input").val(code);
+    		});
+    	});
+
+    	$('#create_bar_code').click(function() {
+    		var code = $('#bar_code_input').val();
+    		if (code == "") {
+    			alert("请输入条形码内容e");
+    		}
+    		navigator.scanner.createBarCode(function(src) {
+                resolveLocalFileSystemURL(src, function (results) {
+                    $("#bar_code_img_x").attr("src", results.toInternalURL());
+                },
+				function (error) {
+                    alert('-->error '+error);
+                })
+
+    		}, null, {content: code, width:200, height:50});
+    		// navigator.scanner.createBarCode(function(src) {
+            //
+            //
+             //    resolveLocalFileSystemURL(src, function (results) {
+            //
+             //        $("#bar_code_img_xx").attr("src", results.toInternalURL());
+            //
+             //    }, function (error) {
+             //        console.log('-->error '+error);
+             //    })
+
+    		// }, null, {content: code});
+    	});
+
+    	$('#create_2d_code').click(function() {
+    		var code = $('#2d_code_input').val();
+    		if (code == "") {
+				alert("请输入条形码内容");
+    		}
+
+    		navigator.scanner.create2DCode(function(src) {
+
+
+                resolveLocalFileSystemURL(src, function (results) {
+
+                    $("#2d_code_img_x").attr("src", results.toInternalURL());
+
+                }, function (error) {
+					console.log('-->error '+error);
+                })
+
+    		}, null, {content: code, width:100, height:100});
+
+
+    		navigator.scanner.create2DCode(function(src) {
+
+                resolveLocalFileSystemURL(src, function (results) {
+
+                    $("#2d_code_img_xx").attr("src", results.toInternalURL());
+
+                }, function (error) {
+                    console.log('-->error '+error);
+                });
+
+    		}, null, {content: code, width:200, height:200, hasLogo: true});
+    	});
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+    }
+
+  </script>
+<header class="mui-bar mui-bar-nav" style="position: static;">
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()" id="back" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">扫码</a>
+			<div class="mui-collapse-content">
+				<div>
+					<img id="scanner" src="../../img/scan.png" class="scan-img"/>
+					<input id="code_input" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 10px; padding-left: 10px;" type="text" class="form-control" placeholder="点击右侧图标开始扫码">
+				</div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">生成条形码</a>
+			<div class="mui-collapse-content">
+				<div>
+					<img id="create_bar_code" src="../../img/create_bar_code.png" class="scan-img"/>
+					<input id="bar_code_input" value="123 456 789" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; margin-bottom: 10px; padding-left: 10px;" type="text" class="form-control">
+				</div>
+			   	<div class="code-div">
+			   		<table>
+			   			<tr>
+			   				<td>
+			   					<img id="bar_code_img_x"/>
+			   				</td>
+			   				<td>
+			   					<img id="bar_code_img_xx" />
+			   				</td>
+			   			</tr>
+			   		</table>
+			   	</div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">生成二维码</a>
+			<div class="mui-collapse-content">
+				<div>
+					<img id="create_2d_code" src="../../img/create_qr_code.png" class="scan-img"/>
+					<input id="2d_code_input" value="123456" style="border-left-width:0px;border-top-width:0px;border-right-width:0px;border-radius:0px;background: transparent;height:50px; padding-left: 10px;" type="text" class="form-control" >
+				</div>
+			    <div class="code-div">
+			   		<table>
+			   			<tr>
+			   				<td>
+			   					<img id="2d_code_img_x"/>
+			   				</td>
+			   				<td>
+			   					<img id="2d_code_img_xx" />
+			   				</td>
+			   			</tr>
+			   		</table>
+			   	</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</body>
+</html>

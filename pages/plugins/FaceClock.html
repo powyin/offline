@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"  href="../../css/mui.picker.min.css" />
+    <style>
+        img{
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .mui-btn-crile{
+            text-align: center;
+            margin-left: calc((100% - 120px)/2);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 22px;
+            font-weight: 400;
+        }
+        .mui-btn1{
+            /*position: fixed;*/
+            /*text-align: center;*/
+            margin-left: 65%;
+            top: -35px;
+            width: 35%;
+            /*height: 100%;*/
+            /*border-radius: 50%;*/
+            font-size: 13px;
+            font-weight: 100;
+            border: none;
+        }
+        .mui-media{
+            /*width: 80%;*/
+            height: 80%;
+        }
+
+        .mui-table-view .mui-media, .mui-table-view .mui-media-body{
+            padding-bottom: 0;
+        }
+        .maddleBox{
+            padding: 20px;
+        }
+        .maddleBox p:last-child{
+            margin-top:20px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<header class="mui-bar" style="position: static;">
+    <span onclick="mui.back()" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh"
+          style="position:absolute; right:15px"></span>
+</header>
+<div id="app">
+        <ul class=" mui-table-view">
+            <li class="mui-table-view-cell mui-media" style="border-none();">
+                <a href="javascript:; " style="text-decoration:none">
+                    <img class="mui-media-object mui-pull-left" src="../../img/avatar_user.png">
+                    <div class="mui-media-body">
+                        小明
+                        <p class='mui-ellipsis'>考勤组：AB...</p>
+                        <button type="button"  class="mui-btn1" style="text-decoration:none" onclick="handleDatePick()"><span class="dataVlaue">▽</span></button>
+                    </div>
+
+                </a>
+
+            </li>
+        </ul>
+
+    <div id='result' class="ui-alert"></div>
+    <div  class="maddleBox">
+        <p>今日班次 ： <a href="">A:9:00 -- 17:30</a> </p>
+        <p>上班时间：9：00</p>
+        <h4>打卡时间：{{data.time}}</h4>
+        <img id='faceImg' class="mui-media-object " style="border-radius: 0px;overflow: hidden;width: 18%;
+            height: 18%" onerror="this.src='../../img/avatar_user.png'" :src="data.image"/>
+        <p>下班时间：17：30</p>
+        <button id="dakaBtn" type="button" class="mui-btn mui-btn-primary mui-btn-crile" @click="videoModeCheck()">上班打卡</button>
+        <p><span class="positionLVaue"></span><a style="color:#307BF7" @click="Relocation()">重新定位</a> </p>
+
+    </div>
+</div>
+
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+    }
+    function handleDatePick() {
+        var dtPicker = new mui.DtPicker({type:'date'});
+        dtPicker.show(function (selectItems) {
+            console.log(selectItems.y);//{text: "2016",value: 2016}
+            console.log(selectItems.m);//{text: "05",value: "05"}
+            console.log(selectItems.value);
+            $('.dataVlaue').html(selectItems.value+'▽')
+        })
+    }
+
+</script>
+</body>
+<!-- 先引入 Vue -->
+<script src="../../js/vue.min.js"></script>
+<script src="http://api.map.baidu.com/api?v=1.2" type="text/javascript"></script>
+<script>
+    mui.init();
+    var data = {
+        image: '',
+        time:''
+    };
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            videoModeCheck() {
+                var isFirst = false;
+                var mainImage = sessionStorage.getItem("imagePath");
+                var options = {'mainImage':'http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg','imgPath':'1'};
+                if (mainImage) {
+                    options = {'mainImage':mainImage,'imgPath':'1'};
+                    isFirst = false;
+                }else {
+                    isFirst = true;
+                }
+                navigator.arcSoftFace.videoModeCheck(options,
+                    function (success) {
+                        var similar = success.similar;
+                        if (isFirst){
+                            data.image = success.imagePath;
+                            sessionStorage.setItem("imagePath", data.image);
+                            $("#faceImg").show();
+                            $("#dakaBtn").hide();
+                            $("#faceImg").show();
+                            let date = new Date(Date.parse(new Date()));
+                            let h = date.getHours();
+                            h = h < 10 ? ('0' + h) : h;
+                            let m = date.getMinutes();
+                            m = m < 10 ? ('0' + m) : m;
+                            let s = date.getSeconds();
+                            s = s < 10 ? ('0' + s) : s;
+                            // return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+                            data.time = h + ':' + m + ':' + s;
+                        } else {
+                            if (similar>0.5){//相似度高
+                                // alert(JSON.stringify(success.imagePath));
+                                data.image = success.imagePath;
+                                $("#faceImg").show();
+                                $("#dakaBtn").hide();
+                                let date = new Date(Date.parse(new Date()));
+                                let h = date.getHours();
+                                h = h < 10 ? ('0' + h) : h;
+                                let m = date.getMinutes();
+                                m = m < 10 ? ('0' + m) : m;
+                                let s = date.getSeconds();
+                                s = s < 10 ? ('0' + s) : s;
+                                // return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+                                data.time = h + ':' + m + ':' + s;
+                            } else {
+                                $("#faceImg").hide();
+                                $("#dakaBtn").show();
+                                alert('识别不通过，与之前录入的人脸无法匹配');
+                            }
+                        }
+                    },
+                    function (error) {
+                        alert(JSON.stringify(error));
+                    }
+                );
+            },
+            closeTopPageMiniProgram:function(){
+                navigator.miniProgram.closeTopPageMiniProgram();
+            },
+            AutoSize(listImg, maxWidth, maxHeight) {
+                //原图片原始地址（用于获取原图片的真实宽高，当<img>标签指定了宽、高时不受影响）
+                let image = new Image();
+                // 获取每一个图片的宽高
+                image.src = listImg.src;
+                // 当图片比图片框小时不做任何改变
+                if (image.width < maxWidth && image.height < maxHeight) {
+                    //原图片宽高比例 大于 图片框宽高比例
+                    listImg.width = image.width;
+                    listImg.height = image.height;
+                } else {
+                    //原图片宽高比例 大于 图片框宽高比例,则以框的宽为标准缩放，反之以框的高为标准缩放
+                    if (maxWidth / maxHeight <= image.width / image.height) {
+                        listImg.width = maxWidth; //以框的宽度为标准
+                        listImg.height = maxWidth * (image.height / image.width);
+                    } else {
+                        listImg.width = maxHeight * (image.width / image.height);
+                        listImg.height = maxHeight; //以框的高度为标准
+                    }
+                }
+                data.image = image.src;
+            }
+        },
+        data: data
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        navigator.map.inInitializeMap({
+            'ios': '01e762ca3a8aeca08df443c489783a34',
+            'android':'95ad8739cddfb8b8b412f89d8e08aa47'
+        });
+        $("#faceImg").hide();
+        $("#dakaBtn").show();
+        $("#faceImg").hide();
+
+        let date = new Date(Date.parse(new Date()));
+        let y = date.getFullYear();
+        let MM = date.getMonth() + 1;
+        MM = MM < 10 ? ('0' + MM) : MM;
+        let d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var time = y + '-' + MM + '-' + d+'▽';
+        $('.dataVlaue').html(time);
+        //获取当前定位
+        var onSuccess = function(position) {
+            var longitude = position.coords.longitude;
+            var latitude = position.coords.latitude;
+            var map = new BMap.Map("allmap");
+            var point = new BMap.Point(longitude, latitude);
+            var gc = new BMap.Geocoder();
+            gc.getLocation(point, function(rs) {
+                // alert(JSON.stringify(rs.address))
+                // $('.positionLVaue').html('已进入考勤范围中控信息大厦A座')
+                if (rs.address.length>0) {
+                    $('.positionLVaue').html('已进入考勤范围'+JSON.stringify(rs.address));
+                }else{
+                    $('.positionLVaue').html('定位失败');
+                }
+
+            });
+        };
+        var onError = function onError(error) {
+            alert(JSON.stringify(error.message));
+        };
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+    }
+
+    //打开地图
+    function Relocation() {
+        navigator.map.open(function (result) {
+        }, {'url': 'http://10.10.21.14:8080/weex/index.js'});
+    }
+    window.onGetLocation = function(info){
+        if (info.success){
+            $('.positionLVaue').html('已进入考勤范围'+JSON.stringify(info.data.name))
+        }else{
+            alert(JSON.stringify(info.message));
+        }
+    };
+
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+    });
+</script>
+</html>

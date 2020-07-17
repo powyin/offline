@@ -1,0 +1,399 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<title>人脸识别插件</title>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+    <!--&lt;!&ndash;标准mui.css&ndash;&gt;-->
+    <!--<link rel="stylesheet" href="../../css/mui.min.css">-->
+
+    <!--<style>-->
+        <!--.mui-bar-nav {-->
+            <!--background-color: white;-->
+        <!--}-->
+
+        <!--.mui-content-padded p {-->
+            <!--text-indent: 22px;-->
+        <!--}-->
+
+        <!--.mui-card:after {-->
+            <!--visibility: hidden-->
+        <!--}-->
+
+        <!--#img-name {-->
+            <!--font-size: 14px;-->
+            <!--font-weight: 500;-->
+            <!--line-height: 17px;-->
+            <!--color: #333-->
+        <!--}-->
+
+
+
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="mui-bar mui-bar-nav">-->
+    <!--<span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>-->
+    <!--<h1 class="mui-title">人脸识别插件</h1>-->
+    <!--<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>-->
+<!--</header>-->
+<!--<div class="mui-content">-->
+
+    <!--<div class="mui-content-padded">-->
+        <!--<p>以下将演示人脸识别插件所包含的接口能力，具体参数详见HCB开发文档</p>-->
+    <!--</div>-->
+
+    <!--<div class="mui-card mui-table-view-cell mui-collapse">-->
+        <!--<a class="mui-navigate-right">图片模式检测</a>-->
+        <!--<img class="mui-media-object mui-pull-left" src="cdvfile://localhost/cache/com.supconit.hcmobile.ios/tmp/IMG_0588_thumb.jpeg" />-->
+        <!--<div class="mui-collapse-content mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right" onclick="selectImage()">选择相册图片</a>-->
+        <!--</div>-->
+        <!--<div class="mui-collapse-content mui-table-view-cell">-->
+            <!--<a class="mui-navigate-right" onclick="imageModeCheck()">输入网路图片</a>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="mui-card">-->
+        <!--<ul class="mui-table-view">-->
+            <!--<li class="mui-table-view-cell">-->
+                <!--<a class="mui-navigate-right" onclick="faceFeatureComparison()">人脸特征对比</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+    <!--<div class="mui-card">-->
+        <!--<ul class="mui-table-view">-->
+            <!--<li class="mui-table-view-cell">-->
+                <!--<a class="mui-navigate-right" onclick="videoModeCheck()">视频模式检测</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+<!--</div>-->
+<!--<script src="../../js/vue.min.js"></script>-->
+<!--<script src="../../js/mui.min.js"></script>-->
+<!--<script src="../../js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>-->
+<!--<script src="../../js/hc.js"></script>-->
+<!--<script>-->
+    <!--mui.init();-->
+
+    <!--document.addEventListener("deviceready", onDeviceReady, false);-->
+
+    <!--function onDeviceReady() {-->
+
+    <!--}-->
+
+    <!--function selectImage() {-->
+        <!--navigator.imagePicker.selectImage(function (res) {-->
+
+            <!--alert(JSON.stringify(res[0].localURL))-->
+        <!--},function (err) {-->
+            <!--alert(err)-->
+        <!--})-->
+    <!--}-->
+
+
+    <!--function imageModeCheck() {-->
+        <!--navigator.arcSoftFace.imageModeCheck('http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg',-->
+            <!--function (successCallback) {-->
+                <!--alert(JSON.stringify(successCallback));-->
+            <!--},function (errorCallback) {-->
+                <!--alert(JSON.stringify(errorCallback));-->
+            <!--});-->
+    <!--}-->
+
+
+
+
+    <!--function faceFeatureComparison() {-->
+        <!--navigator.arcSoftFace.faceFeatureComparison('http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg','http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg',-->
+            <!--function (success) {-->
+                <!--alert(JSON.stringify(success));-->
+            <!--},-->
+            <!--function (error) {-->
+                <!--alert(JSON.stringify(error));-->
+            <!--}-->
+        <!--);-->
+    <!--}-->
+    <!--function videoModeCheck() {-->
+        <!--var options = {'mainImage':'http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg','imgPath':'0'};-->
+        <!--navigator.arcSoftFace.videoModeCheck(options,-->
+            <!--function (success) {-->
+                <!--alert(JSON.stringify(success));-->
+            <!--},-->
+            <!--function (error) {-->
+                <!--alert(JSON.stringify(error));-->
+            <!--}-->
+        <!--);-->
+    <!--}-->
+
+<!--</script>-->
+<!--</body>-->
+
+<!--</html>-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>人脸识别插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #photo-size label {
+            width: 60%;
+        }
+
+        #photo-size .mui-input-clear {
+            width: 40%;
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+        .photo{
+            float:left;
+            width:49%;
+            height: 49%;
+        }
+        .intro {
+            float: right;
+            width: 49%;
+            height: 49%;
+        }
+        .divi
+        {
+            float:left;
+            clear:both;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">ArcSoftFace插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示ArcSoftFace插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <form class="mui-input-group">
+            <a class="mui-navigate-left">检测模式选择:</a>
+            <div class="mui-input-row mui-radio">
+                <label>图片模式(此模式无相似度数据)</label>
+                <input name="radio" type="radio" value=1>
+            </div>
+			<div class="mui-input-row mui-radio">
+                <label>图片对比模式</label>
+                <input name="radio" type="radio" value=2>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>视频模式</label>
+                <input name="radio" type="radio" value=0 checked>
+            </div>
+            <a class="mui-navigate-left">图片选择:</a>
+            <div class="mui-input-row mui-radio">
+                <label>相册图片</label>
+                <input name="radio1" type="radio" value=1>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>网络图片</label>
+                <input name="radio1" type="radio" value=0 checked>
+            </div>
+
+            <div id="imgurl" class="mui-input-row">
+                <label>图片url</label>
+                <input type="text" id="imgurl1" class="mui-input-clear" placeholder="输入网络图片地址" value="http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg">
+            </div>
+
+            <div id="imgurl333" class="mui-button-row">
+                <button type="button"id="imagebuttton22" class="mui-btn mui-btn-primary" onclick="selectImage('1')">选择相册图片</button>
+            </div>
+
+
+            <div id="duibiImg">
+            <a class="mui-navigate-left">对比图选择:</a>
+            <div class="mui-input-row mui-radio">
+                <label>相册图片</label>
+                <input name="radio2" type="radio" value=1>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>网络图片</label>
+                <input name="radio2" type="radio" value=0 checked>
+            </div>
+
+            <div id="imgurl2" class="mui-input-row">
+                <label>图片url</label>
+                <input type="text"id="imgurlduibi2" class="mui-input-clear" placeholder="输入网络图片地址" value="http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg">
+            </div>
+
+            <div id="imgurlbutton" class="mui-button-row">
+                <button type="button"id="imagebuttton3" class="mui-btn mui-btn-primary" onclick="selectImage('2')">选择相册图片</button>
+            </div>
+             <h4>对比图</h4>
+             <img id="imgselect2" style="width: 80%;height: 80%" src="http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg" />
+            </div>
+
+
+
+            <div class="photo">
+                <img id="imgselect" style="width: 100%;height: 100%" src="http://img007.hc360.cn/y3/M01/31/9E/wKhQh1Te-3mEbCI3AAAAAM3xY5E146.jpg" />
+            </div>
+            <div class="intro">
+            <p><h3 style="width: 100%;height: 100%">第一个人脸数据</h3></p>
+            <p><h4 id="age" style="width: 100%;height: 100%">年龄:</h4></p>
+            <p><h4 id="gender"style="width: 100%;height: 100%">性别:</h4></p>                                                                   <p><h4 id="similar"style="width: 100%;height: 100%">相似度:</h4></p>
+            </div>
+
+            <div class="mui-button-row divi" style="width: 100%;height: 100%">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="faceCheck()">人脸检测</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    $("#imagebuttton").hide();//特征对比按钮
+    $("#imgurl333").hide();//选择相册图片按钮
+    $("#duibiImg").hide();//对比图选择隐藏
+
+    function onDeviceReady() {
+        console.log('deviceready');
+        $('input:radio').click(function () {
+            var isImage = $("input[name='radio']:checked").val();
+            var isphotoImage = $("input[name='radio1']:checked").val();
+            if (isphotoImage=='0') {//是网络图片
+                var imgurl1 = $('#imgurl1').val();
+                $("#imgselect").attr("src",imgurl1);
+                $("#imgurl").show();//图片url
+                $("#imgurl333").hide();
+            }else {//是相册图片
+                // $("#imgselect").attr("src",'');
+                $("#imgurl").hide();//图片url隐藏
+                $("#imgurl333").show();
+            }
+
+            if (isImage=='0') {//视频模式检测
+                $("#imagebuttton").hide();
+                $("#duibiImg").hide();//对比图选择隐藏
+            }else if(isImage=='1'){//图片模式
+                $("#imagebuttton").show();
+                $("#duibiImg").hide();//对比图选择隐藏
+            }else{
+			    $("#imagebuttton").show();
+                $("#duibiImg").show();
+			}
+
+            var isduibiPhotoImage = $("input[name='radio2']:checked").val();
+            if (isduibiPhotoImage=='0') {//是网络图片
+                var imgurlduibi2 = $('#imgurlduibi2').val();
+                $("#imgselect2").attr("src",imgurlduibi2);
+                $("#imgurl2").show();//图片url
+                $("#imgurlbutton").hide();
+            }else {//是相册图片
+                // $("#imgselect2").attr("src",'');
+                $("#imgurl2").hide();//图片url隐藏
+                $("#imgurlbutton").show();
+            }
+
+
+        });
+    }
+
+    function selectImage(id) {
+        if (id=='1') {
+            navigator.imagePicker.selectImage(function (res) {
+            $("#imgselect").attr("src",res[0].thumbLocalURL);
+        },function (err) {
+            alert(err)
+        })
+        }else {
+            navigator.imagePicker.selectImage(function (res) {
+                $("#imgselect2").attr("src",res[0].thumbLocalURL);
+            },function (err) {
+                alert(err)
+            })
+        }
+
+    }
+
+    //人脸检测
+    function faceCheck() {
+        var isImage = $("input[name='radio']:checked").val();
+        if (isImage=='1') {//图片模式检测
+            navigator.arcSoftFace.imageModeCheck($('#imgselect').attr('src'),
+                function (successCallback) {
+					$("#age").show();
+					$("#gender").show();
+					$("#similar").hide();
+                    $('#age').html('年龄:'+successCallback.allFaceData[0].age);
+                    $('#gender').html('性别:'+successCallback.allFaceData[0].gender);
+                },function (errorCallback) {
+                    alert(JSON.stringify(errorCallback));
+                });
+        }else if(isImage=='2'){//图片对比模式
+		   navigator.arcSoftFace.faceFeatureComparison($('#imgselect').attr('src'),$('#imgselect2').attr('src'),
+                        function (success) {
+							$("#age").hide();
+							$("#gender").hide();
+							$("#similar").show();
+                            $('#similar').html('相似度:'+success);
+                        },
+                        function (error) {
+                            alert(JSON.stringify(error));
+                        }
+                    );
+		
+		}else {//视频模式
+            var options = {'mainImage':$('#imgselect').attr('src'),'imgPath':'1'};
+            navigator.arcSoftFace.videoModeCheck(options,
+                function (success) {
+                    $('#age').html('年龄:'+success.allFaceData[0].age);
+                    $('#gender').html('性别:'+success.allFaceData[0].gender);
+                    $('#similar').html('相似度:'+success.similar);
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+
+        }
+    }
+
+</script>
+</body>
+
+</html>

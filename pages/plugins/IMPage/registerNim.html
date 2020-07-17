@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">注册</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+
+<div class="mui-content">
+    <form class="mui-input-group">
+        <div class="mui-input-row">
+            <label>帐号</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入用户名" name="username">
+        </div>
+        <div class="mui-input-row">
+            <label>密码</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入密码" name="password">
+        </div>
+        <div class="mui-input-row">
+            <label>昵称</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入昵称" name="nickname">
+        </div>
+        <div class="mui-input-row">
+            <label>头像</label>
+            <input type="text" class="mui-input-clear" placeholder="请输入头像地址" name="icon">
+        </div>
+    </form>
+
+    <div class="mui-content-padded" align="center">
+        <button type="button" class="mui-btn mui-btn-blue" id="login" style="margin-top: 20px;width:40%;height: 50px;font-size: 18px" onclick="registerNim()">注册</button>
+
+    </div>
+</div>
+
+<script src="../../../js/vue.min.js"></script>
+<script src="../../../js/mui.min.js"></script>
+<script src="../../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../../js/hc.js"></script>
+<script>
+    mui.init();
+    $("input[ name='icon']").val('http://b-ssl.duitang.com/uploads/item/201407/10/20140710145247_TAT8t.jpeg');
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+    //注册
+    function registerNim() {
+        var account = $("input[ name='username']").val();
+        var token = $("input[ name='password']").val();
+        var nickname = $("input[ name='nickname']").val();
+        var icon = $("input[ name='icon']").val();
+        if (!account.length){
+            alert('请输入用户名');
+            return;
+        }
+        if (!token.length){
+            alert('请输入密码');
+            return;
+        }
+        if (!nickname.length){
+            alert('请输入昵称');
+            return;
+        }
+        if (!icon.length){
+            alert('请输入头像地址');
+            return;
+        }
+        navigator.nim.registerNim({'account':account,'token':token,'nickname':nickname,'icon':icon},function (successCallback) {
+            mui.back();
+            alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+</script>
+</body>
+
+</html>

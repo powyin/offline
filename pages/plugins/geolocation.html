@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+		.location_watch_div {
+			width: 100%;
+			margin-top: 10px;
+			height: 300px;
+			overflow-y: auto;
+		}
+
+		.map-container {
+			margin-top: 20px;
+			padding: 10px;
+			width: 100%;
+			height:300px;
+		}
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=84e3b524f35bb80ab823f03a57b54176"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text(title);
+
+	    $('#get_location').click(function() {
+	    	navigator.geolocation.getCurrentPosition(function(loc) {
+				console.log(JSON.stringify(loc));
+
+                // alert(
+                //     'Latitude: '          + loc.coords.latitude          + '\n' +
+                //     'Longitude: '         + loc.coords.longitude         + '\n' +
+                //     'Altitude: '          + loc.coords.altitude          + '\n' +
+                //     'Accuracy: '          + loc.coords.accuracy          + '\n' +
+                //     'AltitudeAccuracy: ' + loc.coords.altitudeAccuracy  + '\n' +
+                //     'Heading: '           + loc.coords.heading           + '\n' +
+                //     'Speed: '             + loc.coords.speed             + '\n' +
+                //     'Timestamp: '         + loc.timestamp                + '\n'
+                // );
+
+				var oldText = $('#container').html();
+				var newText =
+						"经度：" + loc.coords.longitude + "<br/>" +
+						"纬度：" + loc.coords.latitude + "<br/>" 
+						"<br/>"
+				$('#container').html(oldText + newText);
+
+
+	    	}, function(error) {
+				alert(JSON.stringify(error));
+	    	});
+	    });
+
+	    var watchId = null;
+	    var index = 0;
+	    $('#startWatch').click(function() {
+	    	watchId = navigator.geolocation.watchPosition(function(loc) {
+	    		//navigator.basis.tip(loc.coords.latitude);
+
+
+	    		var oldText = $('#item2').html();
+				var newText = "第" + ++index + "次<br/>" +
+					"经度：" + loc.coords.longitude + "<br/>" +
+					"纬度：" + loc.coords.latitude + "<br/>" +
+					"精度：" + loc.coords.accuracy + "<br/>" +
+					"方向：" + loc.coords.heading + "<br/>" +
+					"<br/>"
+				$('#item2').html(oldText + newText);
+
+	    	}, function(error) {
+
+                console.log(JSON.stringify(error));
+
+	    			//navigator.basis.tipLong(error.code + "  " +error.message);
+	    			var oldText = $('#item2').html();
+	    			var newText = "第" + ++index + "次<br/>"
+	    						+ "错误码：" + error.code + "<br/>"
+	    						+ "错误信息：" + error.message + "<br/><br/>";
+	    			$('#item2').html(oldText + newText);
+	    	});
+	    });
+
+	    $('#stopWatch').click(function() {
+	    	if (watchId != null) {
+	    		navigator.geolocation.clearWatch(watchId);
+	    	}
+	    });
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+
+    }
+
+
+
+  </script>
+<header class="mui-bar mui-bar-nav" style="position: static;">
+	<span onclick="mui.back()" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+	<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh" style="position:absolute; right:15px"></span>
+</header>
+<div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">获取定位信息</a>
+			<div class="mui-collapse-content">
+				<div>
+					<button id="get_location" class="mui-btn mui-btn-primary" type="button">获取定位</button>
+					<div id="container" class="map-container"></div>
+				</div>
+			</div>
+		</li>
+
+		<li class="mui-table-view-cell mui-collapse">
+			<a class="mui-navigate-right" href="#">获取定位信息</a>
+			<div class="mui-collapse-content">
+				<div>
+					<button id="startWatch" class="mui-btn mui-btn-primary" type="button">开始监听</button>
+					<button id="stopWatch" class="mui-btn mui-btn-primary" type="button">结束监听</button>
+					<!--<div id="item2" class="map-container"></div>-->
+					<div style="width:1620px;height:680px;overflow:scroll;" id="item2">
+					</div>
+				</div>
+
+			</div>
+		</li>
+
+
+	</ul>
+</div>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+
+<!--<head>-->
+	<!--<meta charset="utf-8">-->
+	<!--<title>Geolocation插件</title>-->
+	<!--<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">-->
+	<!--&lt;!&ndash;标准mui.css&ndash;&gt;-->
+	<!--<link rel="stylesheet" href="../../css/mui.min.css">-->
+
+	<!--<style>-->
+		<!--.mui-bar-nav {-->
+			<!--background-color: white;-->
+		<!--}-->
+
+		<!--p {-->
+			<!--text-indent: 22px;-->
+		<!--}-->
+
+		<!--.mui-card:after {-->
+			<!--visibility: hidden-->
+		<!--}-->
+
+
+
+	<!--</style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="mui-bar mui-bar-nav">-->
+	<!--<span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>-->
+	<!--<h1 class="mui-title">Geolocation插件</h1>-->
+	<!--<span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>-->
+<!--</header>-->
+<!--<div class="mui-content">-->
+
+	<!--<div class="mui-content-padded">-->
+		<!--<p>以下将演示Geolocation插件所包含的接口能力，具体参数详见HCB开发文档</p>-->
+	<!--</div>-->
+
+	<!--<div class="mui-card">-->
+		<!--<ul class="mui-table-view">-->
+			<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right" onclick="getCurrentPosition()">获取设备当前位置信息</a>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+
+	<!--<div class="mui-card">-->
+		<!--<ul class="mui-table-view">-->
+			<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right" onclick="watchPosition()">监听设备位置信息的改变</a>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+
+	<!--<div class="mui-card">-->
+		<!--<ul class="mui-table-view">-->
+			<!--<li class="mui-table-view-cell">-->
+				<!--<a class="mui-navigate-right" onclick="clearWatch()">清除设备位置信息的监听</a>-->
+			<!--</li>-->
+		<!--</ul>-->
+	<!--</div>-->
+
+<!--</div>-->
+<!--<script src="../../js/mui.min.js"></script>-->
+<!--<script src="../../js/jquery-3.2.1.min.js"></script>-->
+<!--<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>-->
+<!--<script src="../../js/hc.js"></script>-->
+<!--<script>-->
+	<!--mui.init();-->
+
+	<!--document.addEventListener("deviceready", onDeviceReady, false);-->
+
+	<!--function onDeviceReady() {-->
+		<!--console('deviceready')-->
+	<!--}-->
+	<!--function getCurrentPosition() {-->
+		<!--var onSuccess = function(position) {-->
+			<!--alert(JSON.stringify(position))-->
+		<!--};-->
+		<!--var onError = function onError(error) {-->
+			<!--alert(JSON.stringify(error))-->
+		<!--}-->
+		<!--navigator.geolocation.getCurrentPosition(onSuccess, onError);-->
+	<!--}-->
+	<!--var watchID;-->
+	<!--function watchPosition() {-->
+		<!--// 获取位置信息-->
+		<!--var onSuccess = function(position) {-->
+			<!--alert(JSON.stringify(position))-->
+		<!--};-->
+
+		<!--function onError(error) {-->
+			<!--alert(JSON.stringify(error))-->
+		<!--}-->
+		<!--watchID = navigator.geolocation.watchPosition(onSuccess, onError, { enableHighAccuracy: true });-->
+	<!--}-->
+
+    <!--function clearWatch() {-->
+		<!--navigator.geolocation.clearWatch(watchID);-->
+	<!--}-->
+
+<!--</script>-->
+<!--</body>-->
+
+<!--</html>-->

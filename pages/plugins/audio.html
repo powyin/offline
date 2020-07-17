@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Audio插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #audio-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Audio插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Audio插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+    <div class="mui-card">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" onclick="recording()">开始录音</a>
+            </li>
+        </ul>
+    </div>
+
+    <!--<audio style="width: 100%" controls="controls"></audio>-->
+
+    <div id="audio-content" hidden class="mui-card">
+        <a class="mui-card-header mui-card-media" href="#picture">
+            <!--缩略图-->
+            <img src="../../img/audio_default.png"/>
+            <!--名称 + 大小-->
+            <div class="mui-media-body">
+                <p id="audio-name"></p>
+                <p id="audio-size"></p>
+            </div>
+        </a>
+    </div>
+
+
+    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a onclick="previewAudio()">H5预览</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a onclick="audioPreview()">原生预览</a>
+            </li>
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#picture"><b>取消</b></a>
+            </li>
+        </ul>
+    </div>
+
+
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+
+    var audioUrl;
+
+    function recording() {
+        navigator.audio.recording(function (res) {
+
+
+            $("#audio-size").text('大小:' + res.size + 'B');
+            $("#audio-name").text(res.name);
+
+            audioUrl = res.localURL;
+
+            $("#audio-content").show();
+
+        },function (err) {
+            alert(err);
+        })
+    }
+
+
+    function previewAudio() {
+	
+        var platform = device.platform;
+		  if (platform == "Android") {
+			mui('#picture').popover('toggle');
+			navigator.audioPreviewer.preview(audioUrl);
+		  }else{
+		          mui('#picture').popover('toggle');
+					window.location.href='audio-preview.html?source='+audioUrl;
+		  }
+
+    }
+
+    navigator.db.loadFromJson({dbName:"test.db",dbVersion:1},function(success){
+        alert("成功创建或打开数据库");
+    },function(error){
+        alert(error);
+    });
+    function audioPreview() {
+        mui('#picture').popover('toggle');
+        navigator.audioPreviewer.preview(audioUrl);
+    }
+
+
+</script>
+</body>
+
+</html>

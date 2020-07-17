@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>海康视频插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">资源列表</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+    <ul style="margin: 0" class="mui-table-view">
+    </ul>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    var unitID = getQueryString("unitId")||'0';
+    var regionID = getQueryString("regionID") || '';
+
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+        if (regionID !== 'undefined' && regionID !== ''){
+            navigator.hik.queryRegionResources(regionID, '1', function (res) {
+                $.each(res, function (i, item) {
+                    var resHtml = $("<li class=\"mui-table-view-cell \" >"
+                        + "<a class=\"mui-navigate-right \" "+(item.cameraID?"onclick='preview("+JSON.stringify(item.cameraID)+","+JSON.stringify(item.deviceID)+")'\"":"href=\"hikResource.html?unitId="+item.controlUnitID||''+ "&regionID="+ item.regionID||'') +"\">"
+                        + item.name
+                        + "</a>"
+                        + "</li>");
+                    $(".mui-table-view").append(resHtml);
+                });
+            }, function (error) {
+                alert(JSON.stringify(error));
+                mui.back();
+            })
+        } else if (unitID.length) {
+            navigator.hik.queryControlUnitResources(unitID, '1', function (res) {
+                $.each(res, function (i, item) {
+                    var resHtml = $("<li class=\"mui-table-view-cell \" >"
+                        + "<a class=\"mui-navigate-right \" "+(item.cameraID?"onclick='preview("+JSON.stringify(item.cameraID)+","+JSON.stringify(item.deviceID)+")'\"":"href=\"hikResource.html?unitId="+item.controlUnitID+ "&regionID="+ item.regionID) +"\">"
+                        + item.name
+                        + "</a>"
+                        + "</li>");
+                    $(".mui-table-view").append(resHtml);
+                });
+            }, function (error) {
+                alert(JSON.stringify(error));
+                mui.back();
+
+            })
+        }
+
+    }
+
+    function preview(id,deviceID) {
+        navigator.hik.previewVideo(id,deviceID,function (successCallback) {
+            // alert(JSON.stringify(successCallback));
+        },function (errorCallback){
+            alert(JSON.stringify(errorCallback));
+        });
+    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+</script>
+</body>
+
+</html>

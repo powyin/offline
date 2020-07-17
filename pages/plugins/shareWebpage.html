@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片分享</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-btn-block {
+            width: 90%;
+            left: 5%;
+            padding: 10px 0;
+        }
+
+        .mui-input-clear {
+            width: 90%;
+            left: 0;
+            padding: 10px 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">图片分享</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示微信插件分享图片的接口能力，具体参数详见HCB开发文档</p>
+
+        <h5>URL：(必选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="urLShare" placeholder="url地址">
+        </div>
+
+        <h5 id="shareTitle">标题：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="titleShare" placeholder="标题">
+        </div>
+
+        <h5 id="shareDesc">描述：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="shareDescInput" placeholder="描述">
+        </div>
+
+        <h5 id="shareMusicDataUrl">musicDataUrl：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="shareMusicDataUrlInput" placeholder="音乐数据url地址">
+        </div>
+
+        <h5 id="shareMusicLowBandUrl">musicLowBandUrl：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="shareMusicLowBandUrlInput" placeholder="音乐lowband网页的url地址">
+        </div>
+
+        <h5 id="shareMusicLowBandDataUrl">musicLowBandDataUrl：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="shareMusicLowBandDataUrlInput" placeholder="音乐lowband数据url地址">
+        </div>
+
+     
+
+        <h5 id="shareVideoLowBandUrl">videoLowBandUrl：(可选)</h5>
+        <div class="mui-input-row">
+            <input type="text" id="shareVideoLowBandUrlInput" placeholder="视频lowband网页的url地址">
+        </div>
+
+        <h5>缩略图：(可选)</h5>
+        <div id="album">
+            <a href='#picture'>
+                <img id="thumbnailImg" style="width: 30%;height: 30%" src="../../img/add_media.png"/>
+            </a>
+        </div>
+
+    </div>
+
+    <div style="margin-top: 30px">
+
+        <button type="button" id="haoyouShare" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareImage('1')">分享1
+        </button>
+        <button type="button" id="kongjianShare" class="mui-btn mui-btn-block mui-btn-primary" onclick="shareImage('2')">分享2
+        </button>
+
+    </div>
+
+</div>
+
+
+
+
+<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <a href="#" onclick="photoImage()">拍照</a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a href="#chooseImage" onclick="chooseImage()">相册</a>
+        </li>
+    </ul>
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <a href="#picture"><b>取消</b></a>
+        </li>
+    </ul>
+</div>
+</div>
+
+
+</body>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+
+    mui.init();
+
+    var type = getQueryString("type");
+    var aType = getQueryString("a");
+    // alert(type);
+    // alert(aType);
+    if (type === 'wechat') {
+        document.getElementById("haoyouShare").innerText = "微信好友";
+        document.getElementById("kongjianShare").innerText = "微信朋友圈";
+        $("#shareqq_target_url").hide();
+        $("#shareqq_target_urlInput").hide();
+        $("#shareFlashUrl").hide();
+        $("#shareFlashUrlInput").hide();
+        if (aType === 'music') {
+            $("#shareVideoLowBandUrl").hide();
+            $("#shareVideoLowBandUrlInput").hide();
+
+            $('#urLShare').val('http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3');
+            $('#titleShare').val('歌曲名：不要说话');
+            $('#shareDescInput').val('专辑名：不想放手歌手名：陈奕迅');
+            $('#shareMusicDataUrlInput').val('http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3');
+
+
+        } else if (aType === 'video'){
+            $("#shareMusicDataUrl").hide();
+            $("#shareMusicDataUrlInput").hide();
+            $("#shareMusicLowBandUrl").hide();
+            $("#shareMusicLowBandUrlInput").hide();
+            $("#shareMusicLowBandDataUrl").hide();
+            $("#shareMusicLowBandDataUrlInput").hide();
+
+
+
+            $('#urLShare').val('http://yoo.qq.com/m/video.html?id=j08143jnfo6&ptag=txvideo12&first=1&ptag=4_6.5.0.21999_copy');
+            $('#titleShare').val('视频标题');
+            $('#shareDescInput').val('视频描述');
+
+
+
+
+
+        }else {
+            $("#shareMusicDataUrl").hide();
+            $("#shareMusicDataUrlInput").hide();
+            $("#shareMusicLowBandUrl").hide();
+            $("#shareMusicLowBandUrlInput").hide();
+            $("#shareMusicLowBandDataUrl").hide();
+            $("#shareMusicLowBandDataUrlInput").hide();
+            $("#shareVideoLowBandUrl").hide();
+            $("#shareVideoLowBandUrlInput").hide();
+
+
+            $('#urLShare').val('https://www.baidu.com');
+            $('#titleShare').val('百度');
+            $('#shareDescInput').val('百度一下，你就知道');
+
+
+
+        }
+    } else if (type === 'qq') {
+        document.getElementById("haoyouShare").innerText = "QQ好友";
+        document.getElementById("kongjianShare").innerText = "QQ空间";
+        var title = document.getElementsByTagName("h5")[1];
+        title.innerHTML = '标题：(必选)';
+        $("#shareMusicDataUrl").hide();
+        $("#shareMusicDataUrlInput").hide();
+        $("#shareMusicLowBandUrl").hide();
+        $("#shareMusicLowBandUrlInput").hide();
+        $("#shareMusicLowBandDataUrl").hide();
+        $("#shareMusicLowBandDataUrlInput").hide();
+        $("#shareVideoLowBandUrl").hide();
+        $("#shareVideoLowBandUrlInput").hide();
+        if (aType === 'link') {
+            $("#shareqq_target_url").hide();
+            $("#shareqq_target_urlInput").hide();
+            $("#shareFlashUrl").hide();
+            $("#shareFlashUrlInput").hide();
+        }
+        if (aType === 'music') {
+            $('#urLShare').val('http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3');
+            $('#titleShare').val('歌曲名：不要说话');
+            $('#shareDescInput').val('专辑名：不想放手歌手名：陈奕迅');
+            $('#shareMusicDataUrlInput').val('http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3');
+
+
+        } else if (aType === 'video'){
+            $('#urLShare').val('http://yoo.qq.com/m/video.html?id=j08143jnfo6&ptag=txvideo12&first=1&ptag=4_6.5.0.21999_copy');
+            $('#titleShare').val('视频标题');
+            $('#shareDescInput').val('视频描述');
+
+        }else {
+            $('#urLShare').val('https://www.baidu.com');
+            $('#titleShare').val('百度');
+            $('#shareDescInput').val('百度一下，你就知道');
+        }
+
+
+
+    } else if (type === 'alipay') {
+        document.getElementById("haoyouShare").innerText = "分享支付宝";
+        $("#kongjianShare").hide();
+        $("#shareMusicDataUrl").hide();
+        $("#shareMusicDataUrlInput").hide();
+        $("#shareMusicLowBandUrl").hide();
+        $("#shareMusicLowBandUrlInput").hide();
+        $("#shareMusicLowBandDataUrl").hide();
+        $("#shareMusicLowBandDataUrlInput").hide();
+        $("#shareqq_target_url").hide();
+        $("#shareqq_target_urlInput").hide();
+        $("#shareFlashUrl").hide();
+        $("#shareFlashUrlInput").hide();
+        $("#shareVideoLowBandUrl").hide();
+        $("#shareVideoLowBandUrlInput").hide();
+
+        $('#urLShare').val('http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3');
+        $('#titleShare').val('歌曲名：不要说话');
+        $('#shareDescInput').val('专辑名：不想放手歌手名：陈奕迅');
+
+    } else if (type === 'sina') {
+        document.getElementById("haoyouShare").innerText = "分享新浪";
+        $("#kongjianShare").hide();
+        $("#shareDesc").hide();
+        $("#shareDescInput").hide();
+        $("#shareMusicDataUrl").hide();
+        $("#shareMusicDataUrlInput").hide();
+        $("#shareMusicLowBandUrl").hide();
+        $("#shareMusicLowBandUrlInput").hide();
+        $("#shareMusicLowBandDataUrl").hide();
+        $("#shareMusicLowBandDataUrlInput").hide();
+        $("#shareqq_target_url").hide();
+        $("#shareqq_target_urlInput").hide();
+        $("#shareFlashUrl").hide();
+        $("#shareFlashUrlInput").hide();
+        $("#shareVideoLowBandUrl").hide();
+        $("#shareVideoLowBandUrlInput").hide();
+
+    }
+    if (aType === 'music') {
+        window.onload = function () {
+            var title = document.getElementsByTagName("h1")[0];
+            title.innerHTML = '音频分享';
+            var p = document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示分享音频的接口能力，具体参数详见HCB开发文档";
+        };
+    } else if (aType === 'video') {
+        window.onload = function () {
+            var title = document.getElementsByTagName("h1")[0];
+            title.innerHTML = "视频分享";
+            var p = document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示分享视频的接口能力，具体参数详见HCB开发文档";
+        };
+    } else if (aType === 'link') {
+        window.onload = function () {
+            var title = document.getElementsByTagName("h1")[0];
+            title.innerHTML = "网页分享";
+            var p = document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示分享网页的接口能力，具体参数详见HCB开发文档";
+        };
+    }
+
+    var width, height, padding = 2, itemWidth;
+    var columnCount = 3;
+    var mediaFiles = new Array();
+
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+    });
+
+    function photoImage() {
+        mui('#picture').popover('toggle');
+        var captureSuccess = function(mediaFiles) {
+            generateItem(mediaFiles);
+        };
+        var captureError = function(error) {
+            navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+        };
+        navigator.camera.takePhoto(captureSuccess, captureError,true,1024);
+    }
+
+    function chooseImage() {
+        mui('#picture').popover('toggle');
+
+        navigator.imagePicker.selectImage(function (data) {
+            if (data instanceof Array) {
+                $.each(data, function (i, item) {
+                    generateItem(item)
+                });
+                // JSON.stringify(item);
+            } else {
+                generateItem(data);
+                // JSON.stringify(data);
+            }
+        }, function (error) {
+            JSON.stringify(error)
+        })
+    }
+
+    var urlimageBase= '';
+    function generateItem(mediaFile) {
+        $('#thumbnailImg').attr('src',mediaFile.thumbLocalURL);
+        urlimageBase =  mediaFile.thumbLocalURL;
+    }
+
+
+    function shareImage(str) {
+        var shareURL = $('#urLShare').val();
+        var shareTitle = $('#titleShare').val();
+        var shareDesc = $('#shareDescInput').val();
+        var shareImg = urlimageBase;
+        var shareMusicUrl = $('#shareMusicDataUrlInput').val();
+        var shareMusLowData = $('#shareMusicLowBandDataUrlInput').val();
+        var shareMusLowUrl = $('#shareMusicLowBandUrlInput').val();
+        var shareVideolUrl = $('#shareVideoLowBandUrlInput').val();
+        var shareQQUrl = $('#shareqq_target_urlInput').val();
+        var shareFlasg = $('#shareFlashUrlInput').val();
+        if (type === 'wechat') {
+            if (aType === 'music') {
+                if (str === '1') {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatSession);
+                    obj.musicDataUrl = shareMusicUrl;
+                    obj.musicLowBandUrl = shareMusLowUrl;
+                    obj.musicLowBandDataUrl = shareMusLowData;
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatTimeLine);
+                    obj.musicDataUrl = shareMusicUrl;
+                    obj.musicLowBandUrl = shareMusLowUrl;
+                    obj.musicLowBandDataUrl = shareMusLowData;
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+
+            } else if (aType === 'video') {
+                if (str === '1') {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatSession);
+                    obj.videoLowBandUrl = shareVideolUrl;
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatTimeLine);
+                    obj.videoLowBandUrl = shareVideolUrl;
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+
+            } else if (aType === 'link') {
+                if (str === '1') {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatSession);
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.WechatTimeLine);
+                    navigator.wechat.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            }
+
+        } else if (type === 'qq') {
+            if (aType === 'music') {
+                if (str === '1') {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.QQ);
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.Qzone);
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            } else if (aType === 'video') {
+                if (str === '1') {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.QQ);
+                 
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.Qzone);
+                 
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            } else if (aType === 'link') {
+                if (str === '1') {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.QQ);
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                } else {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, shareDesc, shareImg, ShareScene.Qzone);
+                    navigator.qq.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            }
+
+
+        } else if (type === 'alipay') {
+            if (aType === 'music') {
+                if (str === '1') {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, shareDesc, shareImg);
+                    navigator.alipay.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            } else if (aType === 'video') {
+                if (str === '1') {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, shareDesc, shareImg);
+                    navigator.alipay.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            } else if (aType === 'link') {
+                if (str === '1') {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, shareDesc, shareImg);
+                    navigator.alipay.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            }
+
+        } else if (type === 'sina') {
+            if (aType === 'music') {
+                if (str === '1') {
+                    var obj = new ShareMusicObject(shareURL, shareTitle, '', shareImg);
+                    navigator.sina.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+
+                }
+            } else if (aType === 'video') {
+                if (str === '1') {
+                    var obj = new ShareVideoObject(shareURL, shareTitle, '', shareImg);
+                    navigator.sina.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            } else if (aType === 'link') {
+                if (str === '1') {
+                    var obj = new ShareWebpageObject(shareURL, shareTitle, '', shareImg);
+                    navigator.sina.share(obj, function (successCallback) {
+                        alert(JSON.stringify(successCallback));
+                    }, function (errorCallback) {
+                        alert(JSON.stringify(errorCallback));
+                    });
+                }
+            }
+
+        }
+
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+</script>
+</html>

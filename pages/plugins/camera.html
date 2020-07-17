@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Camera插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <!--App自定义的css-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #photo-size label {
+            width: 60%;
+        }
+
+        #photo-size .mui-input-clear {
+            width: 40%;
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Camera插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Camera插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+    <div class="mui-card">
+        <form class="mui-input-group">
+            <div class="mui-input-row mui-radio">
+                <label>保存到相册</label>
+                <input name="radio" type="radio" value=true>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>不保存到相册</label>
+                <input name="radio" type="radio" value=false checked>
+            </div>
+
+            <div id="photo-size" class="mui-input-row">
+                <label>输出照片的大小(KB)</label>
+                <input type="text" class="mui-input-clear" placeholder="200" value="200">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" onclick="onclickPhotoButton()">&nbsp;拍照&nbsp;
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="mui-btn mui-btn-primary" onclick="onclickVideoButton()">录像</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="img-content" hidden class="mui-card">
+        <a class="mui-card-header mui-card-media" href="javascript:;">
+            <!--缩略图-->
+            <img id="thumb_img"/>
+            <!--名称 + 大小-->
+            <div class="mui-media-body">
+                <p id="img-name"></p>
+                <p id="img-size"></p>
+            </div>
+        </a>
+        <div class="mui-card-content" onclick="previewPhoto()">
+            <img id="img" width="100%"/>
+        </div>
+    </div>
+
+
+    <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a onclick="previewvideo()">H5预览</a>
+            </li>
+
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="#picture"><b>取消</b></a>
+            </li>
+        </ul>
+    </div>
+
+
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready');
+
+    }
+
+    function onclickPhotoButton() {
+        var saveToAlbum = $('input:radio:checked').val();
+        var maxSize = $(".mui-input-clear").val();
+
+        navigator.camera.takePhoto(function (res) {
+
+            $(".mui-card-header").attr('href', "javascript:;");
+
+            $("#thumb_img").attr('src', res.thumbLocalURL);
+            $("#img-size").text('大小:' + res.size + 'B');
+            $("#img-name").text(res.name);
+            $("#img").attr('src', res.localURL);
+
+            $(".mui-card-content").show();
+            $("#img-content").show();
+
+        }, function (err) {
+            alert(err)
+        }, saveToAlbum, Number(maxSize) * 1024.0);
+
+    }
+
+    function onclickVideoButton() {
+
+        var saveToAlbum = $('input:radio:checked').val();
+
+        navigator.camera.shootVideo(function (res) {
+
+            console.log(JSON.stringify(res));
+
+            $(".mui-card-header").attr('href', "#picture");
+
+
+
+            $("#thumb_img").attr('src', res.thumbLocalURL);
+            $("#img-size").text('大小:' + res.size + 'B');
+            $("#img-name").text(res.name);
+            $("#img").attr('src', res.localURL);
+            $(".mui-card-content").hide();
+            $("#img-content").show();
+
+        }, function (err) {
+            alert(err)
+        }, saveToAlbum);
+    }
+
+
+    function previewvideo() {
+        mui('#picture').popover('toggle');
+        window.location.href='camera-video-preview.html?source='+$("#img")[0].src + '&poster='+$("#thumb_img")[0].src;
+    }
+
+    function previewPhoto() {
+        navigator.photoPreviewer.preview($("#img")[0].src);
+    }
+
+    function videoPreview() {
+        mui('#picture').popover('toggle');
+        alert(JSON.stringify($("#img")[0].src));
+        navigator.videoPreviewer.preview($("#img")[0].src,$("#img-name").text());
+    }
+
+</script>
+</body>
+
+</html>

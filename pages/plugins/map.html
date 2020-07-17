@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        .download-img {
+            width: 60px;
+            height: 60px;
+            margin: 5px 0 5px 0;
+            padding: 18px;
+        }
+
+        .progress-td {
+            width: 85%;
+            padding-left: 10px;
+        }
+
+        .img-td {
+            width: 15%;
+        }
+    </style>
+</head>
+<body>
+
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+
+<header class="mui-bar mui-bar-nav" style="position: fixed;">
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh"
+          style="position:absolute; right:15px"></span>
+</header>
+
+<div style="margin-top: 44px;align-items: center">
+
+
+    <div style="background-color: #F0F0F0">
+        <div style="padding-top: 20px;display: flex;">
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lon:</span>
+                <input id="a-lon-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入经度" value="120.19574">
+            </div>
+
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lat:</span>
+                <input id="a-lat-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入纬度" value="30.182748">
+            </div>
+        </div>
+
+
+        <div style="display: flex;">
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lon:</span>
+                <input id="b-lon-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入经度" value="120.190725">
+            </div>
+
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lat:</span>
+                <input id="b-lat-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入纬度" value="30.187793">
+            </div>
+        </div>
+
+        <button type="button" onclick="calculateLineDistance()" class="mui-btn mui-btn-positive"
+                style="margin-bottom: 20px;margin-top: 20px; width: 50%; margin-left: 25%">计算距离
+        </button>
+
+    </div>
+
+    <div style="background-color: #FCFCFC">
+        <div style="padding-top: 20px;display: flex;">
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lon:</span>
+                <input id="lon-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入经度" value="120.2023">
+            </div>
+
+
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lat:</span>
+                <input id="lat-input" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入纬度" value="30.188515">
+            </div>
+
+        </div>
+
+        <div style="display: flex;">
+
+            <label for="map-coordinate-type"
+                   style=" width: 130px; padding-left: 15px; padding-right: 15px; text-align: center; height: 40px;margin-bottom: 0px">源坐标坐标系类型
+
+            </label>
+
+
+            <select id="map-coordinate-type"
+                    style=" width: 100px; margin-left: 20px; vertical-align: center; horiz-align: center; height: 40px;">
+                <option value="-1">AMap</option>
+                <option value="0">Baidu</option>
+                <option value="1">MapBar</option>
+                <option value="2">MapABC</option>
+                <option value="3">SoSoMap</option>
+                <option value="4">AliYun</option>
+                <option value="5">Google</option>
+                <option value="6">GPS</option>
+            </select>
+
+        </div>
+
+        <button type="button" onclick="coordinateConvert()" class="mui-btn mui-btn-positive"
+                style="margin-bottom: 20px;margin-top: 20px; width: 50%; margin-left: 25%">转换坐标
+        </button>
+
+    </div>
+
+    <div style="background-color: #F0F0F0">
+        <div style="padding-top: 20px;display: flex;">
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lon:</span>
+                <input id="lon-input1" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入经度" value="120.190725">
+            </div>
+
+
+            <div style="display: flex; padding-left: 15px; padding-right: 15px;">
+                <span style="line-height: 40px">lat:</span>
+                <input id="lat-input1" type="number" style="height: 40px; margin-left: 10px" class="form-control"
+                       placeholder="请输入纬度" value="30.187793">
+            </div>
+
+        </div>
+
+        <div class="switch"
+             style="display: flex; font-size: 18px">
+
+            <div style="flex: 1; justify-content: center; display: flex; align-items: center">
+                <input id="map-coordinate-dev" type="checkbox" checked/>
+                <label for="map-coordinate-dev" style="margin-bottom: 0; margin-left: 10px">国测加密</label>
+            </div>
+
+
+            <div style="flex: 1">
+                <div>
+                    <input type="radio" value=1 id="map-navigation" name="func-type" checked/>
+                    <label for="map-navigation" style="margin-bottom: 0px">导航</label>
+                </div>
+
+
+                <div>
+                    <input type="radio" value=2 id="map-planning-line" name="func-type"/>
+                    <label for="map-planning-line" style="margin-bottom: 0px">路径规划</label>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div style="display: flex; margin-top: 10px">
+
+            <label for="map-navigation-type"
+                   id="map-navigation-type-title"
+                   style=" width: 100px; padding-left: 15px; padding-right: 15px;
+                   text-align: center; line-height: 40px; margin-bottom: 0px"
+            >
+                导航方式
+            </label>
+
+
+            <select id="map-navigation-type"
+                    style=" width: 220px; margin-left: 20px; vertical-align: center; horiz-align: center; height: 40px;">
+                <option value="0">速度最快</option>
+                <option value="1">费用最少</option>
+                <option value="2">距离最短</option>
+                <option value="3">不走高速</option>
+                <option value="4">躲避拥堵</option>
+                <option value="5">不走高速且避免收费</option>
+                <option value="6">不走高速且躲避拥堵</option>
+                <option value="7">躲避收费和拥堵</option>
+                <option value="8">不走高速躲避收费和拥堵</option>
+            </select>
+
+        </div>
+
+
+        <div style="justify-content: space-around;display: flex;">
+            <button id="map-navigation-button" type="button" onclick="startNavi()" class="mui-btn mui-btn-positive"
+                    style="margin-bottom: 20px;margin-top: 20px; width: 50%; ">导航
+            </button>
+
+            <button id="map-path-button" type="button" onclick="startPlanningPath()" class="mui-btn mui-btn-positive"
+                    style="margin-bottom: 20px;margin-top: 20px; width: 50%; ">
+                路径规划
+            </button>
+        </div>
+
+
+    </div>
+
+
+    <div style="justify-content: space-around;display: flex; padding-top: 20px; padding-bottom: 20px; background-color: #FCFCFC">
+        <button type="button" onclick="getOfflineMapCityList()" class="mui-btn mui-btn-positive">获取离线地图城市列表</button>
+        <button type="button" onclick="getOfflineMapProvinceList()" class="mui-btn mui-btn-positive">获取离线地图省份列表</button>
+    </div>
+
+    <div style="padding-top: 20px; background-color: #F0F0F0; display: flex">
+
+        <p style=" font-size: 20px; text-align: center; flex: 3; line-height: 80px">离线地图下载</p>
+
+        <div style="flex: 2; height: 80px;align-content: center;flex-wrap: wrap;display: flex;">
+
+            <div>
+                <input type="radio" value=1 id="map-download-with-city-name" name="download-type" checked/>
+                <label for="map-download-with-city-name" style="margin-bottom: 0">城市名称</label>
+            </div>
+
+
+            <div>
+                <input type="radio" value=2 id="map-download-with-city-code" name="download-type"/>
+                <label for="map-download-with-city-code" style="margin-bottom: 0">城市编码</label>
+            </div>
+
+
+            <div>
+                <input type="radio" value=3 id="map-download-with-province-name" name="download-type"/>
+                <label for="map-download-with-province-name" style="margin-bottom: 0">省份名称</label>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <table style="width: 100%;text-align: center;">
+        <tr style="border-top: 0.1rem solid gainsboro;">
+            <td class="progress-td">
+                <div class="progress">
+                    <div id="progressBar" name="progress_bar" class="progress-bar progress-bar-striped"
+                         role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span
+                            id="progress" name="progress_num"></span></div>
+                    <input name="status" value="0" hidden/>
+                    <input name="download_id" hidden/>
+                </div>
+            </td>
+            <td class="img-td">
+                <img hcm-index="1" class="download-img" src="../../img/download.png"/>
+            </td>
+        </tr>
+    </table>
+
+
+    <div style="justify-content: space-around;display: flex; padding-top: 20px; background-color: #F0F0F0;padding-bottom: 20px">
+
+        <button type="button" onclick="openDownloadView()" class="mui-btn mui-btn-positive" style="width: 40%">
+            打开地图下载页面
+        </button>
+
+        <button type="button" onclick="openMap()" class="mui-btn mui-btn-positive" style="width: 40%">打开地图</button>
+    </div>
+
+
+    <div style="justify-content: space-around;display: flex; padding-top: 20px; padding-bottom: 20px; background-color: #FCFCFC">
+        <button type="button" onclick="navigator.map.open(null, {'url': 'http://172.16.2.46:8888/map/index.js?type=1'});" class="mui-btn mui-btn-positive">海量点示例</button>
+        <button type="button" onclick="navigator.map.open(null, {'url': 'http://172.16.2.46:8888/map/index.js?type=0'});" class="mui-btn mui-btn-positive">海量线示例</button>
+
+    </div>
+
+    <!--<input id="uploadImg" type="file" accept="image/*" multiple change="changeFile">-->
+    <!--<input id="uploadImg" type="file" accept="image/*" onchange="changeFile()">-->
+
+
+</div>
+
+<script type="text/javascript">
+    function nativeExcuteJs(param) {
+        alert(param);
+        return '12';
+    }
+</script>
+
+
+<script type="application/javascript" charset="UTF-8" type="text/javascript">
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+        $("#spDiv").hide();
+        $("#clearTable").hide();
+        $.each($("[name='ios']"), function () {
+            $(this).hide();
+        });
+        $.each($("[name='android']"), function () {
+            $(this).hide();
+        });
+
+        $('#map-navigation-button').show();
+        $('#map-path-button').hide();
+
+        $(".download-img").click(function () {
+            download();
+        });
+
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        // 初始化地图 ad62de77e31f3865fcd9325d34be5987
+        navigator.map.inInitializeMap({
+            'ios': '01e762ca3a8aeca08df443c489783a34',
+            //添加安卓端key
+            'android': '95ad8739cddfb8b8b412f89d8e08aa47'
+        });
+
+        // navigator.basis.getValue(function (username) {
+        //     if (username != null && username != "undefined")
+        //         $('#usernameLabel').text(username);
+        // }, "username");
+
+        var platform = device.platform;
+        if (platform == "Android") {
+            $.each($("[name='android']"), function () {
+                $(this).show();
+            });
+        } else if (platform == device.platform) {
+            $.each($("[name='ios']"), function () {
+                $(this).show();
+            });
+        }
+
+
+
+
+        getNetworkType();
+        //断网监听事件
+        document.addEventListener("offline", onOffline, false);
+
+        function onOffline() {
+            // 处理断网事件
+            getNetworkType();
+        }
+
+
+        //连网监听事件
+        document.addEventListener("online", onOnline, false);
+
+        function onOnline() {
+            // 处理连网事件
+            getNetworkType();
+        }
+
+
+
+
+    }
+
+    function getNetworkType() {
+        var type = navigator.connection.type;
+        // navigator.basis.tip(type);
+        if (type == "4g") {
+            $("#network").attr("src", "../../img/4g.png");
+        } else if (type == "wifi") {
+            $("#network").attr("src", "../../img/wifi.png");
+        } else if (type == "none") {
+            $("#network").attr("src", "../../img/offline.png");
+        }
+    }
+
+    function openMap() {
+
+
+        // mui.ajax('http://192.168.2.35:8080/offline/line.json', {
+        //     dataType: 'text',//服务器返回json格式数据
+        //     type: 'get',//HTTP请求类型
+        //     timeout: 10000,//超时时间设置为10秒；
+        //     success: function (data) {
+        //         //服务器返回响应，根据响应结果，分析是否登录成功；
+        //         alert(JSON.stringify(typeof data));
+        //         navigator.db.loadFromJson('t_person', ['points', 'wei'], data, function (success) {
+        //
+        //         }, function (error) {
+        //
+        //         });
+        //
+        //
+        //     },
+        //     error: function (error) {
+        //         //异常处理
+        //         alert('失败'+JSON.stringify(error));
+        //     }
+        // });
+
+        // 打开地图
+        navigator.map.open(null, {'url': 'http://10.10.21.14:8080/weex/index.js'});
+    }
+
+    function calculateLineDistance() {
+
+        var latA = $('#a-lat-input').val();
+        var lonA = $('#a-lon-input').val();
+        var latB = $('#b-lat-input').val();
+        var lonB = $('#b-lon-input').val();
+
+        if (latA && latB && lonA && lonB) {
+
+            navigator.map.calculateLineDistance(
+                function (result) {
+                    if (result.success) {
+                        alert(result.data.distance+"  米");
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                {
+                    'latitude': latA,
+                    'longitude': lonA
+                },
+                {
+                    'latitude': latB,
+                    'longitude': lonB
+                }
+            );
+
+        }
+
+    }
+
+    function coordinateConvert() {
+
+        var lat = $('#lat-input').val();
+        var lon = $('#lon-input').val();
+        var type = $('#map-coordinate-type option:selected').val();
+
+        if (lat && lon) {
+            navigator.map.convertCoordinate(
+                function (result) {
+                    if (result.success) {
+                        alert(JSON.stringify(result.data));
+                    } else {
+                        alert(result.message);
+                    }
+                },
+                {
+                    'latitude': lat,
+                    'longitude': lon,
+                    'type': type
+                }
+            );
+        }
+
+    }
+
+
+    function startNavi() {
+        var lat = $('#lat-input1').val();
+        var lon = $('#lon-input1').val();
+
+        var t = $("#map-navigation-type").val();
+
+        var dev = $('#map-coordinate-dev').is(':checked');
+
+        if (lat && lon) {
+            navigator.map.startNavi(
+                function (result) {
+                    alert(result.message);
+                },
+                {
+                    // 'poiname': '网易',
+                    'lat': lat,
+                    'lon': lon,
+                    'style': t,
+                    'dev': dev,
+                }
+            );
+        }
+
+    }
+
+    function startPlanningPath() {
+        var lat = $('#lat-input1').val();
+        var lon = $('#lon-input1').val();
+
+        var t = $("#map-navigation-type").val();
+
+        var dev = $('#map-coordinate-dev').is(':checked');
+
+        if (lat && lon) {
+            navigator.map.startPlanningPath(
+                function (result) {
+                    alert(result.message);
+                },
+                {
+                    // 'dname': '网易',
+                    'dlat': lat,
+                    'dlon': lon,
+                    't': t,
+                    'dev': dev,
+                }
+            );
+        }
+    }
+
+
+    $("input:radio[name='func-type']").change(function () {
+        var opt = $("input:radio[name='func-type']:checked").val();
+
+
+        if (opt == 1) {
+
+            $('#map-navigation-button').show();
+            $('#map-path-button').hide();
+
+
+            $("#map-navigation-type-title").text('导航方式');
+            $("#map-navigation-type option").remove();
+            $("#map-navigation-type").append("<option value='0'>速度最快</option>");
+            $("#map-navigation-type").append("<option value='1'>费用最少</option>");
+            $("#map-navigation-type").append("<option value='2'>距离最短</option>");
+            $("#map-navigation-type").append("<option value='3'>不走高速</option>");
+            $("#map-navigation-type").append("<option value='4'>躲避拥堵</option>");
+            $("#map-navigation-type").append("<option value='5'>不走高速且避免收费</option>");
+            $("#map-navigation-type").append("<option value='6'>不走高速且躲避拥堵</option>");
+            $("#map-navigation-type").append("<option value='7'>躲避收费和拥堵</option>");
+            $("#map-navigation-type").append("<option value='7'>不走高速躲避收费和拥堵</option>");
+
+        } else if (opt == 2) {
+            $('#map-navigation-button').hide();
+            $('#map-path-button').show();
+
+            $("#map-navigation-type-title").text('出行方式');
+            $("#map-navigation-type option").remove();
+            $("#map-navigation-type").append("<option value='0'>驾车</option>");
+            $("#map-navigation-type").append("<option value='1'>公交</option>");
+            $("#map-navigation-type").append("<option value='2'>步行</option>");
+            $("#map-navigation-type").append("<option value='3'>骑行</option>");
+        }
+
+    });
+
+    function getOfflineMapCityList() {
+        navigator.map.getOfflineMapCityList(
+            function (result) {
+                if (result.success) {
+                    navigator.notification.alert(
+                        JSON.stringify(result.data),
+                        null,
+                        '离线地图城市列表'
+                    )
+                } else {
+                    alert(result.message)
+                }
+            }
+        );
+    }
+
+    function getOfflineMapProvinceList() {
+        navigator.map.getOfflineMapProvinceList(
+            function (result) {
+                if (result.success) {
+                    navigator.notification.alert(
+                        JSON.stringify(result.data),
+                        null,
+                        '离线地图省份列表'
+                    )
+                } else {
+                    alert(result.message)
+                }
+            }
+        );
+    }
+
+
+    $("input:radio[name='download-type']").change(function () {
+        $("input[name='status']").val(0);
+        $(".download-img").attr('src', '../../img/download.png');
+        $("#progressBar").css('width', '0%');
+        $("#progress").text('0%');
+    });
+
+
+    function download() {
+
+        if ($("input[name='status']").val() == 1) {
+            return;
+        }
+
+        var opt = $("input:radio[name='download-type']:checked").val();
+
+
+        $("input:radio[name='download-type']").attr("disabled", true);
+
+        navigator.map.clearDisk();
+
+
+        switch (opt) {
+            case '1':
+
+
+                navigator.map.downloadByCityName(
+                    function (result) {
+                        handleDownloadData(result);
+                    },
+                    ['杭州市'],
+                    true
+                );
+
+                break;
+
+            case '2':
+
+                navigator.map.downloadByCityCode(
+                    function (result) {
+                        handleDownloadData(result);
+                    },
+                    ['010'],
+                    true
+                );
+
+                break;
+
+            case '3':
+
+                navigator.map.downloadByProvinceName(
+                    function (result) {
+                        handleDownloadData(result);
+                    },
+                    ['浙江省'],
+                    true
+                );
+
+                break;
+
+            default:
+                break;
+        }
+
+
+    }
+
+
+    function handleDownloadData(result) {
+
+        var downloadStatus = 0; // 0-默认 1-下载 2-暂停 3-完成 4-出错
+
+
+        if (result.success) {
+
+            $(".download-img").attr('src', '../../img/pause.png');
+
+            var progress = 0;
+
+            var resData = result.data;
+            switch (resData.status) {
+                case 100: // 等待
+                case 101: // 开始
+                case 102: // 下载
+                case 103: // 下载完成
+                case 105: // 解压
+                    progress = resData.progress;
+                    downloadStatus = 1;
+                    break;
+                case 106: // 完成
+                    progress = resData.progress;
+                    downloadStatus = 3;
+                    $(".download-img").attr('src', '../../img/success.png');
+                    $("input:radio[name='download-type']").attr("disabled", false);
+                    break;
+                case 104: // 暂停
+                    progress = resData.progress;
+                    downloadStatus = 2;
+                    $(".download-img").attr('src', '../../img/continue.png');
+                    break;
+                default : // 出错107
+                    downloadStatus = 4;
+                    $(".download-img").attr('src', '../../img/download.png');
+                    $("input:radio[name='download-type']").attr("disabled", false);
+                    break;
+            }
+
+            var text = progress + "%";
+
+            $("#progressBar").css('width', text);
+            $("#progress").text(text);
+
+            $("input[name='status']").val(downloadStatus);
+
+        } else {
+            $("input:radio[name='download-type']").attr("disabled", false);
+            alert(result.message);
+        }
+
+    }
+
+
+    function openDownloadView() {
+        navigator.map.openDownloadView();
+    }
+
+    function changeFile() {
+
+        alert('22222');
+
+
+        setTimeout(alert('111111'), 5000);
+
+    }
+
+
+</script>
+
+</body>
+
+</html>

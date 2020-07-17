@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        .progress-div {
+            margin: 20px 20px 20px 20px;
+        }
+
+        .download-img {
+            width: 60px;
+            height: 60px;
+            margin: 5px 0 5px 0;
+            padding: 18px;
+        }
+
+        .progress-td {
+            width: 85%;
+            padding-left: 10px;
+        }
+
+        .img-td {
+            width: 15%;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/popper.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/bootstrap.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+        $(".download-img").click(function () {
+            download(this);
+        });
+    });
+
+    function download(obj, s) {
+        var downloadIdEle = $(obj).parent().parent().find("input[name='download_id']").get(0);
+        var statusEle = $(obj).parent().parent().find("input[name='status']").get(0);
+        var realStatus = $(statusEle).val();
+        var status;
+        if (s == -1) {
+            if (realStatus != 0 && realStatus != 3)
+                status = 1;
+        } else if (s == -2) {
+            if (realStatus != 0 && realStatus != 3)
+                status = 2;
+        } else {
+            status = realStatus;
+        }
+
+        var progressBar = $(obj).parent().parent().find("div[name='progress_bar']").get(0);
+        var progressNum = $(obj).parent().parent().find("span[name='progress_num']").get(0);
+        var progress = 0;
+        if (status == 0) {
+            $(statusEle).val(1);
+            $(obj).attr('src', '../../img/pause.png');
+            var per = Math.ceil(Math.random() * 5) * 10;
+            var downloadId = setInterval(function () {
+                progress += per;
+                console.log(progress);
+                if (progress >= 10000) {
+                    progress = 10000;
+                    $(statusEle).val(3);
+                    $(obj).attr('src', '../../img/success.png');
+                    clearInterval(downloadId);
+                }
+                var text = (progress / 100).toFixed(1) + "%";
+
+                $(progressBar).css('width', text);
+                $(progressNum).text(text);
+            }, 100, 0);
+            $(downloadIdEle).val(downloadId);
+        } else if (status == 1) {
+            $(obj).attr('src', '../../img/continue.png');
+            $(statusEle).val(2);
+            clearInterval($(downloadIdEle).val());
+        } else if (status == 2) {
+            clearInterval($(downloadIdEle).val());
+            $(obj).attr('src', '../../img/pause.png');
+            $(statusEle).val(1);
+            var progressText = $(progressNum).text();
+            progress = parseFloat(progressText.substring(0, progressText.length - 1)) * 100;
+            var per = Math.ceil(Math.random() * 5) * 10;
+            var downloadId = setInterval(function () {
+                progress += per;
+                console.log(progress);
+                if (progress >= 10000) {
+                    progress = 10000;
+                    $(statusEle).val(3);
+                    $(obj).attr('src', '../../img/success.png');
+                    clearInterval(downloadId);
+                }
+                var text = (progress / 100).toFixed(1) + "%";
+
+                $(progressBar).css('width', text);
+                $(progressNum).text(text);
+            }, 100, 0);
+            $(downloadIdEle).val(downloadId);
+        } else if (status == -1) {
+
+        }
+
+    }
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        getNetworkType();
+        //断网监听事件
+        document.addEventListener("offline", onOffline, false);
+
+        function onOffline() {
+            // alert('offline');
+            // 处理断网事件
+            getNetworkType();
+            $.each($(".download-img"), function (i, item) {
+                download(item, -1)
+            });
+        }
+
+
+        //连网监听事件
+        document.addEventListener("online", onOnline, false);
+
+        function onOnline() {
+            // alert('online');
+            // 处理连网事件
+            getNetworkType();
+            $.each($(".download-img"), function (i, item) {
+                download(item, -2)
+            });
+        }
+    }
+
+    function getNetworkType() {
+        var type = navigator.connection.type;
+
+        // alert(type == '4g');
+        if (type == '4g') {
+            // alert("4g");
+            $("#network").attr("src", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582878872175&di=6f0a6616066fb16604755b2694ba73f3&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F03%2F77%2F95%2F5bff6a3c69354_610.jpg");
+        } else if (type == "wifi") {
+            // alert("wifi");
+            $("#network").attr("src", "../../img/wifi.png");
+        } else if (type == "none") {
+            // alert("当前无网络");
+            $("#network").attr("src", "../../img/offline.png");
+        }
+    }
+
+</script>
+<header class="mui-bar mui-bar-nav" >
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+    <img id="network" src="../../img/offline.png"
+         style="width:44px; height:44px; padding: 8px; position: absolute; right: 50px;"/>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh"
+          style="position:absolute; right:15px"></span>
+</header>
+<div>
+    <div style="margin: 10px;" hidden>
+        <button type="button" onclick="getNetworkType()" class="mui-btn mui-btn-primary">网络类型</button>
+    </div>
+    <div style="padding: 0 10px 0 10px;margin-top: 44px">
+        <table>
+            <tr style="border-top: 0.1rem solid gainsboro;">
+                <td class="progress-td">
+                    <div class="progress">
+                        <div id="progressBar_1" name="progress_bar" class="progress-bar progress-bar-striped"
+                             role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span
+                                id="progress_1" name="progress_num"></span></div>
+                        <input name="status" value="0" hidden/>
+                        <input name="download_id" hidden/>
+                    </div>
+                </td>
+                <td class="img-td">
+                    <img hcm-index="1" class="download-img" src="../../img/download.png"/>
+                </td>
+            </tr>
+            <tr style="border-bottom: 0.1rem solid gainsboro; border-top: 0.1rem solid gainsboro;">
+                <td class="progress-td">
+                    <div class="progress">
+                        <div id="progressBar_2" name="progress_bar" class="progress-bar progress-bar-striped"
+                             role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span
+                                id="progress_2" name="progress_num"></span></div>
+                        <input name="status" value="0" hidden/>
+                        <input name="download_id" hidden/>
+                    </div>
+                </td>
+                <td class="img-td">
+                    <img hcm-index="2" class="download-img" src="../../img/download.png"/>
+                </td>
+            </tr>
+            <tr style="border-bottom: 0.1rem solid gainsboro;">
+                <td class="progress-td">
+                    <div class="progress">
+                        <div id="progressBar_3" name="progress_bar" class="progress-bar progress-bar-striped"
+                             role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span
+                                id="progress_3" name="progress_num"></span></div>
+                        <input name="status" value="0" hidden/>
+                        <input name="download_id" hidden/>
+                    </div>
+                </td>
+                <td class="img-td">
+                    <img hcm-index="3" class="download-img" src="../../img/download.png"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

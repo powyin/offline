@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>微信插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:cdvfile：https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <!--App自定义的css-->
+    <!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">微信插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示微信插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+
+    <div id="login" class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">登录</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="authLogin" class="mui-navigate-right" href="thirdLogin.html">登录</a>
+        </div>
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">分享</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareText2" class="mui-navigate-right" href="shareText.html">分享文字</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareImage" class="mui-navigate-right" href="shareImage.html?a=image">分享图片</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareMusic" class="mui-navigate-right " href="shareImage.html?a=music">音频分享</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareVideo" class="mui-navigate-right " href="shareImage.html?a=video">视频分享</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a id="shareLink" class="mui-navigate-right " href="shareImage.html?a=link">网页分享</a>
+        </div>
+    </div>
+
+
+    <div id="pay" class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">支付</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="pay()">支付</a>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    var type = getQueryString("type");
+
+    var arr=type.split("?");
+
+    if (arr[0]==='wechat') {
+        window.onload = function(){
+            var h1= document.getElementsByTagName("h1")[0];
+            h1.innerHTML = "微信插件";
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示微信插件所包含的接口能力，具体参数详见HCB开发文档";
+            $('#shareText2').attr('href','shareText.html?type=wechat');
+            $('#shareImage').attr('href','shareImage.html?type=wechat');
+            $('#shareMusic').attr('href','shareWebpage.html?a=music&type=wechat');
+            $('#shareVideo').attr('href','shareWebpage.html?a=video&type=wechat');
+            $('#shareLink').attr('href','shareWebpage.html?a=link&type=wechat');
+            //区分登录
+            $('#authLogin').attr('href','thirdLogin.html?type=wechat');
+        };
+    }else if (arr[0]==='qq') {
+        window.onload = function(){
+            var h1= document.getElementsByTagName("h1")[0];
+            h1.innerHTML = "QQ插件";
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示QQ插件所包含的接口能力，具体参数详见HCB开发文档";
+            $('#shareText2').attr('href','shareText.html?type=qq');
+            $('#shareImage').attr('href','shareImage.html?type=qq');
+            $('#shareMusic').attr('href','shareWebpage.html?a=music&type=qq');
+            $('#shareVideo').attr('href','shareWebpage.html?a=video&type=qq');
+            $('#shareLink').attr('href','shareWebpage.html?a=link&type=qq');
+            //区分登录
+            $('#authLogin').attr('href','thirdLogin.html?type=qq');
+
+            $('#pay').hide();
+        };
+    }else if (arr[0]==='alipay') {
+        window.onload = function(){
+            var h1= document.getElementsByTagName("h1")[0];
+            h1.innerHTML = "支付宝插件";
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示支付宝插件所包含的接口能力，具体参数详见HCB开发文档";
+            $('#shareText2').attr('href','shareText.html?type=alipay');
+            $('#shareImage').attr('href','shareImage.html?type=alipay');
+            $('#shareMusic').attr('href','shareWebpage.html?a=music&type=alipay');
+            $('#shareVideo').attr('href','shareWebpage.html?a=video&type=alipay');
+            $('#shareLink').attr('href','shareWebpage.html?a=link&type=alipay');
+            //区分登录
+            $('#authLogin').attr('href','thirdLogin.html?type=alipay');
+
+            $('#login').hide();
+            $('#pay').hide();
+        };
+    }else if (arr[0]==='sina') {
+        window.onload = function(){
+            var h1= document.getElementsByTagName("h1")[0];
+            h1.innerHTML = "新浪插件";
+            var p= document.getElementsByTagName("p")[0];
+            p.innerHTML = "以下将演示新浪插件所包含的接口能力，具体参数详见HCB开发文档";
+            $('#shareText2').attr('href','shareText.html?type=sina');
+            $('#shareImage').attr('href','shareImage.html?type=sina');
+            $('#shareMusic').attr('href','shareWebpage.html?a=music&type=sina');
+            $('#shareVideo').attr('href','shareWebpage.html?a=video&type=sina');
+            $('#shareLink').attr('href','shareWebpage.html?a=link&type=sina');
+            //区分登录
+            $('#authLogin').attr('href','thirdLogin.html?type=sina');
+
+            $('#pay').hide();
+
+        };
+    }
+    function pay() {
+        mui.ajax('http://10.10.21.191:8090/hcmobile/pay', {
+            dataType: 'json',//服务器返回json格式数据
+            type: 'get',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            success: function (data) {
+                //服务器返回响应，根据响应结果，分析是否登录成功；
+                // alert(JSON.stringify(data));
+                navigator.wechat.pay(data, function (successCallback) {
+                    alert(JSON.stringify(successCallback));
+                }, function (err) {
+                    alert('支付失败'+JSON.stringify(err));
+                });
+            },
+            error: function (error) {
+                //异常处理
+                alert('支付失败'+JSON.stringify(error));
+            }
+        });
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+</script>
+</body>
+
+</html>

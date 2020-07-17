@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>AdView插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">AdView插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示AdView插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+    <div class="mui-card">
+        <!--<ul class="mui-table-view">-->
+            <!--<li class="mui-table-view-cell">-->
+                <!--<a class="mui-navigate-right" onclick="showBannerAd()">横幅广告</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <h4 class="mui-content-padded" style="text-align: center;font-size: 18px;">横幅广告</h4>
+        <h5 class="mui-content-padded">广告位置:</h5>
+        <div class="mui-content-padded">
+            <form action="" class="mui-input-group">
+                <div class="mui-input-row mui-radio">
+                    <label>顶部</label>
+                    <input type="radio" name="radio" checked  value="0" />
+                </div>
+                <div class="mui-input-row mui-radio">
+                    <label>居中</label>
+                    <input type="radio" name="radio"  value="1" />
+                </div>
+                <!--mui-disabled:字体颜色变淡，disabled：禁止选择颜色变化(小圆点)-->
+                <div class="mui-input-row mui-radio">
+                    <label>底部</label>
+                    <input type="radio" name="radio" value="2" />
+                </div>
+                <div class="mui-input-row" id="xDiv">
+                    <label>X</label>
+                    <input type="text" id="dddInput" name="xset" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="距离顶部的距离,基于上面选择">
+                </div>
+                <div class="mui-input-row" id="yDiv">
+                    <label>Y</label>
+                    <input type="text" id="yInput" name="yset" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="距离底部的距离,基于上面选择">
+                </div>
+            </form>
+        </div>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="showBannerAd()">展示横幅广告</button>
+        </div>
+    </div>
+    <div class="mui-card">
+        <h4 class="mui-content-padded" style="text-align: center;font-size: 18px;">插屏广告</h4>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="showInterteristalAd()">展示插屏广告</button>
+        </div>
+    </div>
+    <div class="mui-card">
+        <h4 class="mui-content-padded" style="text-align: center;font-size: 18px;">原生广告</h4>
+        <h5 class="mui-content-padded">广告位置:</h5>
+        <div class="mui-content-padded">
+            <form action="" class="mui-input-group">
+                <div class="mui-input-row" >
+                    <label>广告位ID:</label>
+                    <input type="text" name="nativePoid" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="请输入原生广告位id">
+                </div>
+                <div class="mui-input-row mui-radio">
+                    <label>顶部</label>
+                    <input type="radio" name="radio1" checked  value="0" />
+                </div>
+                <div class="mui-input-row mui-radio">
+                    <label>居中</label>
+                    <input type="radio" name="radio1"  value="1" />
+                </div>
+                <div class="mui-input-row mui-radio">
+                    <label>底部</label>
+                    <input type="radio" name="radio1" value="2" />
+                </div>
+                <div class="mui-input-row" id="xDiv1">
+                    <label>X</label>
+                    <input type="text" id="dddInput1" name="xset1" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="距离顶部的距离,基于上面选择">
+                </div>
+                <div class="mui-input-row" id="yDiv1">
+                    <label>Y</label>
+                    <input type="text" id="yInput1" name="yset1" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="距离底部的距离,基于上面选择">
+                </div>
+            </form>
+        </div>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="showNativeAd()">展示原生广告</button>
+        </div>
+    </div>
+    <div class="mui-card">
+        <!--<ul class="mui-table-view">-->
+            <!--<li class="mui-table-view-cell">-->
+                <!--<a class="mui-navigate-right" onclick="showVideoAd()">视频广告</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <h4 class="mui-content-padded" style="text-align: center;font-size: 18px;">视频广告</h4>
+        <div class="mui-content-padded">
+            <form action="" class="mui-input-group">
+                <div class="mui-input-row" >
+                    <label>广告位ID:</label>
+                    <input type="text" name="videoPoid" style="text-align: left;font-size: 15px;" class="mui-input-clear" placeholder="请输入视频广告位id">
+                </div>
+            </form>
+        </div>
+        <div class="mui-content-padded">
+            <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="showVideoAd()">展示视频广告</button>
+        </div>
+    </div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+    $(document).ready(function() {
+        $('input[type=radio][name=radio]').change(function() {
+            // alert(this.value)
+            var yDiv = document.getElementById('yDiv');
+            var xDiv = document.getElementById('xDiv');
+            if (this.value=='1') {
+                $("#dddInput").removeAttr('disabled');
+                $("#yInput").removeAttr('disabled');
+                $("input[ name='xset']").val('');
+                $("input[ name='yset']").val('');
+                $("input[ name='xset']").placeholder.val('距离顶部的距离,基于上面选择');
+                $("input[ name='yset']").placeholder.val('距离底部的距离,基于上面选择');
+            }else if (this.value=='0') {
+                $("#dddInput").removeAttr('disabled');
+                $("#yInput").removeAttr('disabled');
+                document.getElementById("yInput").setAttribute("disabled", true);
+                $("input[ name='yset']").val('');
+                $("input[ name='yset']").placeholder.val('距离底部的距离,基于上面选择');
+            }else{//底部
+                $("#dddInput").removeAttr('disabled');
+                $("#yInput").removeAttr('disabled');
+                document.getElementById("dddInput").setAttribute("disabled", true);
+                $("input[ name='xset']").val('');
+                $("input[ name='xset']").placeholder.val('距离顶部的距离,基于上面选择');
+            }
+        });
+        //原生广告
+        $('input[type=radio][name=radio1]').change(function() {
+            var yDiv = document.getElementById('yDiv1');
+            var xDiv = document.getElementById('xDiv1');
+            if (this.value=='1') {
+                $("#dddInput1").removeAttr('disabled');
+                $("#yInput1").removeAttr('disabled');
+                $("input[ name='xset1']").val('');
+                $("input[ name='yset1']").val('');
+                $("input[ name='xset1']").placeholder.val('距离顶部的距离,基于上面选择');
+                $("input[ name='yset1']").placeholder.val('距离底部的距离,基于上面选择');
+            }else if (this.value=='0') {
+                $("#dddInput1").removeAttr('disabled');
+                $("#yInput1").removeAttr('disabled');
+                document.getElementById("yInput1").setAttribute("disabled", true);
+                $("input[ name='yset1']").val('');
+                $("input[ name='yset1']").placeholder.val('距离底部的距离,基于上面选择');
+            }else{//底部
+                $("#dddInput1").removeAttr('disabled');
+                $("#yInput1").removeAttr('disabled');
+                document.getElementById("dddInput1").setAttribute("disabled", true);
+                $("input[ name='xset1']").val('');
+                $("input[ name='xset1']").placeholder.val('距离顶部的距离,基于上面选择');
+            }
+        });
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+        $("#dddInput").removeAttr('disabled');
+        $("#yInput").removeAttr('disabled');
+        document.getElementById("yInput").setAttribute("disabled", true);
+//原生
+        $("#dddInput1").removeAttr('disabled');
+        $("#yInput1").removeAttr('disabled');
+        document.getElementById("yInput1").setAttribute("disabled", true);
+    }
+
+    function showBannerAd() {
+        var x = Number($("input[ name='xset']").val());
+        var y = Number($("input[ name='yset']").val());
+        var isshow = $("input[name='radio']:checked").val();
+        var type = "top";
+        if (isshow=='1') {
+            type = "center";
+        }else if (isshow=='2') {
+            type = "bottom";
+        }
+        var para = {'x':x,'y':y,'type':type};
+        // alert(JSON.stringify(para));
+        navigator.adview.showBannerAd(
+            function(success) {
+                console.log(JSON.stringify(success));
+            },function (error){
+                console.log(JSON.stringify(error));
+            },para);
+    }
+    function showInterteristalAd() {
+        navigator.adview.showInterteristalAd(function(success) {
+            console.log(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function showNativeAd() {
+        var nativePoid = $("input[name='nativePoid']").val();
+        if (nativePoid === undefined || !nativePoid.length ||nativePoid === null ){
+            alert("请输入原生广告位ID");
+            return;
+        };
+        var x = Number($("input[ name='xset1']").val());
+        var y = Number($("input[ name='yset1']").val());
+        var isshow = $("input[name='radio1']:checked").val();
+        var type = "top";
+        if (isshow=='1') {
+            type = "center";
+        }else if (isshow=='2') {
+            type = "bottom";
+        }
+        var para = {'positionID':nativePoid,'x':x,'y':y,'type':type};
+        navigator.adview.showNativeAd(function (success) {
+            console.log(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        },para);//'POSIDs38o5ybf6agj'
+    }
+
+    function showVideoAd() {
+        var videoPoid = $("input[name='videoPoid']").val();
+        alert(videoPoid);
+        if (videoPoid === undefined || !videoPoid.length ||videoPoid === null ){
+            alert("请输入视频广告位ID");
+            return;
+        };
+        navigator.adview.showVideoAd(function (success) {
+            console.log(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        },{'positionID':videoPoid});//'POSID74pjtjpxo516'
+    }
+
+</script>
+</body>
+
+</html>

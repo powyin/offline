@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <script src="js/mui.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+</head>
+<script type="text/javascript">
+
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+
+        // alert('onDeviceReady')
+
+    }
+
+    function scan() {
+        navigator.bluetooth.scan(null, function (res) {
+            alert(JSON.stringify(res))
+        }, function (error) {
+            alert(error)
+        });
+
+    }
+
+    function stopScan() {
+        navigator.bluetooth.stopScan();
+    }
+
+    function connect() {
+        navigator.bluetooth.connect('21F44C6C-423C-D48A-04B0-8050A6978A6E', function (res) {
+            alert(JSON.stringify(res))
+        }, function (error) {
+            alert(error)
+        });
+    }
+
+    function disconnect() {
+        navigator.bluetooth.disconnect('21F44C6C-423C-D48A-04B0-8050A6978A6E');
+    }
+
+    function updateModule() {
+        navigator.bluetooth.update('21F44C6C-423C-D48A-04B0-8050A6978A6E','http://192.168.2.35:8080/offline/SimpleBLECentral_1.0.bin', function (res) {
+            navigator.basis.tip(JSON.stringify(res));
+            console.log(JSON.stringify(res));
+        }, function (error) {
+            alert(error)
+        });
+    }
+
+    function updateModule2(){
+        navigator.bluetooth.writeValue('F000FFC1-0451-4000-B000-000000000000',string2buffer(''),function (res) {
+
+        },function (error) {
+
+        })
+    }
+    //
+    // function string2buffer(str) {
+    //     // 首先将字符串转为16进制
+    //     let val = "";
+    //     for (let i = 0; i < str.length; i++) {
+    //         if (val === '') {
+    //             val = str.charCodeAt(i).toString(16)
+    //         } else {
+    //             val += ',' + str.charCodeAt(i).toString(16)
+    //         }
+    //     }
+    //     // 将16进制转化为ArrayBuffer
+    //     return new Uint8Array(val.match(/[\da-f]{2}/gi).map(function (h) {
+    //         return parseInt(h, 16)
+    //     })).buffer
+    // }
+
+    // ASCII only
+    function stringToBytes(string) {
+        var array = new Uint8Array(string.length);
+        for (var i = 0, l = string.length; i < l; i++) {
+            array[i] = string.charCodeAt(i);
+        }
+        return array.buffer;
+    }
+
+    // ASCII only
+    function bytesToString(buffer) {
+        return String.fromCharCode.apply(null, new Uint8Array(buffer));
+    }
+
+
+    function send0x3ACommand() {
+
+        navigator.bluetooth.write('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF1', stringToBytes(':'), function (res) {
+            alert(JSON.stringify(res));
+        }, function (error) {
+            alert(error);
+        })
+    }
+
+
+    function send0x3BCommand() {
+        navigator.bluetooth.write('21F44C6C-423C-D48A-04B0-8050A6978A6E','','FFF1', stringToBytes(';'), function (res) {
+            alert(JSON.stringify(res));
+        }, function (error) {
+            alert(error);
+        })
+    }
+
+    function sendCommand() {
+        var uuid = $("#uuid1").val();
+        var cmd = $("#command1").val();
+
+        if (uuid === undefined || uuid === ''){
+            return alert('请输入通道uuid');
+        }
+
+
+        navigator.bluetooth.write(uuid, string2buffer(cmd), function (res) {
+            alert(JSON.stringify(res));
+        }, function (error) {
+            alert(error);
+        })
+
+    }
+
+    function setIP() {
+        navigator.notification.prompt(
+            '请输入IP地址',
+            function (results) {
+                if (results.buttonIndex === 2){
+                    var ip = results.input1;
+                    navigator.bluetooth.write('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF6', stringToBytes(ip), function (res) {
+                        alert(JSON.stringify(res));
+                    }, function (error) {
+                        alert(error);
+                    })
+                }
+            },
+            '提示',
+            ['取消','确定'],
+            '192.168.31.1'
+        );
+    }
+
+    function setPort() {
+        navigator.notification.prompt(
+            '请输入端口号',
+            function (results) {
+                if (results.buttonIndex === 2){
+                    var port = results.input1;
+                    navigator.bluetooth.write('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF5', stringToBytes(port), function (res) {
+                        alert(JSON.stringify(res));
+                    }, function (error) {
+                        alert(error);
+                    })
+                }
+            },
+            '提示',
+            ['取消','确定'],
+            '8080'
+        );
+    }
+    
+    function readCommand() {
+
+    }
+
+    function getIP() {
+        navigator.bluetooth.read('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF6',function (res) {
+            var ip = bytesToString(res);
+            alert(JSON.stringify(ip))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    function getPort() {
+
+    }
+
+    function startNotification() {
+        navigator.bluetooth.startNotification('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF4',function (res) {
+            navigator.basis.tip(bytesToString(res));
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    function stopNotification() {
+        navigator.bluetooth.stopNotification('21F44C6C-423C-D48A-04B0-8050A6978A6E',null,'FFF4',function (res) {
+            alert(JSON.stringify(res))
+        },function (error) {
+            alert(JSON.stringify(error))
+        })
+    }
+
+
+
+</script>
+
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">测试</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+    <div class="mui-content-padded">
+        <button type="button" class="mui-btn mui-btn-block" onclick="scan()">扫描蓝牙设备</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="stopScan()">停止扫描</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="connect()">连接蓝牙设备</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="disconnect()">取消连接</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="updateModule()">升级</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="updateModule2()">升级2</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="send0x3ACommand()">发送0x3A指令</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="send0x3BCommand()">发送0x3B指令</button>
+
+        <button type="button" class="mui-btn mui-btn-block" onclick="setIP()">设置IP</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="setPort()">设置端口号</button>
+
+        <button type="button" class="mui-btn mui-btn-block" onclick="startNotification()">监听通道值</button>
+        <button type="button" class="mui-btn mui-btn-block" onclick="stopNotification()">停止监听通道值</button>
+
+        <h5>发送字符串指令</h5>
+        <div class="mui-input-group">
+            <div class="mui-input-row">
+                <label style="width: 10%">UUID:</label>
+                <input type="text" id="uuid" class="mui-input-clear" placeholder="请输入通道UUID" value="FFF1">
+            </div>
+            <div class="mui-input-row">
+                <label>指令:</label>
+                <input type="text" id="command1" class="mui-input-clear" placeholder="请输入字符串指令" value=":">
+            </div>
+
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" style="width: 60%" onclick="sendCommand()">发送</button>
+            </div>
+        </div>
+
+
+        <h5>读取特征值</h5>
+        <div class="mui-input-group">
+            <div class="mui-input-row">
+                <label style="width: 10%">UUID:</label>
+                <input type="text" id="uuid2" class="mui-input-clear" placeholder="请输入通道UUID" value="FFF5">
+            </div>
+            <div class="mui-button-row">
+                <button type="button" class="mui-btn mui-btn-primary" style="width: 60%" onclick="readCommand()">读取</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>

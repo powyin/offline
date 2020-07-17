@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>蓝牙插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">蓝牙插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示蓝牙插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">接口</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="scanning()">扫描</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="stopScan()">停止扫描</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="connect()">连接外设</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="disconnect()">停止连接</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="du()">读</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="xie()">写</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="Connected()">监听</a>
+        </div>
+
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">用例</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" href="bluetooth.html" >蓝牙液位计</a>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+    $(document).ready(function(){
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=")+1);
+        $('#title').text(title);
+
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+
+    }
+
+    function scanning() {
+        navigator.bluetooth.scan(10,function (success) {
+            console.log(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function stopScan() {
+        navigator.bluetooth.stopScan(function (success) {
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function connect() {
+        var uuid = device.uuid;
+        navigator.bluetooth.connect(uuid ,function (success) {
+            alert(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function disconnect() {
+        var uuid = device.uuid;
+        navigator.bluetooth.disconnect(uuid ,function (success) {
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function xie() {
+        var uuid = device.uuid;
+        var value= "";
+        var service_uuid="";
+        var characteristic_uuid="";
+        navigator.bluetooth.write(uuid,service_uuid,characteristic_uuid,value,function (success) {
+            alert(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function du() {
+        var uuid = device.uuid;
+        var value= "";
+        var service_uuid="";
+        var characteristic_uuid="";
+        navigator.bluetooth.read(uuid,service_uuid,characteristic_uuid,value,function (success) {
+            alert(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function Connected() {
+        var uuid = device.uuid;
+        navigator.bluetooth.isConnected(uuid ,function (success) {
+            alert(JSON.stringify(success));
+        },function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+</script>
+</body>
+
+</html>

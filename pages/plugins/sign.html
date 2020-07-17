@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Sign插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Sign插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Sign插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+    <div class="mui-card">
+        <form class="mui-input-group" style="padding:10px">
+            <h5 class="mui-content-padded">横竖屏设置:</h5>
+            <div class="mui-input-row mui-radio">
+                <label>横屏</label>
+                <input name="radio" type="radio" value=1>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>竖屏</label>
+                <input name="radio" type="radio" value=0 checked>
+            </div>
+        </form>
+        <h5 class="mui-content-padded">存储方式设置:</h5>
+        <form class="mui-input-group"style="padding:10px">
+            <div class="mui-input-row mui-radio">
+                <label>沙盒</label>
+                <input name="radio1" type="radio" value=1>
+            </div>
+            <div class="mui-input-row mui-radio">
+                <label>相册</label>
+                <input name="radio1" type="radio" value=0 checked>
+            </div>
+        </form>
+    </div>
+    <div class="mui-content-padded">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="sign()">电子签名</button>
+    </div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+    function sign() {
+        var isImage = $("input[name='radio']:checked").val();
+        var isblu = $("input[name='radio1']:checked").val();
+        var options = {'screenNum':isImage,'imgPath':isblu};
+        navigator.signature.sign(
+            function (success) {
+                alert(JSON.stringify(success));
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            },options);
+    }
+
+</script>
+</body>
+
+</html>

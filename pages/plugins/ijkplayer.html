@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>海康视频插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        .mui-collapse-content .mui-navigate-right {
+            height: 44px;
+            line-height: 28px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">视频播放器插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示视频播放器插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">本地视频</a>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="hikLogin()">.mp4格式</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="hikLogin()">.avi格式</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="hikLogin()">.wma格式</a>
+        </div>
+    </div>
+
+    <div class="mui-card mui-table-view-cell mui-collapse">
+        <a class="mui-navigate-right" href="#">在线视频</a>
+
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="play('https://www.apple.com/105/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/films/feature/iphone-x-feature-tpl-cc-us-20170912_1920x1080h.mp4', 'iPhone X官方宣传视频')" >.mp4格式</a>
+        </div>
+
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="play('rtmp://58.200.131.2:1935/livetv/hunantv', '湖南卫视直播')" >RTMP协议直播源</a>
+        </div>
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="play('rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov', '大熊兔（点播)')" >RTSP协议点播源</a>
+        </div>
+
+        <div class="mui-collapse-content mui-table-view-cell">
+            <a class="mui-navigate-right" onclick="play('http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8', 'CCTV1（直播)')" >HTTP协议直播源</a>
+        </div>
+    </div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    function play(url, title) {
+        navigator.file.preview(url, title,function (res) {
+            alert(res)
+        }, function (error) {
+            alert(error)
+        })
+    }
+
+</script>
+</body>
+
+</html>

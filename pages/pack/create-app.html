@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet"/>
+	<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
+	<style>
+		.form-row {
+			margin: 0 0.8rem 0 0.3rem;
+			padding-right: 1.8rem;
+			padding-left: 0.8rem;
+		}
+    </style>
+</head>
+<body>
+<script type="application/javascript" charset="UTF-8" src="../../js/jquery-3.2.1.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="../../js/mui.min.js"></script>
+<script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script type="application/javascript" charset="UTF-8" type="text/javascript" charset="utf-8">
+  	$(document).ready(function(){
+	    var title = decodeURI(location.search);
+	    title = title.substring(title.indexOf("=")+1);
+	    $('#title').text("新建应用");
+	   
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+    }
+
+  </script>
+<header class="mui-bar mui-bar-nav" style="position: static;">
+	<span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+	<h1 class="mui-title" id="title"></h1>
+</header>
+<div>
+	<form id="appForm" class="mui-input-group">
+	    <div class="mui-input-row row form-row">
+	        <label class="col-3">名称:</label>
+	    	<input id="name" type="text" class="mui-input-clear col-9" placeholder="请输应用名称">
+	    </div>
+	    <div class="mui-input-row row form-row">
+	        <label class="col-3">包名:</label>
+	    	<input id="packageName" type="text" class="mui-input-clear col-9" placeholder="例如：com.hcmobile.demo">
+	    </div>
+	    <div class="mui-input-row row form-row">
+	        <label class="col-3">描述:</label>
+	    	<input id="description" type="text" class="mui-input-clear col-9" placeholder="请输应用描述">
+	    </div>
+	    
+	    <div class="mui-button-row" style="height: 3.2rem;">
+	        <button id="submitBtn" type="button" class="mui-btn mui-btn-primary" style="width: 90%;font-size: 1.1rem;">确认</button>
+	    </div>
+	</form>
+</div>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+	$(function() {
+		var account = "admin";
+		 $("#submitBtn").click(function () {
+        	var app = {};
+        	var name = $.trim($("#name").val());
+        	var packageName = $.trim($("#packageName").val());
+        	var description = $.trim($("#description").val());
+        	if (name == "") {
+        		navigator.basis.tip("名称不能为空!");
+        		return;
+        	}
+        	
+        	if (packageName == "") {
+        		navigator.basis.tip("包名不能为空");
+        		return;
+        	}
+			app.name = name;
+			app.packageName = packageName;
+			app.description = description;
+			app.account = account;
+			console.log(app);
+	        $.ajax({
+				url:"http://10.10.21.43:8070/hcmobile/app/add",
+				data:JSON.stringify(app),
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				contentType:"application/json",
+				timeout:10000,//超时时间设置为10秒
+				success:function(data) {
+					navigator.basis.tip("创建成功");
+					window.location.href = "../../index.html"
+				},
+				error:function(request) {
+					navigator.basis.tip("创建失败，请重试~");
+				}
+			});
+		});  
+	});
+</script>
+</body>
+</html>

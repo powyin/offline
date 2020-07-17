@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Update插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../../css/mui.min.css">
+
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-content-padded p {
+            text-indent: 22px;
+        }
+
+        .mui-card:after {
+            visibility: hidden
+        }
+
+        #img-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 17px;
+            color: #333
+        }
+
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="mui.back()"></span>
+    <h1 class="mui-title">Update插件</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+
+    <div class="mui-content-padded">
+        <p>以下将演示Update插件所包含的接口能力，具体参数详见HCB开发文档</p>
+    </div>
+
+
+    <form id="input-group" >
+        <div class="mui-input-row">
+            <label>下载地址:</label>
+        </div>
+		  <div class="mui-input-row">
+		   <input type="text" name="urlipa" class="mui-input-group" placeholder="安装包下载地址">
+		     </div>
+    </form>
+    <h5 class="mui-content-padded">是否显示提示弹窗(仅支持Android):</h5>
+    <form class="mui-input-group" style="padding:10px">
+
+        <div class="mui-input-row mui-radio" id="falseDiv">
+            <label>否</label>
+            <input name="radio" type="radio" id="falseInput" value=0 checked>
+        </div>
+        <div class="mui-input-row mui-radio"id="trueDiv">
+            <label>是</label>
+            <input name="radio" type="radio"id="trueInput" value=1>
+        </div>
+    </form>
+
+    <div class="mui-content-padded">
+        <button type="button" class="mui-btn mui-btn-primary mui-btn-block" onclick="download()">版本更新</button>
+    </div>
+</div>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script src="../../js/hc.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('deviceready')
+    }
+    let u = navigator.userAgent;
+    let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+    let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isAndroid) {
+        //这个是安卓操作系统
+        $("input[ name='urlipa']").val('http://172.16.2.46:8888/groupTest/M00/00/02/rBACMl6dYm2AYzf_BpMoHCTQHXU188.apk?filename=com.supconit.hcmobile.apk');
+    }
+    if (isIOS) {
+        var falseDiv = document.getElementById('falseDiv');
+        var trueDiv = document.getElementById('trueDiv');
+        falseDiv.setAttribute("disabled", true);
+        trueDiv.setAttribute("disabled", true);
+        document.getElementById("falseInput").setAttribute("disabled", true);
+        document.getElementById("trueInput").setAttribute("disabled", true);
+        falseDiv.className = 'mui-input-row mui-radio mui-disabled';
+        trueDiv.className = 'mui-input-row mui-radio mui-disabled';
+        $("input[ name='urlipa']").val('http://yd-mobile.cn:8010/pack/download?versionId=1011&packName=com.supconit.cloud.app');
+    }
+
+
+    function download() {
+        var url = $("input[ name='urlipa']").val();
+        var isshow = $("input[name='radio']:checked").val();
+        var isPrompt = false;
+        if (isshow=='1') {
+            isPrompt = true;
+        }
+        navigator.update.download({url:url,showPrompt:isPrompt},
+            function(succ){
+                alert(succ);
+            },function(err){
+                alert(err);
+            });
+    }
+
+
+
+
+</script>
+</body>
+
+</html>

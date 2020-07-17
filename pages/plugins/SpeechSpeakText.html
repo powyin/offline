@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>聊天列表</title>
+    <script type="application/javascript" charset="UTF-8" src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <style>
+        .mui-content-padded{
+            text-indent: 22px;
+        }
+        .mui-bar-nav{
+            background-color: white;
+        }
+        img{
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .mui-abtn{
+            position: fixed;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 200;
+        }
+        /*.mui-btn1{*/
+            /*position: fixed;*/
+            /*text-align: center;*/
+            /*margin-left: calc((100% - 130px)/2);*/
+            /*top: 250px;*/
+            /*width: 120px;*/
+            /*height: 120px;*/
+            /*border-radius: 50%;*/
+            /*font-size: 22px;*/
+            /*font-weight: 400;*/
+        /*}*/
+        .mui-btn1{
+            text-align: center;
+            margin-left: calc((100% - 120px)/2);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 22px;
+            font-weight: 400;
+        }
+        /*.mui-card-content{*/
+            /*position: fixed;*/
+            /*margin-left: calc(10px);*/
+            /*top: 230px;*/
+            /*width: 120px;*/
+            /*height: 120px;*/
+            /*border-radius: 50%;*/
+            /*font-size: 22px;*/
+            /*font-weight: 400;*/
+        /*}*/
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <header class="mui-bar" style="position: static;">
+        <span onclick="mui.back()" class="mui-icon mui-icon-back"></span>
+        <h1 class="mui-title" id="title"></h1>
+        <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh"
+              style="position:absolute; right:15px"></span>
+    </header>
+    <div class="mui-card" id="contentdiv">
+        <!--页眉，放置标题-->
+        <div class="mui-card-header mui-card-media"><img src="../../img/avatar_user.png"/>
+            <div class="mui-media-body">
+            文字识别结果
+            <p>{{data.time}}</p>
+            </div>
+        </div>
+        <!--内容区-->
+        <div class="mui-card-content ">
+            <div class="mui-card-content-inner">
+                <p class="mui-card-content-inner">{{data.message}}
+                </p>
+            </div>
+        </div>
+        <!--页脚，放置补充信息或支持的操作-->
+        <div class="mui-card-footer">
+            <a class="mui-card-link"  @click="speechSynthesis()" >语音播放</a>
+            <a class="mui-card-link"  @click="pauseSynthesis()">{{data.btnText}}</a>
+            <a class="mui-card-link"  @click="cancelSynthesis()">停止播放</a>
+        </div>
+    </div>
+    <button type="button" id="btnId" class="mui-btn1 mui-btn-primary" style="display:block;" @click="generalBasic()">选取照片</button>
+    <!--<button type="button" id="btnId1" class="mui-btn1 mui-btn-primary" @click="speechSynthesis()">语音转换</button>-->
+</div>
+</body>
+<!-- 先引入 Vue -->
+<script src="../../js/vue.min.js"></script>
+
+<script>
+    mui.init();
+    var data = {
+        message: '',
+        time:'',
+        flag:true,//单位切换开关
+        btnText:'暂停播放'
+    };
+    var app = new Vue({
+        el: '#app',
+        methods: {
+            generalBasic:function(){
+                this.$options.methods.formatDate();
+                navigator.bdrecognition.generalBasic(
+                    function (success) {
+                        data.message = JSON.parse(success).message.message;
+                        if (data.message.length>0){
+                            // $("#btnId").hide();
+                            // $("#contentdiv").show();
+                            // $("#btnId1").show();
+
+                        }else{
+                            // $("#btnId").show();
+                            // $("#contentdiv").hide();
+                            // $("#btnId1").hide();
+                            alert('识别结果为空，请重新选择');
+                        }
+                    },
+                    function (error) {
+                        alert(error);
+                    },{'imgPath':1,'imgType':0}
+                );
+            },
+            formatDate: function () {
+                let date = new Date(Date.parse(new Date()));
+                let y = date.getFullYear();
+                let MM = date.getMonth() + 1;
+                MM = MM < 10 ? ('0' + MM) : MM;
+                let d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                let h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                let m = date.getMinutes();
+                m = m < 10 ? ('0' + m) : m;
+                let s = date.getSeconds();
+                s = s < 10 ? ('0' + s) : s;
+                // return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+                data.time = y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
+                // alert(JSON.stringify(data.time));
+            },
+            speechSynthesis:function() {
+                navigator.speechsynthesis.speechSynthesis(
+                    function (success) {
+                        // alert(JSON.stringify(success));
+                    },
+                    function (error) {
+                        alert(JSON.stringify(error));
+                    },{'text':data.message}
+                );
+            },
+            cancelSynthesis:function() {
+                this.flag = true;
+                this.btnText = "暂停播放";
+                navigator.speechsynthesis.cancelSynthesis(
+                    function (successCallback) {
+                        // alert(successCallback);
+                    },function (errorCallback) {
+                    });
+            },
+            pauseSynthesis:function() {
+                this.flag = !this.flag;
+                if(this.flag){
+                    this.btnText = "暂停播放";
+                    navigator.speechsynthesis.resumeSynthesis(
+                        function (successCallback) {
+                            // alert(successCallback);
+                        },function (errorCallback) {
+                        });
+                }else {
+                    this.btnText = "继续播放";
+                    navigator.speechsynthesis.pauseSynthesis(
+                        function (successCallback) {
+                            // alert(successCallback);
+                        },function (errorCallback) {
+                        });
+                }
+
+            }
+        },
+
+        data: data
+    });
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        // $("#contentdiv").hide();
+        // $("#btnId1").hide();
+    }
+
+    $(document).ready(function () {
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=") + 1);
+        $('#title').text(title);
+
+    });
+
+    // function speechSynthesis() {
+    //     alert(data.message);
+    //     navigator.speechsynthesis.speechSynthesis(
+    //         function (success) {
+    //             // alert(JSON.stringify(success));
+    //         },
+    //         function (error) {
+    //             alert(JSON.stringify(error));
+    //         },{'text':data.message}
+    //     );
+    // }
+
+
+</script>
+</html>

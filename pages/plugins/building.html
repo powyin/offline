@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+</head>
+<body style="background: #f7f7f7;">
+<header class="mui-bar mui-bar-nav">
+    <span onclick="mui.back()" id="back" class="mui-icon mui-icon-back"></span>
+    <h1 class="mui-title" id="title"></h1>
+</header>
+<img style="width: 100%;" src="../../img/building.gif" />
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        var title = decodeURI(location.search);
+        title = title.substring(title.indexOf("=")+1);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>蓝牙插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <style>
+        .mui-bar-nav {
+            background-color: white;
+        }
+
+        .mui-navigate-right>.mui-badge {
+            background-color: white;
+        }
+
+        .mui-badge > .mui-badge {
+            margin-right: 5px;
+        }
+
+        .mui-badge > .mui-badge:last-child {
+            margin-right: 0;
+        }
+
+        .mui-content-padded{
+            margin: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <span class="mui-icon mui-icon-arrowleft mui-pull-left" onclick="back()"></span>
+    <h1 class="mui-title">连接外设</h1>
+    <span onclick="window.location.reload()" class="mui-icon mui-icon-refresh mui-pull-right"></span>
+</header>
+<div class="mui-content">
+    <ul style="margin: 0" id="content" class="mui-table-view mui-table-view-chevron">
+    </ul>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-3.2.1.min.js"></script>
+<script src="
+http://192.168.43.47:8080/offline5/offline/hc-cross-js/hcmobile.js"></script>
+<script>
+    mui.init();
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    var uuid = decodeURI(getQueryString("uuid"));
+
+    function onDeviceReady() {
+
+        navigator.bluetooth.connect(uuid, function (res) {
+            // alert(JSON.stringify(res));
+
+            $.each(res.services, function (i, item) {
+                var service = $("<li class=\"mui-table-view-cell mui-collapse\"><a class=\"mui-navigate-right\" href=\"#\">" + item + "</a><ul id='" + item + "' class=\"mui-table-view mui-table-view-chevron\"></ul></li>");
+                $("#content").append(service);
+            });
+
+            $.each(res.characteristics, function (i, item) {
+
+
+                var str = "<li class=\"mui-table-view-cell\"><a id='"+item.characteristic+"' class=\"mui-navigate-right\">"+item.characteristic+"</a>";
+
+                if (item.properties.length) {
+
+                    str += "<div class=\"mui-content\"><div class=\"mui-content-padded\">";
+
+                    $.each(item.properties, function (j, p) {
+                        str += "<button type=\"button\" class=\"mui-btn mui-btn-block\" id='"+p+"' onclick='readOrWrite(\""+p+"\",\""+item.characteristic+"\",\""+item.service+"\")'>"+p+"</button>" ;
+                    });
+
+
+                    str +="</div></div>";
+                }
+
+                str += "</li>";
+
+
+                var serviceId = item.service;
+
+
+                var characteristics = $(str);
+
+
+                $("#" + serviceId + "").append(characteristics);
+
+            });
+            $("#FFF4").click(function () {
+
+                navigator.notification.confirm("open or close notify", function (buttonIndex) {
+
+
+                    if (buttonIndex ===1){
+
+                        navigator.bluetooth.startNotification(uuid,null,'FFF4',function (res) {
+                            alert(bytesToString(res));
+                        },function (error) {
+                            alert(JSON.stringify(error))
+                        })
+
+
+                    } else {
+
+
+                        navigator.bluetooth.stopNotification(uuid,null,'FFF4',function (res) {
+                            alert(JSON.stringify(res))
+                        },function (error) {
+                            alert(JSON.stringify(error))
+                        })
+
+                    }
+
+
+                }, "请选择指令", ['open', 'close'])
+
+
+            });
+            //
+            //
+            // $("#F000FFC1-0451-4000-B000-000000000000").click(function () {
+            //
+            //     navigator.notification.confirm("update to", function (buttonIndex) {
+            //
+            //         var uri = buttonIndex === 1 ? 'http://10.10.21.14:8080/hot/uploader/SimpleBLEPeripheral_A.bin' : 'http://10.10.21.14:8080/hot/uploader/SimpleBLEPeripheral_B.bin';
+            //         navigator.bluetooth.update(uuid, uri, function (res) {
+            //             console.log(JSON.stringify(res));
+            //         }, function (error) {
+            //             alert(error);
+            //         });
+            //
+            //     }, "请选择指令", ['A', 'B'])
+//
+
+                // navigator.notification.prompt(
+                //     '请输入更新地址',
+                //     function (results) {
+                //         if (results.buttonIndex === 2){
+                //             var uri = results.input1;
+                //             alert(uri);
+                //             navigator.bluetooth.update(uuid, uri, function (res) {
+                //                 console.log(JSON.stringify(res));
+                //             }, function (error) {
+                //                 alert(error);
+                //             });
+                //         }
+                //     },
+                //     '提示',
+                //     ['取消','确定'],
+                //     'http://10.10.21.14:8080/hot/uploader/SimpleBLEPeripheral_B.bin'
+                // );
+
+            // });
+
+
+        }, function (error) {
+            alert(error)
+        });
+
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    function back() {
+
+        navigator.bluetooth.disconnect(uuid);
+        mui.back();
+    }
+
+function readOrWrite(p,characteristic,service) {
+        if (p == 'Read') {
+            navigator.bluetooth.read(uuid,service,characteristic,function (success) {
+                var buffer = bytesToString(success);
+                alert(JSON.stringify(buffer));
+            },function (error){
+                alert(JSON.stringify(error));
+            });
+        }else if (p == 'Write'){
+            navigator.notification.prompt(
+                '请输入value值',
+                    function (results) {
+                        if (results.buttonIndex === 2){
+                            var port = results.input1;
+                            navigator.bluetooth.write(uuid,service,characteristic, stringToBytes(port), function (res) {
+                                alert(JSON.stringify(res));
+                            }, function (error) {
+                                alert(error);
+                            })
+                        }
+                    },
+                    '提示',
+                    ['取消','确定'],
+                    '9003'
+                );
+        }else if (p == 'Notify'){
+            navigator.notification.confirm("open or close notify", function (buttonIndex) {
+                if (buttonIndex ===1){
+                    navigator.bluetooth.startNotification(uuid,service,characteristic,function (res) {
+                        alert(bytesToString(res));
+                    },function (error) {
+                        alert(JSON.stringify(error))
+                    })
+                } else {
+                    navigator.bluetooth.stopNotification(uuid,service,characteristic,function (res) {
+                        alert('关闭通道')
+                    },function (error) {
+                        alert(JSON.stringify(error))
+                    })
+                }
+            }, "请选择指令", ['open', 'close'])
+
+        }else if (p == 'WriteWithoutResponse'){
+            navigator.notification.prompt(
+                '请输入value值',
+                function (results) {
+                    if (results.buttonIndex === 2){
+                        var port = results.input1;
+                        navigator.bluetooth.writeWithoutResponse(uuid,service,characteristic, stringToBytes(port), function (res) {
+                            alert('没有响应');
+                        }, function (error) {
+                            alert(error);
+                        })
+                    }
+                },
+                '提示',
+                ['取消','确定'],
+                '9003'
+            );
+
+        }else{
+            alert('待补充');
+        }
+
+
+
+}
+
+
+
+    function stringToBytes(string) {
+        var array = new Uint8Array(string.length);
+        for (var i = 0, l = string.length; i < l; i++) {
+            array[i] = string.charCodeAt(i);
+        }
+        return array.buffer;
+    }
+
+    function bytesToString(buffer) {
+        return String.fromCharCode.apply(null, new Uint8Array(buffer));
+    }
+
+
+
+
+
+</script>
+</body>
+
+</html>
